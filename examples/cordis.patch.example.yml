@@ -1,0 +1,40 @@
+# 示例：把三个插件挂进 profile 的 cordis.patch.yml
+#
+# 这是「手写 patch」的写法；用 `dsh plugin add` 安装时不需要这一段。
+# 路径留空表示使用环境变量 / home 目录默认值，只有目录不在默认位置时才填。
+
+- insert:
+    - id: dsh-literature-workflow
+      name: 'dsh-literature-workflow'
+      config:
+        workflowRoot: ''
+        rootCollection: ''
+        cardsHome: ''
+        publishMode: preview
+        watchInput: false
+        autoRun: false
+        maxPapers: 10
+        nativeUI: true
+
+    - id: dsh-knowledge-cards
+      name: 'dsh-knowledge-cards'
+      config:
+        home: ''
+        nativeUI: true
+
+    - id: dsh-lit-learning
+      name: 'dsh-lit-learning'
+      config:
+        workflowRoot: ''
+        cardsHome: ''
+        learningRoot: ''
+        rubricPath: ''
+        lexiconDir: ''
+        review:
+          intervalDays: [1, 3, 7, 16, 35, 75]
+          passScore: 3
+          dailyLimit: 20
+        autoBuild: true
+        nativeUI: true
+        writeCards: false
+        writeOutsideLearningRoot: false

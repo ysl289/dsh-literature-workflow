@@ -1,0 +1,9 @@
+# `home` stays empty on purpose: the plugin resolves it from DSH_CARDS_HOME,
+# then falls back to ~/Desktop/知识卡片库. Set it only when your library lives
+# somewhere else.
+- insert:
+    - id: dsh-knowledge-cards
+      name: 'dsh-knowledge-cards'
+      config:
+        home: ''
+        nativeUI: true

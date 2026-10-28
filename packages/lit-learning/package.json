@@ -1,0 +1,67 @@
+{
+  "name": "dsh-lit-learning",
+  "version": "0.2.0",
+  "description": "Literature learning layer for DeepSeek Harness: read-only workflow and card inputs, evidence locating, readiness ratings, recital and review.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./index.mjs",
+    "./client": "./client.js",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.mjs",
+    "host.mjs",
+    "client.js",
+    "bundle.patch.yml",
+    "icon.svg",
+    "README.md",
+    "bin/**",
+    "lib/**",
+    "lexicon/**",
+    "docs/**"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "build": "node bin/build.mjs",
+    "check": "node --check index.mjs && node --check lib/config.mjs"
+  },
+  "devDependencies": {
+    "jsdom": "^26.0.0"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "learning",
+    "spaced-repetition",
+    "literature"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ysl289/dsh-literature-workflow.git",
+    "directory": "packages/lit-learning"
+  },
+  "homepage": "https://github.com/ysl289/dsh-literature-workflow#readme",
+  "bugs": {
+    "url": "https://github.com/ysl289/dsh-literature-workflow/issues"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./bundle.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-ui-sidebar",
+        "@deepseek-ai/dsh-client-ui-theme",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-connection"
+      ]
+    }
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "updated": "2026-10-22",
+  "note": "识别策略术语枚举。同一策略只允许一种写法：论文里写「双重差分法」「DID」「difference-in-differences」都归一到 DID。归一靠 aliases 的顺序匹配，先长后短。",
+  "canonical": [
+    {
+      "id": "RCT",
+      "label": "随机对照实验",
+      "family": "实验",
+      "aliases": ["randomized controlled trial", "randomized experiment", "field experiment", "random assignment", "随机对照实验", "随机实验", "田野实验", "实地实验"],
+      "assumption": "随机分配使处理与潜在结果独立",
+      "threat": "依从性不完全、处理组之间存在溢出、样本规模有限",
+      "portable": 2
+    },
+    {
+      "id": "RDD",
+      "label": "断点回归",
+      "family": "准实验",
+      "aliases": ["regression discontinuity design", "regression discontinuity", "断点回归", "断点设计", "RDD"],
+      "assumption": "阈值附近个体在可观测与不可观测特征上连续",
+      "threat": "操纵阈值、带宽选择、局部有效性无法外推",
+      "portable": 2
+    },
+    {
+      "id": "DID",
+      "label": "双重差分",
+      "family": "准实验",
+      "aliases": ["difference-in-differences", "difference in differences", "双重差分法", "双重差分", "倍差法", "DID", "DD"],
+      "assumption": "处理前两组结果变量满足平行趋势",
+      "threat": "平行趋势不成立、处理时点内生、交错处理下的异质处理效应",
+      "portable": 3
+    },
+    {
+      "id": "IV",
+      "label": "工具变量",
+      "family": "准实验",
+      "aliases": ["instrumental variable", "instrumental variables", "two-stage least squares", "2SLS", "工具变量法", "工具变量", "IV"],
+      "assumption": "工具只通过内生变量影响结果（排除性限制），且与内生变量相关",
+      "threat": "排除性限制不可检验、弱工具、单调性不成立",
+      "portable": 2
+    },
+    {
+      "id": "MOVER",
+      "label": "流动者设计",
+      "family": "准实验",
+      "aliases": ["mover design", "movers design", "movers", "AKM", "流动者设计", "流动者", "跨校流动设计"],
+      "assumption": "个体效应不随流动时点与方向变化，个体效应与环境效应可加分离",
+      "threat": "流动自选择、流动时点与个人冲击同期、环境效应对流动者与未流动者不同",
+      "portable": 2
+    },
+    {
+      "id": "EVENT",
+      "label": "事件研究",
+      "family": "准实验",
+      "aliases": ["event study", "event-study", "事件研究法", "事件研究"],
+      "assumption": "事件前不存在与事件相关的预趋势",
+      "threat": "事件时点编码误差、预期效应提前、同期其他冲击",
+      "portable": 3
+    },
+    {
+      "id": "SCM",
+      "label": "合成控制",
+      "family": "准实验",
+      "aliases": ["synthetic control", "synthetic control method", "合成控制法", "合成控制"],
+      "assumption": "处理前合成单元能复现处理单元的结果路径",
+      "threat": "捐赠池选择、处理前拟合过度、仅适用于少数处理单元",
+      "portable": 1
+    },
+    {
+      "id": "MATCH",
+      "label": "匹配",
+      "family": "观测",
+      "aliases": ["propensity score matching", "matching estimator", "倾向得分匹配", "匹配法", "PSM", "matching"],
+      "assumption": "给定可观测协变量后处理分配与潜在结果独立",
+      "threat": "不可观测混杂、共同支撑不足、匹配变量由结果反推",
+      "portable": 2
+    },
+    {
+      "id": "FE",
+      "label": "面板固定效应",
+      "family": "观测",
+      "aliases": ["two-way fixed effects", "fixed effects", "双向固定效应", "固定效应模型", "面板固定效应", "FE"],
+      "assumption": "不可观测异质性不随时间变化，且与解释变量不相关（组内变换后）",
+      "threat": "时变异质性、组内变异不足、把相关当因果",
+      "portable": 3
+    },
+    {
+      "id": "THEORY",
+      "label": "理论建模",
+      "family": "理论",
+      "aliases": ["structural model", "theoretical model", "general equilibrium model", "理论模型", "结构模型", "一般均衡模型"],
+      "assumption": "模型设定与参数校准能代表所研究的经济环境",
+      "threat": "函数形式假设、参数外部校准、模型无法被数据拒绝",
+      "portable": 2
+    },
+    {
+      "id": "DESC",
+      "label": "描述性/相关性",
+      "family": "描述",
+      "aliases": ["descriptive", "correlational", "ordinary least squares", "OLS", "描述性统计", "相关性分析", "横截面回归"],
+      "assumption": "只声称相关，不声称因果",
+      "threat": "遗漏变量、反向因果、样本选择",
+      "portable": 1
+    },
+    {
+      "id": "OTHER",
+      "label": "其他/未标注",
+      "family": "未标注",
+      "aliases": [],
+      "assumption": "抽取未给出识别策略",
+      "threat": "无法判断",
+      "portable": 0
+    }
+  ]
+}

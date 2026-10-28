@@ -1,0 +1,14 @@
+# Conservative defaults: nothing is written outside the workflow root and no
+# publishing happens until the user turns it on from the workflow page.
+# Paths are omitted on purpose — the engine resolves them from the plugin
+# config, then from home-directory defaults (see docs/configuration.md).
+- insert:
+    - id: dsh-literature-workflow
+      name: 'dsh-literature-workflow'
+      config:
+        rootCollection: ''
+        publishMode: 'preview'
+        watchInput: false
+        maxPapers: 10
+        autoRun: false
+        nativeUI: true

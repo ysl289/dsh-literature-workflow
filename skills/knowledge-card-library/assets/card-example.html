@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>T-0001 · 吸收能力 · full</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@400;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#faf7f2; --ink:#1b1813; --body:#2a2620; --mute:#8a8175;
+  --line:rgba(27,24,19,.13); --green:#1a7a6d; --orange:#d9663a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#e6e1d8;display:flex;justify-content:center;padding:28px;
+  font-family:"Noto Sans SC",system-ui,sans-serif;color:var(--ink);
+  -webkit-font-smoothing:antialiased}
+.sheet{background:var(--paper);box-shadow:0 10px 36px rgba(0,0,0,.10)}
+.full{width:1200px;padding:56px 72px 44px}
+.brief{width:1000px;padding:52px 60px 40px}
+.talk{width:840px;padding:56px 76px 48px}
+.top{display:flex;justify-content:space-between;align-items:baseline;
+  padding-bottom:14px;border-bottom:1px solid var(--line)}
+.kicker{font-family:"JetBrains Mono",monospace;font-size:10.5px;font-weight:500;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--green)}
+.kicker.dim{color:var(--mute)}
+.ev{display:inline-flex;gap:3px;margin-left:10px;vertical-align:middle}
+.ev i{width:5px;height:5px;border-radius:50%;background:var(--line);display:block}
+.ev i.on{background:var(--green)}
+.evw{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.12em;
+  color:var(--mute);margin-left:7px;vertical-align:middle}
+.masthead{padding:32px 0 0}
+h1{font-family:"Playfair Display",serif;font-weight:900;font-size:56px;
+  line-height:.98;letter-spacing:-.022em}
+.zh{font-size:38px;font-weight:900;color:var(--green);letter-spacing:.05em;margin-top:10px}
+.lead{display:grid;grid-template-columns:76px 1fr;gap:18px;margin-top:26px;
+  padding-top:22px;border-top:1px solid var(--line)}
+.lead .lb{font-family:"JetBrains Mono",monospace;font-size:10.5px;font-weight:500;
+  letter-spacing:.16em;color:var(--mute);padding-top:7px}
+.lead p{font-family:"Noto Serif SC",serif;font-size:20px;line-height:1.85;color:var(--body)}
+.figure{margin-top:32px;padding:24px 0;border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line)}
+.figure svg{display:block;width:100%;height:auto}
+.body{display:grid;grid-template-columns:1.02fr .98fr;margin-top:32px}
+.story{padding-right:44px}
+.edge{padding-left:44px;border-left:1px solid var(--line)}
+.sec{font-family:"JetBrains Mono",monospace;font-size:10.5px;font-weight:500;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--orange);margin-bottom:16px}
+.story p{font-family:"Noto Serif SC",serif;font-size:15.5px;line-height:2.05;
+  color:var(--body);margin-bottom:12px}
+.story .note{font-size:11px;color:var(--mute);margin-top:12px;letter-spacing:.02em}
+.edge .main{font-size:16px;line-height:1.75;color:#211d18;padding-bottom:14px;
+  border-bottom:1px solid var(--line)}
+.edge .main b{color:var(--green);font-weight:700}
+.edge .item{display:grid;grid-template-columns:24px 1fr;gap:10px;padding:11px 0;
+  border-bottom:1px solid var(--line)}
+.edge .item .n{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--mute);
+  padding-top:4px}
+.edge .item p{font-size:13px;line-height:1.78;color:#3a352e}
+.edge .item b{font-weight:700;color:#211d18}
+.quiz{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:32px;
+  padding-top:20px;border-top:1px solid var(--line)}
+.quiz .q{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.16em;
+  color:var(--green);margin-bottom:7px}
+.quiz p{font-size:12.5px;line-height:1.8;color:#4a443b}
+footer{display:flex;justify-content:space-between;margin-top:28px;padding-top:14px;
+  border-top:1px solid var(--line);font-family:"JetBrains Mono",monospace;
+  font-size:10px;font-weight:500;letter-spacing:.18em;color:var(--mute);
+  text-transform:uppercase}
+footer .d{color:var(--green);margin:0 7px}
+/* ---- brief ---- */
+.brief h1{font-size:44px}
+.brief .zh{font-size:28px}
+.brief .lead p{font-size:19px}
+.pit{margin-top:30px;padding:20px 22px;background:#f2ede3;
+  border-left:3px solid var(--orange)}
+.pit .lb{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.18em;
+  color:var(--orange);margin-bottom:8px}
+.pit p{font-size:14px;line-height:1.8;color:#2a2620}
+.brief .quiz{margin-top:26px}
+/* ---- talk ---- */
+.talk h1{font-size:40px}
+.talk .zh{font-size:24px}
+.talk .story p{font-size:19px;line-height:2.15;margin-bottom:18px}
+.talk .story .note{font-size:11px}
+.hook{margin-top:26px;padding-top:20px;border-top:1px solid var(--line);
+  font-family:"Noto Serif SC",serif;font-size:17px;line-height:1.9;color:var(--green)}
+.pause{margin-top:22px;font-family:"JetBrains Mono",monospace;font-size:10px;
+  letter-spacing:.18em;color:var(--mute)}
+.pause span{display:inline-block;margin-right:14px}
+.land{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);
+  display:grid;grid-template-columns:60px 1fr;gap:14px}
+.land .lb{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.18em;
+  color:var(--muted);color:var(--mute);padding-top:5px}
+.land p{font-family:"Noto Serif SC",serif;font-size:16px;line-height:1.85;color:var(--green)}
+@media print{body{background:#fff;padding:0}.sheet{box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="sheet full">
+  <div class="top">
+    <span class="kicker">理论 · 演化经济学与创新研究
+      <span class="ev"><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="evw">证据强</span></span>
+    <span class="kicker dim">Cohen 1990</span>
+  </div>
+  <div class="masthead">
+    <h1>Absorptive Capacity</h1>
+    <div class="zh">吸收能力</div>
+  </div>
+  <div class="lead">
+    <div class="lb">一句话</div>
+    <p>企业得先自己有研究能力，才看得懂、也用得上外面来的科学知识。</p>
+  </div>
+  <div class="figure"><svg viewBox="0 0 1056 190" xmlns="http://www.w3.org/2000/svg"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#8a8175"/></marker></defs><rect x="0" y="42" width="176" height="92" fill="#fff" stroke="#d5cec2" stroke-width="1.4"/><text x="88.0" y="84.0" text-anchor="middle" font-size="14" font-weight="700" fill="#211d18">外部知识</text><text x="88.0" y="104.0" text-anchor="middle" font-size="10.5" fill="#8a8175">论文 · 公开专利</text><line x1="182" y1="88" x2="292" y2="88" stroke="#8a8175" stroke-width="1.2" marker-end="url(#ah)"/><line x1="318" y1="20" x2="318" y2="156" stroke="#1a7a6d" stroke-width="3"/><line x1="368" y1="20" x2="368" y2="156" stroke="#1a7a6d" stroke-width="3"/><text x="343" y="14" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1a7a6d">自身能力</text><text x="343" y="174" text-anchor="middle" font-size="10.5" fill="#8a8175">踩过坑才看得懂</text><line x1="374" y1="88" x2="484" y2="88" stroke="#8a8175" stroke-width="1.2" marker-end="url(#ah)"/><rect x="498" y="42" width="176" height="92" fill="#fff" stroke="#1a7a6d" stroke-width="1.4"/><text x="586.0" y="84.0" text-anchor="middle" font-size="14" font-weight="700" fill="#211d18">可吸收量</text><text x="586.0" y="104.0" text-anchor="middle" font-size="10.5" fill="#8a8175">结果</text><line x1="716" y1="18" x2="716" y2="172" stroke="#e2dbcf" stroke-width="1"/><text x="752" y="96" font-size="26" font-weight="700" fill="#1b1813" font-family="Playfair Display,serif">A = z · f(Z)</text><text x="752" y="126" font-size="11" fill="#8a8175">乘号不是加号：一边为零，结果为零</text></svg></div>
+  <div class="body">
+    <div class="story">
+      <div class="sec">一个故事</div>
+      <p>镇上的老周开农机厂。大学研究站寄来一本新技术报告，他翻了两页，全是自己没见过的术语，只好压在抽屉里。</p><p>第二年，厂里来了个做过研究的小林博士。同一份报告，他三天就看出哪一节能改播种机的排种器——不是因为他更聪明，是因为他读博时在那台设备上耗过两年，知道误差出在哪儿、哪个参数不能信。</p><p>改完，试验多了，专利也多了。老周后来总结得很到位：<strong>不是人家没给你东西，是你手里没有能拆包装的人。</strong></p>
+      <div class="note">虚构类比，非论文原例。</div>
+    </div>
+    <div class="edge">
+      <div class="sec">边界与误用</div>
+      <div class="main"><b><strong>不成立的情形</strong></b>　知识已经被编码成即插即用的设备、软件或成熟专利时，吸收能力不再是瓶颈——买来就能用，不需要先懂原理。</div>
+      <div class="item"><span class="n">02</span><p><strong>被谁批评</strong>：Zahra 与 George（2002）指出原版把&quot;获取&quot;和&quot;转化利用&quot;混成一个概念，主张拆成潜在吸收能力与实际吸收能力；后续文献进一步要求区分它是能力还是过程。</p></div><div class="item"><span class="n">03</span><p><strong>最常见的误读</strong>：拿它论证&quot;研发投入越多越好&quot;。原命题只说&quot;没有内部研究就吸收不了&quot;，没说&quot;内部研究一定划算&quot;——边际回报递减同样成立。</p></div><div class="item"><span class="n">04</span><p><strong>测量陷阱</strong>：常用研发强度或专利存量代理吸收能力，但这两者同时反映技术机会和战略选择，回归系数不能直接读成&quot;吸收能力的回报&quot;。</p></div><div class="item"><span class="n">05</span><p><strong>一句话识别误用</strong>：看到&quot;知识溢出会自动让所有企业受益&quot;，先反问一句——<strong>那谁来做&quot;吸收&quot;这件事？</strong> 答不上来，就是漏了这张卡。</p></div>
+    </div>
+  </div>
+  <div class="quiz"><div><div class="q">Q1</div><p>一家企业研发投入为零，但车间里雇了三十个博士做生产管理。它的吸收能力高吗？</p></div><div><div class="q">Q2</div><p>全国公开论文数量翻倍，为什么未必带来企业专利翻倍？</p></div><div><div class="q">Q3</div><p>举一个反例：什么情况下企业没有内部研究，也能用上外部知识？</p></div></div>
+  <footer>
+    <span>T-0001<span class="d">/</span>理论</span>
+    <span>知识卡片库<span class="d">/</span>经济学</span>
+  </footer>
+</div>
+</body>
+</html>

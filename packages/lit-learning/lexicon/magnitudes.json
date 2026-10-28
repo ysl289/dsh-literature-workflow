@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "updated": "2026-10-22",
+  "note": "量级主题词表。跨篇量级索引按这里的主题归类；归不上的进 OTHER，不强行贴标签。",
+  "themes": [
+    {
+      "id": "SPILLOVER_SHARE",
+      "label": "溢出/区位份额",
+      "unit": "比例",
+      "keywords": ["份额", "占比", "可归因", "share", "fraction", "attributable"]
+    },
+    {
+      "id": "MOBILITY_EFFECT",
+      "label": "流动/迁移效应",
+      "unit": "标准差或百分比",
+      "keywords": ["流动", "迁移", "mover", "mobility", "relocat"]
+    },
+    {
+      "id": "PRICE_RESPONSE",
+      "label": "价格/收益反应",
+      "unit": "百分点或收益率",
+      "keywords": ["超额收益", "价格", "收益率", "abnormal return", "CAR", "price"]
+    },
+    {
+      "id": "PRODUCTIVITY",
+      "label": "生产率/产出",
+      "unit": "弹性或对数点",
+      "keywords": ["生产率", "专利", "产出", "productivity", "patent", "output"]
+    },
+    {
+      "id": "ELASTICITY",
+      "label": "弹性",
+      "unit": "弹性",
+      "keywords": ["弹性", "elasticity"]
+    },
+    {
+      "id": "OTHER",
+      "label": "其他",
+      "unit": "未归类",
+      "keywords": []
+    }
+  ]
+}

@@ -1,0 +1,268 @@
+{
+  "version": 1,
+  "updated": "2026-10-22",
+  "purpose": "文献可靠性评级口径。三轴定档（内部效度 / 外推性 / 资料充分性），两个修正项封顶（度量效度 / 发表状态），证据不足一律降级。",
+  "principles": [
+    "评级只看论文自身与抽取产物，不参考作者名气、期刊影响因子以外的外部评价。",
+    "每一条理由必须挂证据（字段 + 段号 + 原文）；挂不上证据的轴记为「资料不足」，不猜。",
+    "同一输入重复运行必须得到同一等级：本文件是唯一口径来源，代码只做查表与加权。"
+  ],
+  "axes": {
+    "internal": {
+      "label": "内部效度",
+      "max": 4,
+      "question": "估计出来的东西，是不是它声称的那个东西？",
+      "strategyStrength": {
+        "RCT": 4.0,
+        "RDD": 3.5,
+        "DID": 3.1,
+        "IV": 3.1,
+        "MOVER": 3.1,
+        "EVENT": 2.9,
+        "SCM": 2.6,
+        "MATCH": 2.2,
+        "FE": 2.0,
+        "THEORY": 1.2,
+        "DESC": 0.7,
+        "OTHER": 0.8
+      },
+      "bonuses": [
+        {
+          "id": "pretrend",
+          "label": "有预趋势/平衡性检验",
+          "points": 0.4
+        },
+        {
+          "id": "threats",
+          "label": "至少列出 2 条识别威胁",
+          "points": 0.3
+        },
+        {
+          "id": "robustness",
+          "label": "至少 3 项稳健性检验",
+          "points": 0.3
+        },
+        {
+          "id": "cluster",
+          "label": "声明了标准误聚类层级",
+          "points": 0.2
+        }
+      ]
+    },
+    "external": {
+      "label": "外推性",
+      "max": 4,
+      "question": "这个结论能挪到别的国家、行业、时期吗？",
+      "scopeBase": {
+        "multiCountry": 3.2,
+        "singleCountryLarge": 2.6,
+        "singleCountry": 2.2,
+        "singleSetting": 1.4,
+        "unknown": 0
+      },
+      "bonuses": [
+        {
+          "id": "heterogeneity",
+          "label": "至少 3 个异质性维度",
+          "points": 0.5
+        },
+        {
+          "id": "mechanism",
+          "label": "机制被单独检验",
+          "points": 0.5
+        }
+      ]
+    },
+    "sufficiency": {
+      "label": "资料充分性",
+      "max": 4,
+      "question": "手上的抽取与证据，够不够支撑上面这些判断？",
+      "minVerifiedQuotes": 8,
+      "quotePenalty": 0.5,
+      "requiredFields": [
+        "apa_citation",
+        "authors",
+        "year",
+        "abstract",
+        "research_questions",
+        "hypotheses",
+        "core_theory",
+        "contribution",
+        "data",
+        "limitations",
+        "future_research",
+        "core_variables",
+        "economic_concepts",
+        "design.identification.strategy",
+        "design.identification.assumption",
+        "design.key_coefficients",
+        "evidence"
+      ],
+      "weights": {
+        "fieldCoverage": 0.6,
+        "evidenceCoverage": 0.4
+      },
+      "note": "字段覆盖看抽取是否填全；证据覆盖看这些字段是否真有能定位到页码/段号的证据。两者按权重合成，缺证据的字段不算充分。"
+    }
+  },
+  "modifiers": {
+    "construct": {
+      "label": "度量效度",
+      "max": 2,
+      "question": "变量度量的，是不是概念本身？",
+      "levels": [
+        {
+          "min": 0.9,
+          "score": 2.0,
+          "label": "核心变量均有定义与数据来源"
+        },
+        {
+          "min": 0.6,
+          "score": 1.5,
+          "label": "核心变量有定义，部分缺数据来源"
+        },
+        {
+          "min": 0.3,
+          "score": 1.0,
+          "label": "核心变量只有名称，度量靠读者推断"
+        },
+        {
+          "min": 0,
+          "score": 0.0,
+          "label": "核心变量缺失"
+        }
+      ]
+    },
+    "publication": {
+      "label": "发表状态",
+      "max": 2,
+      "question": "这份稿子经过了多少同行审查？",
+      "topTierMatch": [
+        "American Economic Review",
+        "Quarterly Journal of Economics",
+        "Journal of Political Economy",
+        "Econometrica",
+        "Review of Economic Studies",
+        "Journal of Finance",
+        "Journal of Financial Economics",
+        "Review of Financial Studies",
+        "Management Science",
+        "AER",
+        "QJE",
+        "JPE",
+        "ECMA",
+        "ReStud"
+      ],
+      "workingPaperMatch": [
+        "NBER",
+        "CEPR",
+        "SSRN",
+        "Working Paper",
+        "Discussion Paper",
+        "WP No"
+      ],
+      "preprintMatch": [
+        "arXiv",
+        "Preprint",
+        "Conference"
+      ],
+      "tiers": [
+        {
+          "kind": "top",
+          "score": 2.0,
+          "label": "顶级期刊"
+        },
+        {
+          "kind": "journal",
+          "score": 1.5,
+          "label": "正式发表期刊"
+        },
+        {
+          "kind": "workingPaper",
+          "score": 1.0,
+          "label": "已流通工作论文"
+        },
+        {
+          "kind": "preprint",
+          "score": 0.5,
+          "label": "会议论文/预印本"
+        },
+        {
+          "kind": "none",
+          "score": 0.0,
+          "label": "未标注发表状态"
+        }
+      ]
+    }
+  },
+  "grades": [
+    {
+      "id": "A",
+      "label": "可直接引用",
+      "minRatio": 0.8,
+      "requires": {
+        "internal": 3,
+        "sufficiency": 3
+      },
+      "usage": "可作为论证支柱，引用时仍需带上识别假设与适用范围。"
+    },
+    {
+      "id": "B",
+      "label": "可用需限定",
+      "minRatio": 0.62,
+      "requires": {
+        "internal": 2,
+        "sufficiency": 2
+      },
+      "usage": "可引用，但必须同时写出限定条件；不单独承担核心论证。"
+    },
+    {
+      "id": "C",
+      "label": "仅作旁证",
+      "minRatio": 0.45,
+      "requires": {
+        "internal": 1,
+        "sufficiency": 1
+      },
+      "usage": "只能作为旁证或文献铺陈，不能作为因果主张的依据。"
+    },
+    {
+      "id": "D",
+      "label": "暂不引用",
+      "minRatio": 0,
+      "requires": {},
+      "usage": "资料不足或识别不可信；先补抽取与证据，再谈引用。"
+    }
+  ],
+  "caps": [
+    {
+      "id": "sufficiencyFloor",
+      "when": "sufficiency < 2",
+      "grade": "D",
+      "reason": "资料充分性低于 2 分：证据链不足以支撑任何可靠性判断。"
+    },
+    {
+      "id": "constructFloor",
+      "when": "construct < 1",
+      "grade": "C",
+      "reason": "度量效度不足：核心变量缺少定义，结论的含义无法确定。"
+    },
+    {
+      "id": "publicationFloor",
+      "when": "publication < 1",
+      "grade": "C",
+      "reason": "发表状态未标注：无法判断是否经过同行审查，等级封顶为 C。"
+    },
+    {
+      "id": "workingPaperCap",
+      "when": "publication < 1.5",
+      "grade": "B",
+      "reason": "未经完整同行审查（工作论文/预印本/未标注），等级封顶为 B。"
+    }
+  ],
+  "evidenceRequirements": {
+    "perAxisMinReasons": 1,
+    "reasonMustCarryQuote": true,
+    "downgradeWhenNoEvidence": "资料不足"
+  }
+}

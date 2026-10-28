@@ -1,0 +1,68 @@
+{
+  "name": "dsh-literature-workflow",
+  "version": "0.3.0",
+  "description": "Harness-native literature workflow: search, PDF-to-Markdown, extraction, Zotero filing, Excel sheet, cards handoff and publishing, with an authenticated local Client page.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./index.mjs",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.mjs",
+    "client.js",
+    "host-api.mjs",
+    "install.mjs",
+    "bundle.patch.yml",
+    "bridge.py",
+    "lib/**",
+    "web/**",
+    "locale/*.json",
+    "icon.svg",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "test:py": "python -X utf8 -m pytest tests -q",
+    "check": "node --check index.mjs && node --check lib/engine.mjs"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "literature",
+    "zotero",
+    "research",
+    "pdf",
+    "knowledge-cards"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ysl289/dsh-literature-workflow.git",
+    "directory": "packages/literature-workflow"
+  },
+  "homepage": "https://github.com/ysl289/dsh-literature-workflow#readme",
+  "bugs": {
+    "url": "https://github.com/ysl289/dsh-literature-workflow/issues"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./bundle.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-ui-sidebar",
+        "@deepseek-ai/dsh-client-ui-theme",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-connection"
+      ]
+    }
+  }
+}

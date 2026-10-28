@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fsp from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import {attachLearningUI} from '../host.mjs';
+function routesFor(service,root){const routes=new Map();const dispose=attachLearningUI({connection:{fetch:{register(route){routes.set(route.path,route);return()=>routes.delete(route.path);}}}},service,{learningRoot:root});return {routes,dispose};}
+test('host：版本或attempt冲突给明确409与错误码',async()=>{const root=await fsp.mkdtemp(path.join(os.tmpdir(),'lit-host-'));const h=routesFor({async recordReview(){throw Object.assign(new Error('内容版本已变化'),{code:'ITEM_VERSION_STALE'});}},root);try{const r=await h.routes.get('/api/litLearning/review').fetch(new Request('http://fixture/api/litLearning/review',{method:'POST',body:'{}'}));assert.equal(r.status,409);assert.deepEqual(await r.json(),{error:'内容版本已变化',code:'ITEM_VERSION_STALE'});}finally{h.dispose();}});
+test('host：输入损坏不伪装成正常空数据',async()=>{const root=await fsp.mkdtemp(path.join(os.tmpdir(),'lit-host-'));const h=routesFor({async invoke(){throw Object.assign(new Error('JSON 损坏'),{code:'JSON_INVALID'});}},root);try{const r=await h.routes.get('/api/litLearning/invoke').fetch(new Request('http://fixture/api/litLearning/invoke',{method:'POST',body:JSON.stringify({action:'build'})}));assert.equal(r.status,422);assert.equal((await r.json()).code,'JSON_INVALID');}finally{h.dispose();}});
+test('host：当前代存在时探针不依赖根镜像manifest',async()=>{const root=await fsp.mkdtemp(path.join(os.tmpdir(),'lit-host-'));await fsp.mkdir(path.join(root,'.generations','test-gen'),{recursive:true});await fsp.writeFile(path.join(root,'.generations','test-gen','manifest.json'),'{}');await fsp.writeFile(path.join(root,'.current.json'),JSON.stringify({version:1,generation:'test-gen'}));const h=routesFor({},root);try{const r=await h.routes.get('/api/litLearning/ping').fetch(new Request('http://fixture/api/litLearning/ping'));assert.equal(r.status,200);assert.equal((await r.json()).built,true);}finally{h.dispose();}});

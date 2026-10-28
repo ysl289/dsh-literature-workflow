@@ -1,0 +1,59 @@
+{
+  "name": "dsh-knowledge-cards",
+  "version": "0.2.0",
+  "description": "Knowledge-card library for DeepSeek Harness: browse by shelf, deduplicate, edit, export, with built-in 2D and 3D relation graphs.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./index.mjs",
+    "./client": "./client.js",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.mjs",
+    "client.js",
+    "host.mjs",
+    "bundle.patch.yml",
+    "icon.svg",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check index.mjs && node --check host.mjs"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "knowledge-cards",
+    "zotero",
+    "research"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ysl289/dsh-literature-workflow.git",
+    "directory": "packages/knowledge-cards"
+  },
+  "homepage": "https://github.com/ysl289/dsh-literature-workflow#readme",
+  "bugs": {
+    "url": "https://github.com/ysl289/dsh-literature-workflow/issues"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./bundle.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-ui-sidebar",
+        "@deepseek-ai/dsh-client-ui-theme",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-connection"
+      ]
+    }
+  }
+}

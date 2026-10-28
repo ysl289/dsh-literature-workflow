@@ -1,0 +1,127 @@
+{
+  "version": 1,
+  "updated": "2026-10-22",
+  "note": "数据与制度常识库的底座。构建时按 keywords 在论文的 data / core_theory / 卡片正文里做命中，只收录被本批论文真正用到的条目，并标注命中的论文。",
+  "entries": [
+    {
+      "id": "DS-WOS",
+      "kind": "dataset",
+      "label": "Web of Science 核心合集",
+      "keywords": ["Web of Science", "WoS", "SCI", "SSCI"],
+      "fact": "Clarivate 的论文索引库，覆盖 1900 年至今的期刊论文、作者与机构署名，可据作者邮箱域名推断单位变动。",
+      "whyItMatters": "做学者层面面板时的常用底表：能拿到作者—机构—年份三元组。",
+      "caveat": "只收被索引期刊；人文社科与会议论文覆盖不全，机构署名规范化程度因年代而异。",
+      "source": "Clarivate, Web of Science Core Collection 官方说明（clarivate.com）"
+    },
+    {
+      "id": "DS-RELSCI",
+      "kind": "dataset",
+      "label": "Reliance on Science（专利—论文引用）",
+      "keywords": ["Reliance on Science", "专利—论文", "patent-paper", "Marx"],
+      "fact": "把美国专利的首页引用与正文引用匹配到论文，形成专利对科学文献的引用链。",
+      "whyItMatters": "度量科学知识的商业溢出时，它比单纯的专利引用计数更接近「真的用了这篇论文」。",
+      "caveat": "只覆盖美国专利；正文引用的抽取依赖文本质量，早期年份缺失较多。",
+      "source": "Marx, M. & Fuegi, A. (2020). Reliance on Science: Worldwide Front-Page Patent Citations to Scientific Articles. Strategic Management Journal."
+    },
+    {
+      "id": "DS-AUTM",
+      "kind": "dataset",
+      "label": "AUTM 技术转移调查",
+      "keywords": ["AUTM", "技术转移办公室", "technology transfer office", "TTO"],
+      "fact": "美国大学技术经理人协会的年度调查，记录各校许可数量、许可收入与成立衍生企业数。",
+      "whyItMatters": "研究大学商业化时最直接的机构层面结果变量来源。",
+      "caveat": "自报数据，口径逐年微调；只覆盖会员机构，小规模院校缺失。",
+      "source": "AUTM, Licensing Activity Survey（年度报告，autm.net）"
+    },
+    {
+      "id": "DS-COMPUSTAT",
+      "kind": "dataset",
+      "label": "Compustat / CRSP",
+      "keywords": ["Compustat", "CRSP"],
+      "fact": "美国上市公司财务报表与股价数据库，常用于构造企业层面研发、专利与市值变量。",
+      "whyItMatters": "企业侧结果变量的标准来源，可与专利数据按公司名或股票代码合并。",
+      "caveat": "只覆盖上市公司；私有企业与子公司层面的创新活动看不到。",
+      "source": "S&P Global Market Intelligence, Compustat / CRSP 数据库文档"
+    },
+    {
+      "id": "DS-CNRDS",
+      "kind": "dataset",
+      "label": "CNRDS / CSMAR 等中文数据库",
+      "keywords": ["CNRDS", "CSMAR", "Wind", "国泰安"],
+      "fact": "中文文献常用的企业与市场数据库，覆盖 A 股上市公司财务、专利、股权与治理变量。",
+      "whyItMatters": "做中国情境复制研究时的首选底表，字段口径与 Compustat 不完全对应。",
+      "caveat": "专利引用信息弱于美国数据；上市公司样本无法代表全部企业。",
+      "source": "CNRDS 与 CSMAR 数据库官方说明（cnrds.com / gtadata.com）"
+    },
+    {
+      "id": "DS-PATENT",
+      "kind": "dataset",
+      "label": "专利数据库（USPTO / EPO / CNIPA）",
+      "keywords": ["USPTO", "EPO", "CNIPA", "专利数据库", "patent database"],
+      "fact": "专利著录、引用与被引用信息，可用来构造创新数量、质量与知识流动变量。",
+      "whyItMatters": "创新经济学的核心结果变量几乎都从这里来。",
+      "caveat": "引用是审查员与申请人共同留下的，含策略性引用；跨局口径不可直接比较。",
+      "source": "USPTO Patent Full-Text Database；EPO PATSTAT；CNIPA 专利检索与分析系统"
+    },
+    {
+      "id": "INST-BAYHDOLE",
+      "kind": "institution",
+      "label": "Bayh-Dole 法案（1980）",
+      "keywords": ["Bayh-Dole", "拜杜", "Bayh Dole"],
+      "fact": "允许受联邦资助的研究机构保留发明所有权，并负有推进商业化的义务，是美国大学技术转移制度的起点。",
+      "whyItMatters": "讨论大学商业化时，它常常是制度断点的来源，也是 DID 设计的天然处理。",
+      "caveat": "法案前后的变化与同期其他政策（如专利法改革）纠缠，单独归因需谨慎。",
+      "source": "Bayh-Dole Act, Pub. L. 96-517 (1980)，编纂于 35 U.S.C. §§200–212"
+    },
+    {
+      "id": "INST-TENURE",
+      "kind": "institution",
+      "label": "终身教职与晋升制度",
+      "keywords": ["tenure", "终身教职", "晋升", "promotion"],
+      "fact": "研究型大学的晋升评价以论文发表为主，商业化活动在多数院系不计入或低权重计入晋升。",
+      "whyItMatters": "解释了为什么学者的商业化倾向会随所在院系的评价口径而变。",
+      "caveat": "各校、各院系差异极大，用统一假设会误判激励强度。",
+      "source": "American Association of University Professors (AAUP), 终身教职制度说明"
+    },
+    {
+      "id": "INST-INDIRECT",
+      "kind": "institution",
+      "label": "科研经费的间接成本分摊",
+      "keywords": ["indirect cost", "间接成本", "overhead", "科研经费"],
+      "fact": "联邦资助按比例向机构支付间接成本，机构可自主支配部分，形成对招聘与平台建设的资金。",
+      "whyItMatters": "把「区位效应」落到可观测的机构资源上，而不只是地理 proximity。",
+      "caveat": "分摊比例按协商确定，机构间不可比；数据不公开。",
+      "source": "OMB Uniform Guidance, 2 CFR Part 200（间接成本分摊规则）"
+    },
+    {
+      "id": "INST-PEERREVIEW",
+      "kind": "institution",
+      "label": "同行评审与工作论文流通",
+      "keywords": ["peer review", "同行评审", "working paper", "工作论文", "NBER"],
+      "fact": "经济学以工作论文先行流通、期刊评审滞后的方式运作，同一篇论文可能同时存在多个版本。",
+      "whyItMatters": "评级时必须区分「已发表」与「已流通工作论文」，后者未经完整同行审查。",
+      "caveat": "顶刊工作论文系列的流通本身带有筛选，不能等同于未经审查。",
+      "source": "Nature / Elsevier 同行评审流程说明；NBER Working Paper Series 说明"
+    },
+    {
+      "id": "INST-TTO",
+      "kind": "institution",
+      "label": "大学技术转移办公室（TTO）",
+      "keywords": ["technology transfer office", "TTO", "技术转移办公室", "许可办公室"],
+      "fact": "负责发明披露、专利申请与许可谈判的校内机构，其能力差异本身会改变商业化产出。",
+      "whyItMatters": "「大学效应」的一部分可能来自 TTO 的专业化程度，而非地理或学术环境。",
+      "caveat": "TTO 质量难以直接度量，常用许可收入或人员规模作代理，内生性明显。",
+      "source": "AUTM, Technology Transfer Office 职能说明"
+    },
+    {
+      "id": "INST-SABBATICAL",
+      "kind": "institution",
+      "label": "学术休假与访问制度",
+      "keywords": ["sabbatical", "学术休假", "访问学者", "visiting"],
+      "fact": "允许教师带薪离校半年至一年，是短期的、可逆的机构转换。",
+      "whyItMatters": "可作为「流动但未换单位」的对照，帮助区分知识移动与人事关系变动。",
+      "caveat": "休假期间的产出归属常按署名机构计，度量时容易错配。",
+      "source": "AAUP, 学术休假（sabbatical）制度说明"
+    }
+  ]
+}

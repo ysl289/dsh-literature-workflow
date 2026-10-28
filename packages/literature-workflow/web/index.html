@@ -1,0 +1,877 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>文献积累 · 工作流</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f3ecd9;
+      --paper-light: #fbf7eb;
+      --paper-deep: #e7dbc0;
+      --ink: #342e24;
+      --muted: #716b5b;
+      --green: #254b3b;
+      --green-dark: #1c392f;
+      --green-soft: #e3eadb;
+      --brown: #65513a;
+      --brass: #b08a4e;
+      --line: #d5c8aa;
+      --red: #914b38;
+      font: 15px/1.55 "Source Han Sans SC", "Microsoft YaHei", "PingFang SC", system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse at 12% 0%, #fff9e8 0, transparent 36rem),
+        repeating-linear-gradient(0deg, #66502b08 0, #66502b08 1px, transparent 1px, transparent 5px),
+        var(--paper);
+    }
+    button, input, textarea, select { font: inherit; }
+    button {
+      border: 1px solid #b8aa8a;
+      color: var(--green-dark);
+      background: var(--paper-light);
+      border-radius: 7px;
+      padding: 8px 13px;
+      cursor: pointer;
+      box-shadow: 0 2px 0 #68573b17;
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+    }
+    button:hover { background: #fffdf6; border-color: var(--brass); transform: translateY(-1px); }
+    button:active { transform: translateY(0); }
+    button:disabled { opacity: .55; cursor: wait; transform: none; }
+    button.primary { background: var(--green); color: #fff9e9; border-color: var(--green-dark); }
+    button.primary:hover { background: #315d48; }
+    :focus-visible { outline: 3px solid #c9964e; outline-offset: 2px; }
+    a { color: #28573f; }
+    .shell { max-width: 1580px; margin: 0 auto; padding: 0 34px 52px; }
+    header {
+      min-height: 86px;
+      padding: 16px max(34px, calc((100vw - 1580px) / 2 + 34px));
+      background: #203d32;
+      color: #fbf3dd;
+      border-bottom: 4px solid var(--brass);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .brandSeal {
+      width: 46px; height: 46px; border: 1px solid #d6bb7e; color: #edcf90;
+      display: grid; place-items: center; border-radius: 50%; font: 24px/1 Georgia, serif;
+      box-shadow: inset 0 0 0 3px #203d32, inset 0 0 0 4px #d6bb7e;
+    }
+    header strong { display: block; font: 600 22px/1.25 "Source Han Serif SC", "Songti SC", Georgia, serif; letter-spacing: 2px; }
+    header small { display: block; color: #d1c5a5; margin-top: 4px; font-size: 12px; }
+    header button { color: var(--paper-light); background: #315446; border-color: #a68a59; }
+    header button:hover { background: #406952; }
+    .headerRight { display: flex; align-items: center; gap: 15px; }
+    #health { color: #d7cfb8; white-space: nowrap; font-size: 12px; }
+    .statusDot { width: 8px; height: 8px; border-radius: 50%; background: #c5ad75; display: inline-block; margin-right: 6px; }
+    .statusDot.ok { background: #9ec38b; box-shadow: 0 0 0 3px #9ec38b25; }
+    .intro { padding: 30px 2px 15px; display: flex; align-items: end; justify-content: space-between; gap: 20px; }
+    .eyebrow { color: #806c47; letter-spacing: 2px; font-size: 10px; text-transform: uppercase; margin-bottom: 5px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { font: 600 clamp(25px, 3vw, 36px)/1.25 "Source Han Serif SC", "Songti SC", Georgia, serif; color: #2b3e31; margin-bottom: 8px; }
+    h2 { font: 600 18px/1.35 "Source Han Serif SC", "Songti SC", Georgia, serif; color: #334538; margin-bottom: 7px; }
+    h3 { margin: 0; }
+    p { color: var(--muted); margin-bottom: 8px; }
+    .intro p { max-width: 740px; margin-bottom: 0; }
+    .miniNote { color: #75694f; font-size: 12px; max-width: 360px; text-align: right; }
+    .panel {
+      background: #fbf7ebed;
+      border: 1px solid #cabc9b;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px #47361d0d, inset 0 0 0 4px #f4eedf;
+      padding: 20px;
+      margin: 13px 0 20px;
+    }
+    .panelHead { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 12px; }
+    .panelHead h2 { margin: 0; }
+    #pipelineTitle { min-width: 140px; white-space: nowrap; }
+    .templatebar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: end; }
+    .templatebar select { max-width: 240px; width: auto; min-width: 155px; padding: 7px 9px; }
+    .templatebar button { font-size: 12px; padding: 7px 10px; }
+    .selectField { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; }
+    .selectField select { width: auto; }
+    .flowline {
+      min-height: 272px; padding: 14px 9px 17px;
+      display: flex; align-items: stretch; overflow-x: auto; overflow-y: hidden;
+      border: 1px dashed #b5a77f; border-radius: 8px;
+      background: #f1ead7;
+      scrollbar-color: #a58d5e #e7dfcb; scrollbar-width: thin;
+    }
+    .flowline.dragover { background: #e5ead9; border-color: var(--green); }
+    .flowline:empty { justify-content: center; align-items: center; }
+    .flowline:empty::before { content: "把下方的流程卡拖到这里，按顺序排好"; color: #82775d; }
+    .flowcard {
+      width: 200px; min-width: 200px; position: relative; display: flex; flex-direction: column;
+      border: 2px solid #806b49; border-radius: 8px; background: #fffaf0; overflow: hidden;
+      box-shadow: 0 3px 0 #6c5936, 0 8px 12px #473a240e; cursor: grab; user-select: none;
+    }
+    .flowcard:active { cursor: grabbing; }
+    .flowcard.dragover { outline: 3px solid #b08a4e; outline-offset: -4px; }
+    .cardArt {
+      height: 122px; flex: 0 0 122px;
+      background-color: #d9e1cf;
+      background-image: var(--atlas-image), radial-gradient(circle at 74% 28%, #f5da91 0 8%, transparent 9%), linear-gradient(145deg, #94a982, #d5bb7d 58%, #768e70);
+      background-size: 400% 300%, auto, auto;
+      background-position: var(--sprite-x, 0%) var(--sprite-y, 0%), center, center;
+      background-repeat: no-repeat;
+      border-bottom: 1px solid #9b8252;
+      position: relative;
+    }
+    .cardArt::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(180deg, #152a1a0a 42%, #1d2d225c 100%);
+      pointer-events: none;
+    }
+    .cardSeal {
+      position: absolute; z-index: 1; right: 7px; top: 7px; width: 25px; height: 25px;
+      display: grid; place-items: center; border-radius: 50%; color: #f8efd8;
+      background: #284c3bcc; border: 1px solid #e6d39f; font: 11px/1 Georgia, serif;
+    }
+    .flowcardBody { padding: 8px 10px 9px; min-height: 108px; display: flex; flex-direction: column; }
+    .flowTitleRow { display: flex; align-items: baseline; gap: 6px; }
+    .order { color: #9a7948; font: 600 11px/1 Georgia, serif; min-width: 19px; }
+    .flowcard strong { color: #302e25; font: 600 14px/1.35 "Source Han Serif SC", "Songti SC", Georgia, serif; }
+    .flowcard .desc { color: #686253; font-size: 11px; line-height: 1.4; margin-top: 4px; height: 31px; overflow: hidden; }
+    .io { color: #847653; font-size: 9px; line-height: 1.25; margin-top: auto; padding-top: 4px; }
+    .cardControls { display: flex; justify-content: space-between; gap: 4px; margin-top: 5px; }
+    .cardControls button { box-shadow: none; border: 0; background: #eee6d3; padding: 2px 6px; font-size: 11px; line-height: 1.5; }
+    .cardControls button:hover { background: #dfe6d5; }
+    .cardControls .remove { color: #854b3c; }
+    .connector { min-width: 31px; display: grid; place-items: center; color: #8c7449; font-size: 21px; }
+    .flowvalidation { min-height: 24px; margin: 9px 2px 0; font-size: 12px; color: #6e644f; white-space: pre-line; }
+    .flowvalidation.error { color: var(--red); }
+    .flowvalidation.valid { color: #386448; }
+    .flowHelp { font-size: 11px; color: #81775f; margin: 4px 2px 0; }
+    .shortcutRow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .shortcutRow button { font-size: 12px; padding: 6px 10px; }
+    .tabs { display: flex; gap: 8px; margin: 24px 0 0; border-bottom: 1px solid #c8b995; }
+    .tabs button { background: transparent; border: 1px solid transparent; border-bottom: 0; border-radius: 7px 7px 0 0; box-shadow: none; padding: 9px 16px; }
+    .tabs button.active { color: #f8f1dd; background: var(--green); border-color: var(--green-dark); }
+    .workcard { background: #fbf7eb; border: 1px solid #cabc9b; border-radius: 0 9px 9px 9px; padding: 19px; margin-bottom: 22px; }
+    .drop {
+      min-height: 156px; border: 1px dashed #9b916e; border-radius: 8px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px;
+      text-align: center; background: #f4efdf; padding: 20px;
+    }
+    .drop.drag { background: #e2ead9; border-color: var(--green); }
+    .drop strong { font: 600 19px/1.35 "Source Han Serif SC", "Songti SC", Georgia, serif; color: #3f4b38; }
+    .muted { color: #7c745f; font-size: 12px; }
+    .row { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .field { display: grid; gap: 5px; margin: 0 0 12px; }
+    .field span { color: #716b5b; font-size: 12px; }
+    input[type=text], input[type=password], input[type=number], textarea, select {
+      color: var(--ink); border: 1px solid #c8bb9a; border-radius: 6px; background: #fffdf6; padding: 9px 10px;
+    }
+    input[type=number] { width: 100%; }
+    textarea { width: 100%; min-height: 105px; resize: vertical; }
+    .fieldRow { display: flex; align-items: end; flex-wrap: wrap; gap: 12px; }
+    .fieldRow .field { width: 130px; }
+    .queueHead { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 22px 0 9px; }
+    .queueHead h2 { margin: 0; }
+    .tableWrap { overflow-x: auto; background: #fbf7eb; border: 1px solid #cabc9b; border-radius: 8px; padding: 6px 12px; }
+    table { border-collapse: collapse; width: 100%; text-align: left; font-size: 13px; }
+    th { color: #7d7155; font-size: 11px; font-weight: 600; padding: 9px; white-space: nowrap; }
+    td { padding: 12px 9px; border-top: 1px solid #e0d6bd; vertical-align: top; }
+    td:first-child { min-width: 240px; max-width: 410px; overflow-wrap: anywhere; }
+    .badge { display: inline-block; background: #e6eadc; color: #456344; padding: 3px 8px; border-radius: 20px; font-size: 11px; }
+    .badge.error { background: #f1dfd5; color: #8c4d3a; }
+    .errorText { font-size: 11px; color: #9a503b; max-width: 340px; overflow-wrap: anywhere; margin: 6px 0 0; }
+    .links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 5px; }
+    .links a { font-size: 12px; }
+    #agentHint { margin: 9px 2px; }
+    .sectionRule { height: 1px; background: #ddd1b5; margin: 18px 0; }
+    dialog { width: min(650px, 92vw); max-height: 88vh; overflow: auto; padding: 26px; color: var(--ink); background: #fbf7eb; border: 1px solid #b8a77f; border-radius: 11px; box-shadow: 0 20px 70px #182a2255; }
+    dialog::backdrop { background: #1b2923a6; }
+    .dialogHead { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .dialogHead h2 { margin: 0; }
+    #toast {
+      display: none; position: fixed; z-index: 20; bottom: 22px; left: 50%; transform: translateX(-50%);
+      color: #fff7e4; background: #233f32; border: 1px solid #b18c50; border-radius: 8px;
+      padding: 11px 19px; max-width: 90vw; box-shadow: 0 7px 24px #182a2240;
+    }
+    [hidden] { display: none !important; }
+    @media (max-width: 760px) {
+      .shell { padding: 0 14px 34px; }
+      header { padding: 14px; align-items: flex-start; }
+      header strong { font-size: 19px; }
+      .brandSeal { width: 38px; height: 38px; }
+      .headerRight { align-items: end; flex-direction: column-reverse; gap: 6px; }
+      #health { font-size: 10px; }
+      .intro { padding-top: 23px; display: block; }
+      .miniNote { text-align: left; margin-top: 10px; }
+      .panel { padding: 13px; }
+      .panelHead { align-items: flex-start; flex-direction: column; }
+      .templatebar { justify-content: flex-start; }
+      .flowline { min-height: 253px; }
+      .flowcard { width: 183px; min-width: 183px; }
+      .cardArt { height: 110px; flex-basis: 110px; }
+      .connector { min-width: 24px; }
+      .fieldRow .field { flex: 1 1 95px; }
+      .workcard { padding: 13px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+    /* Harness-inspired neutral surface: illustration remains vivid, controls stay quiet. */
+    :root {
+      --paper:#f5f6f8; --paper-light:#fff; --paper-deep:#eef0f3; --ink:#20242b; --muted:#69717d;
+      --green:#315fce; --green-dark:#244aa8; --green-soft:#e9efff; --brown:#626b78; --brass:#8fa6dc;
+      --line:#e1e4e9; background:#f5f6f8; color:#20242b;
+    }
+    body { background:#f5f6f8; }
+    header {
+      min-height:72px; padding-top:12px; padding-bottom:12px; color:#20242b;
+      background:#fff; border-bottom:1px solid #e2e5ea;
+    }
+    header small { color:#727b88; }
+    header button { color:#344052; background:#fff; border-color:#d9dee7; }
+    header button:hover { color:#244aa8; background:#f8faff; border-color:#b7c7ed; }
+    .brandSeal {
+      width:40px; height:40px; border:1px solid #d8e0f1; border-radius:11px; color:#315fce;
+      background:#eef3ff; box-shadow:none; font-size:20px;
+    }
+    header strong { color:#20242b; letter-spacing:.5px; font:600 20px/1.25 "Microsoft YaHei",system-ui,sans-serif; }
+    #health { color:#69717d; }
+    .intro { padding-top:26px; }
+    .eyebrow { color:#697586; letter-spacing:1.1px; }
+    h1,h2 { color:#232833; font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif; }
+    h1 { font-weight:600; }
+    .miniNote { color:#727b88; }
+    .panel {
+      background:#fff; border:1px solid #e1e4e9; border-radius:11px;
+      box-shadow:0 1px 3px #1b27330a; padding:19px;
+    }
+    .flowline { background:#f8f9fb; border:1px dashed #cbd1db; border-radius:9px; }
+    .flowline.dragover { background:#f0f4ff; border-color:#6e8fe0; }
+    .flowline:empty::before { color:#7c8491; }
+    .flowcard {
+      border:1px solid #d6dbe4; border-radius:9px; background:#fff;
+      box-shadow:0 1px 3px #1b27330d; cursor:grab;
+    }
+    .flowcard.dragover { outline:2px solid #6d8ee0; }
+    .flowcard .desc { color:#69717d; }
+    .flowcard strong { color:#20242b; font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif; }
+    .order { color:#5b76bb; }
+    .io { color:#7b8491; }
+    .cardArt {
+      background-color:#fff;
+      background-image:var(--atlas-image);
+      border-bottom:1px solid #e1e4e9;
+    }
+    .cardArt::after { background:none; }
+    .cardSeal {
+      color:#355792; background:#ffffffd9; border:1px solid #ffffff;
+      box-shadow:0 1px 3px #20242b22; font:10px/1 "Microsoft YaHei",system-ui,sans-serif;
+    }
+    .cardControls button { color:#4c586b; background:#f2f4f7; }
+    .cardControls button:hover { color:#244aa8; background:#eaf0ff; }
+    .cardControls .remove { color:#8a5555; }
+    .connector { color:#8093ba; }
+    .flowvalidation { color:#69717d; }
+    .flowvalidation.valid { color:#397453; }
+    .flowvalidation.error { color:#a24646; }
+    .candidatezone {
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(205px,1fr)); gap:14px;
+      align-items:stretch; padding:2px;
+    }
+    .candidateCard { width:auto; min-width:0; }
+    .candidateCard .flowcardBody { min-height:112px; }
+    .candidatezone.dragover { background:#f0f4ff; border-radius:9px; }
+    button { color:#344052; background:#fff; border-color:#d7dce5; box-shadow:0 1px 2px #18212b08; }
+    button:hover { color:#244aa8; background:#f8faff; border-color:#b7c7ed; }
+    button.primary { color:#fff; background:#315fce; border-color:#315fce; }
+    button.primary:hover { background:#244fb8; }
+    .tabs { border-color:#e0e4ea; }
+    .tabs button { color:#596270; }
+    .tabs button.active { color:#244aa8; background:#edf2ff; border-color:#d9e3fb; }
+    .workcard { background:#fff; border-color:#e1e4e9; border-radius:0 9px 9px 9px; }
+    .drop { background:#f8f9fb; border-color:#cbd1db; }
+    .drop.drag { background:#f0f4ff; border-color:#6d8ee0; }
+    .drop strong { color:#343b47; font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif; }
+    input[type=text],input[type=password],input[type=number],textarea,select {
+      border-color:#d7dce5; background:#fff; color:#20242b;
+    }
+    input:focus,textarea:focus,select:focus { border-color:#6d8ee0; outline-color:#6d8ee0; }
+    .tableWrap { background:#fff; border-color:#e1e4e9; }
+    th { color:#697586; }
+    td { border-color:#eceef2; }
+    .badge { background:#edf2ff; color:#345caf; }
+    .badge.error { background:#f9eaea; color:#934a4a; }
+    .errorText { color:#a24646; }
+    .links a { color:#315fce; }
+    dialog { color:#20242b; background:#fff; border-color:#d7dce5; border-radius:12px; }
+    dialog::backdrop { background:#1a24324d; }
+    .sectionRule { background:#e7e9ee; }
+    .muted,.field span { color:#69717d; }
+    #toast { color:#fff; background:#273243; border-color:#7588ad; }
+    @media (prefers-color-scheme: dark) {
+      :root { --paper:#171a20; --paper-light:#20242c; --ink:#e6e9ef; --muted:#a2aab7; background:#171a20; color:#e6e9ef; }
+      body { background:#171a20; }
+      header,.panel,.workcard,.tableWrap,dialog { background:#20242c; color:#e6e9ef; border-color:#353b46; }
+      header strong,h1,h2,.flowcard strong { color:#e8ebf2; }
+      header small,#health,.muted,.field span,.miniNote,.eyebrow { color:#a3adbb; }
+      .brandSeal { background:#27334b; color:#a9c0ff; border-color:#465575; }
+      .flowline,.drop { background:#191d24; border-color:#424a58; }
+      .flowline.dragover,.drop.drag,.candidatezone.dragover { background:#202b3e; border-color:#7898e5; }
+      .flowcard { background:#242a33; border-color:#424a56; box-shadow:0 1px 3px #0004; }
+      .flowcard .desc,.io,.flowvalidation,.flowHelp { color:#a9b1bd; }
+      .cardSeal { background:#202833dd; color:#c0d1ff; border-color:#56627a; }
+      .cardControls button { background:#303743; color:#c3cad4; }
+      .connector { color:#8298c9; }
+      .tabs { border-color:#3b424e; }
+      .tabs button { color:#b5bdca; }
+      .tabs button.active { color:#c7d5ff; background:#293750; border-color:#3d5279; }
+      input[type=text],input[type=password],input[type=number],textarea,select { background:#191d24; border-color:#444c59; color:#e6e9ef; }
+      .tableWrap th { color:#a3adbb; }
+      td { border-color:#353b46; }
+      .badge { background:#293750; color:#c3d2ff; }
+      .badge.error { background:#472e32; color:#efb6b6; }
+      .sectionRule { background:#383e49; }
+      button { color:#d1d7e1; background:#252b35; border-color:#434b58; }
+      button:hover { color:#c7d5ff; background:#293345; border-color:#637bab; }
+      button.primary { color:#fff; background:#4269c5; border-color:#4269c5; }
+      .cardArt { background-color:#384338; }
+      .cardArt::after { background:linear-gradient(180deg,#152a1a00 50%,#10160e38 100%); }
+      #toast { background:#101820; }
+    }
+    /* Harness supplies these aliases at the app root; fallbacks keep a useful preview outside Harness. */
+    :root {
+      --paper:var(--dsw-alias-bg-base,#f5f6f8);
+      --paper-light:var(--dsw-alias-bg-layer-1,#fff);
+      --paper-deep:var(--dsw-alias-bg-layer-2,#f8f9fb);
+      --ink:var(--dsw-alias-label-primary,#20242b);
+      --muted:var(--dsw-alias-label-secondary,#69717d);
+      --green:var(--dsw-alias-state-business-primary,#315fce);
+      --green-dark:var(--dsw-alias-state-business-primary,#244aa8);
+      --green-soft:var(--dsw-alias-interactive-bg-hover,#edf2ff);
+      --line:var(--dsw-alias-border-l1,#e1e4e9);
+      --ui-tertiary:var(--dsw-alias-label-tertiary,#9098a5);
+      --ui-module:var(--dsw-alias-bg-module-platform,#fff);
+      --ui-border-2:var(--dsw-alias-border-l2,#d6dbe4);
+      --ui-hover:var(--dsw-alias-interactive-bg-hover,#f0f4ff);
+      --ui-button:var(--dsw-alias-button-primary-fill,var(--green));
+      --ui-button-hover:var(--dsw-alias-button-primary-hover,#244fb8);
+      --ui-radius-sm:var(--dsw-radius-sm,8px);
+      --ui-radius-md:var(--dsw-radius-md,12px);
+    }
+    body { background:var(--paper); color:var(--ink); }
+    header { color:var(--ink); background:var(--ui-module); border-color:var(--line); }
+    header strong,h1,h2,.flowcard strong { color:var(--ink); }
+    header small,#health,.muted,.field span,.miniNote,.eyebrow { color:var(--muted); }
+    .brandSeal { color:var(--green); background:var(--green-soft); border-color:var(--line); }
+    .panel,.workcard,.tableWrap,dialog { color:var(--ink); background:var(--ui-module); border-color:var(--line); border-radius:var(--ui-radius-md); }
+    .flowline,.drop { color:var(--ink); background:var(--paper-deep); border-color:var(--ui-border-2); border-radius:var(--ui-radius-sm); }
+    .flowcard { color:var(--ink); background:var(--paper-light); border-color:var(--ui-border-2); border-radius:var(--ui-radius-sm); }
+    .flowcard .desc,.io,.flowvalidation,.flowHelp { color:var(--muted); }
+    .cardSeal { color:var(--green); background:var(--ui-module); border-color:var(--line); }
+    .cardControls button { color:var(--muted); background:var(--paper-deep); }
+    .cardControls button:hover,button:hover { background:var(--ui-hover); }
+    .connector,.order { color:var(--green); }
+    .tabs { border-color:var(--line); }
+    .tabs button { color:var(--muted); }
+    .tabs button.active { color:var(--green); background:var(--green-soft); border-color:var(--line); }
+    .drop strong { color:var(--ink); }
+    input[type=text],input[type=password],input[type=number],textarea,select { color:var(--ink); background:var(--paper-light); border-color:var(--ui-border-2); border-radius:var(--ui-radius-sm); }
+    .tableWrap th { color:var(--muted); }
+    td { border-color:var(--line); }
+    .badge { color:var(--green); background:var(--green-soft); }
+    .links a { color:var(--green); }
+    button { color:var(--ink); background:var(--paper-light); border-color:var(--ui-border-2); border-radius:var(--ui-radius-sm); }
+    button.primary { color:#fff; background:var(--ui-button); border-color:var(--ui-button); }
+    button.primary:hover { background:var(--ui-button-hover); }
+    dialog { background:var(--ui-module); }
+    .sectionRule { background:var(--line); }
+    #toast { color:#fff; background:var(--ui-button); border-color:var(--line); }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper:var(--dsw-alias-bg-base,#171a20);
+        --paper-light:var(--dsw-alias-bg-layer-1,#20242c);
+        --paper-deep:var(--dsw-alias-bg-layer-2,#191d24);
+        --ink:var(--dsw-alias-label-primary,#e6e9ef);
+        --muted:var(--dsw-alias-label-secondary,#a2aab7);
+        --line:var(--dsw-alias-border-l1,#353b46);
+        --ui-tertiary:var(--dsw-alias-label-tertiary,#858e9d);
+        --ui-module:var(--dsw-alias-bg-module-platform,#20242c);
+        --ui-border-2:var(--dsw-alias-border-l2,#424a56);
+        --ui-hover:var(--dsw-alias-interactive-bg-hover,#293345);
+        --green-soft:var(--dsw-alias-interactive-bg-hover,#293750);
+        --ui-button:var(--dsw-alias-button-primary-fill,#4269c5);
+        --ui-button-hover:var(--dsw-alias-button-primary-hover,#5079d9);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand"><span class="brandSeal" aria-hidden="true">文</span><div><strong>文献积累</strong><small>从发现一篇论文，到留下一份可复用的理解</small></div></div>
+    <div class="headerRight"><span id="health" class="muted">正在连接</span><button id="setup">连接与设置</button></div>
+  </header>
+  <main class="shell">
+    <section class="intro">
+      <div><div class="eyebrow">把每一步排成自己的方法</div><h1>让文献沿着你选好的路径前进。</h1><p>上方卡牌按从左到右的顺序执行。拖动可以换位，点选或从下方拖入可添加步骤；将卡片拖回候选区即可移除。</p></div>
+    </section>
+
+    <section class="panel" aria-labelledby="pipelineTitle">
+      <div class="panelHead">
+        <div><div class="eyebrow">我的工作流</div><h2 id="pipelineTitle">按顺序编排</h2></div>
+        <div class="templatebar">
+          <label class="selectField">输入类型
+            <select id="inputKind" aria-label="本次输入类型"><option value="pdf">PDF</option><option value="extract">已有 extract.json</option></select>
+          </label>
+          <select id="templates" aria-label="已保存模板"><option value="">选择模板</option></select>
+          <button id="saveTemplate" type="button">另存为模板</button>
+          <div class="shortcutRow"><button id="all" type="button">完整流程</button><button id="local" type="button">已有抽取结果快捷流程</button></div>
+        </div>
+      </div>
+      <div id="flow" class="flowline" role="list" aria-label="按执行顺序排列的流程卡"></div>
+      <div id="dependency" class="flowvalidation" role="status" aria-live="polite">正在检查流程依赖……</div>
+      <p class="flowHelp">可用卡片上的左右按钮微调，也可把焦点放在卡片上按 ← →；来源卡固定在第一步，上传与检索入口会互相替换。</p>
+      <div class="row" style="justify-content:space-between; border-top:1px solid #e7e9ee; padding-top:12px; margin-top:10px">
+        <label class="row" style="gap:7px;font-size:12px;color:#69717d"><input id="watch" type="checkbox"> 监听 input 文件夹 <span id="folder"></span></label>
+        <button id="saveSteps" type="button">保存为默认流程</button>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="candidateTitle">
+      <div class="panelHead"><div><div class="eyebrow">流程卡牌</div><h2 id="candidateTitle">候选步骤</h2></div><p class="muted">点击「加入」或拖到上方流水线。已使用的卡会从候选区暂时收起。</p></div>
+      <div id="candidates" class="candidatezone" role="list" aria-label="所有可选流程步骤"></div>
+    </section>
+
+    <div class="tabs" role="tablist" aria-label="文献来源">
+      <button type="button" role="tab" aria-selected="true" data-tab="import" class="active">导入已有论文</button>
+      <button type="button" role="tab" aria-selected="false" data-tab="search">按要求找论文</button>
+    </div>
+    <section id="import" class="workcard" role="tabpanel" aria-label="导入已有论文">
+      <div class="drop" id="drop">
+        <strong>把 PDF 或 extract.json 拖到这里</strong>
+        <span class="muted">也可用按钮选择文件；JSON 输入会按当前流程校验，不会替你改动排序。</span>
+        <button id="choose" type="button">选择文件</button><input id="files" type="file" accept=".pdf,.json" multiple hidden>
+      </div>
+      <div class="row" style="margin-top:15px"><button id="scan" type="button">处理 input 文件夹中的现有 PDF</button><span class="muted">安装时不会自动处理旧文件；启用监听后，新放入的 PDF 会按默认流程进入队列。</span></div>
+    </section>
+    <section id="search" class="workcard" role="tabpanel" aria-label="按要求找论文" hidden>
+      <label class="field"><span>文献要求</span><textarea id="query" placeholder="例如：2020年以来，研究大学技术转移与企业创新的实证论文，优先有公开数据，找5篇。"></textarea></label>
+      <div class="fieldRow">
+        <label class="field"><span>最多篇数</span><input id="limit" type="number" min="1" max="30" value="5"></label>
+        <label class="field"><span>起始年份（可选）</span><input id="from" type="number" min="1800" max="2100"></label>
+        <label class="field"><span>结束年份（可选）</span><input id="to" type="number" min="1800" max="2100"></label>
+        <button id="searchBtn" class="primary" type="button">检索并处理</button>
+      </div>
+        <p class="muted">「下载全文」卡负责获取可访问的 PDF；也可以移除后续卡片，只保留文献候选。</p>
+    </section>
+
+    <div class="queueHead"><h2>处理队列</h2><button id="refresh" type="button">刷新</button></div>
+    <div class="tableWrap"><table><thead><tr><th>论文 / 任务</th><th>进度</th><th>执行流程</th><th>操作</th></tr></thead><tbody id="jobs"><tr><td colspan="4">尚无任务。拖入第一篇论文即可开始。</td></tr></tbody></table></div>
+    <p id="agentHint" class="muted"></p>
+  </main>
+
+  <dialog id="settings">
+    <div class="dialogHead"><h2>连接与设置</h2><button id="closeSettings" type="button" aria-label="关闭设置">关闭</button></div>
+    <p class="muted">凭证只保存在本机插件状态目录，不会写入报告、发送到聊天或展示给模型。</p>
+    <div class="sectionRule"></div>
+    <div class="row"><strong>Zotero 本地连接</strong><span id="zstatus" class="badge"></span><button id="zconnect" type="button">授权 Zotero 写入</button></div>
+    <p class="muted">首次点击会由 Zotero 弹出授权窗口。需要持续自动入库时，可选择它提供的「始终允许」。</p>
+    <div class="sectionRule"></div>
+    <label class="field"><span>Blog 账号</span><input id="account" type="text" autocomplete="username" placeholder="留空保留现有账号"></label>
+    <label class="field"><span>Blog 密码</span><input id="password" type="password" autocomplete="current-password" placeholder="留空保留现有密码"></label>
+    <div class="row"><strong>腾讯文档</strong><span id="tstatus" class="badge"></span><button id="tconnect" type="button">打开官方登录授权</button></div>
+    <p class="muted">授权后仅允许在表尾追加完整21列，已有行与表结构保持原状。</p>
+    <div class="sectionRule"></div>
+    <label class="field"><span>发布方式</span><select id="publishMode"><option value="auto">完成后自动发布勾选的两处</option><option value="preview">仅生成发布预览</option><option value="local">只保留本地材料</option></select></label>
+    <p class="muted">分类优先参考 Zotero 全库已有目录；找不到合适分类时允许自动创建父分类和子分类。</p>
+    <div class="row"><button id="saveSettings" class="primary" type="button">保存</button></div>
+  </dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const token = location.hash.slice(1);
+    // Keep the fragment so a normal page refresh retains this local tab's access.
+    document.documentElement.style.setProperty('--atlas-image', `url("/assets/card-atlas.png?token=${encodeURIComponent(token)}")`);
+    let state;
+    let pipeline = [];
+    let dragStage = '';
+    let validationSeq = 0;
+    let pipelineDirty = false;
+    let lastCatalogKey = '';
+    const $ = id => document.getElementById(id);
+    const sourceIds = new Set(['import', 'search']);
+    const atlasOrder = ['import','search','download','prepare','classify','zotero','read','excel','design','lecture','blog','sheet'];
+    const defaultPipeline = ['import','prepare','classify','zotero','read','excel','design','lecture','blog','sheet'];
+    const localPipeline = ['import','excel','design','lecture','blog','sheet'];
+    const typeNames = {pdf:'PDF', candidates:'检索候选', document:'分页正文', classification:'分类结果', extract:'抽取结果', metadata:'元数据', zotero:'Zotero条目', excel:'Excel', html:'HTML', links:'发布链接', sheet:'腾讯文档'};
+    const statusNames = {queued:'排队中',awaiting_agent:'等待读取',preparing:'转换正文',awaiting_analysis:'阅读全文',analysis_ready:'分析完成',importing:'存入 Zotero',rendering:'生成材料',publishing:'发布中',completed:'已完成',needs_auth:'需要连接账号',needs_setup:'需要设置',needs_attention:'需要处理',ready_publish:'等待发布'};
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const nodeList = () => Array.isArray(state?.nodes) ? state.nodes : [];
+    const nodeById = id => nodeList().find(n => n.id === id);
+    const nodeName = id => nodeById(id)?.name || id;
+    function toast(message) {
+      $('toast').textContent = message;
+      $('toast').style.display = 'block';
+      clearTimeout(window.toastTimer);
+      window.toastTimer = setTimeout(() => $('toast').style.display = 'none', 6500);
+    }
+    async function api(url, options = {}) {
+      const r = await fetch(url, {...options, headers: {'X-Workflow-Token': token, ...options.headers}});
+      const x = await r.json();
+      if (!r.ok || x.error) throw Error(x.error || '请求失败');
+      return x;
+    }
+    async function invoke(action, payload = {}) {
+      return api('/api/invoke', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,payload})});
+    }
+    function orderedNodes() {
+      const rank = new Map(atlasOrder.map((id, i) => [id, i]));
+      return [...nodeList()].sort((a, b) => (rank.get(a.id) ?? 1000) - (rank.get(b.id) ?? 1000) || String(a.name).localeCompare(String(b.name), 'zh-CN'));
+    }
+    function spriteVars(id) {
+      const i = atlasOrder.indexOf(id);
+      if (i < 0) return '';
+      const col = i % 4, row = Math.floor(i / 4);
+      const x = col * (100 / 3), y = row * 50;
+      return `--sprite-x:${x}%;--sprite-y:${y}%`;
+    }
+    function kindLabel(node) {
+      if (node?.kind === 'source') return '入口';
+      if (node?.kind === 'publish') return '发布';
+      return '处理';
+    }
+    function ioText(node) {
+      if (!node) return '';
+      const ins = (node.inputs || []).map(x => typeNames[x] || x);
+      const outs = (node.outputs || []).map(x => typeNames[x] || x);
+      return `输入：${ins.length ? ins.join(' / ') : '原始材料'}　·　产物：${outs.length ? outs.join(' / ') : '—'}`;
+    }
+    function artMarkup(node) {
+      const id = esc(node.id);
+      return `<div class="cardArt" style="${spriteVars(node.id)}" role="img" aria-label="${esc(node.name)} 插画"><span class="cardSeal">${esc(kindLabel(node))}</span></div>`;
+    }
+    function cardMarkup(node, index, inFlow) {
+      const id = esc(node.id);
+      return `<article class="${inFlow ? 'flowcard' : 'flowcard candidateCard'}" role="listitem" draggable="true" tabindex="0" data-stage="${id}" aria-label="${inFlow ? `第${index+1}步 ${esc(node.name)}` : esc(node.name)}">${artMarkup(node)}<div class="flowcardBody"><div class="flowTitleRow">${inFlow ? `<span class="order">${String(index+1).padStart(2,'0')}</span>` : ''}<strong>${esc(node.name)}</strong></div><div class="desc">${esc(node.description || '此步骤尚未填写说明。')}</div><div class="io">${esc(ioText(node))}</div><div class="cardControls">${inFlow ? `<span><button type="button" data-move="-1" aria-label="将${esc(node.name)}上移">←</button> <button type="button" data-move="1" aria-label="将${esc(node.name)}下移">→</button></span><button class="remove" type="button" data-remove="${id}">移出</button>` : `<span class="muted">${esc(kindLabel(node))}</span><button type="button" data-add="${id}">加入 +</button>`}</div></div></article>`;
+    }
+    function renderFlow({resetScroll = false, scrollStage = ''} = {}) {
+      const flow = $('flow');
+      const previousScroll = flow.scrollLeft;
+      flow.innerHTML = pipeline.map((id, i) => {
+        const node = nodeById(id);
+        if (!node) return '';
+        return (i ? '<div class="connector" aria-hidden="true">›</div>' : '') + cardMarkup(node, i, true);
+      }).join('');
+      flow.querySelectorAll('.flowcard').forEach(card => bindFlowCard(card));
+      bindDropZone(flow, 'flow');
+      flow.scrollLeft = resetScroll ? 0 : previousScroll;
+      renderCandidates();
+      if (scrollStage) scrollFlowTo(scrollStage);
+      validateCurrent().catch(e => setValidation([e.message], false));
+    }
+    function scrollFlowTo(id) {
+      requestAnimationFrame(() => {
+        const flow = $('flow');
+        const card = [...flow.querySelectorAll('.flowcard')].find(x => x.dataset.stage === id);
+        if (!card) return;
+        const flowRect = flow.getBoundingClientRect();
+        const cardRect = card.getBoundingClientRect();
+        const cardLeft = flow.scrollLeft + cardRect.left - flowRect.left;
+        const target = cardLeft - Math.max(8, (flow.clientWidth - cardRect.width) / 2);
+        flow.scrollTo({left:Math.max(0, Math.min(flow.scrollWidth - flow.clientWidth, target)), behavior:'smooth'});
+      });
+    }
+    function renderCandidates() {
+      const candidateIds = orderedNodes().filter(n => !pipeline.includes(n.id));
+      $('candidates').innerHTML = candidateIds.map(n => cardMarkup(n, -1, false)).join('');
+      $('candidates').querySelectorAll('.candidateCard').forEach(card => {
+        card.addEventListener('dragstart', e => beginDrag(e, card.dataset.stage));
+        card.addEventListener('dragend', endDrag);
+      });
+      $('candidates').querySelectorAll('[data-add]').forEach(button => button.onclick = () => addStage(button.dataset.add));
+      bindDropZone($('candidates'), 'candidates');
+    }
+    function beginDrag(event, id) {
+      dragStage = id;
+      event.dataTransfer.effectAllowed = 'move';
+      event.dataTransfer.setData('text/plain', id);
+      event.currentTarget.classList.add('dragging');
+    }
+    function endDrag(event) {
+      event.currentTarget.classList.remove('dragging');
+      document.querySelectorAll('.dragover').forEach(x => x.classList.remove('dragover'));
+      dragStage = '';
+    }
+    function bindFlowCard(card) {
+      card.addEventListener('dragstart', e => beginDrag(e, card.dataset.stage));
+      card.addEventListener('dragend', endDrag);
+      card.addEventListener('keydown', e => {
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+          e.preventDefault();
+          const delta = e.key === 'ArrowLeft' ? -1 : 1;
+          moveStage(card.dataset.stage, delta);
+          requestAnimationFrame(() => $('flow').querySelector(`[data-stage="${CSS.escape(card.dataset.stage)}"]`)?.focus({preventScroll:true}));
+        }
+        if (e.key === 'Delete' || e.key === 'Backspace') { e.preventDefault(); removeStage(card.dataset.stage); }
+      });
+      card.addEventListener('dragover', e => {
+        if (!dragStage || dragStage === card.dataset.stage) return;
+        e.preventDefault(); card.classList.add('dragover');
+      });
+      card.addEventListener('dragleave', () => card.classList.remove('dragover'));
+      card.addEventListener('drop', e => {
+        if (!dragStage) return;
+        e.preventDefault(); e.stopPropagation(); card.classList.remove('dragover');
+        const rect = card.getBoundingClientRect();
+        const before = e.clientX < rect.left + rect.width / 2;
+        const targetIndex = pipeline.indexOf(card.dataset.stage) + (before ? 0 : 1);
+        const moving = dragStage; dragStage = '';
+        insertStage(moving, targetIndex);
+      });
+      card.querySelectorAll('[data-move]').forEach(button => button.onclick = () => moveStage(card.dataset.stage, Number(button.dataset.move)));
+      card.querySelector('[data-remove]')?.addEventListener('click', () => removeStage(card.dataset.stage));
+    }
+    function bindDropZone(zone, kind) {
+      if (zone.dataset.dropBound === 'true') return;
+      zone.dataset.dropBound = 'true';
+      zone.addEventListener('dragover', e => {
+        if (!dragStage) return;
+        e.preventDefault(); zone.classList.add('dragover');
+        e.dataTransfer.dropEffect = 'move';
+      });
+      zone.addEventListener('dragleave', e => { if (!zone.contains(e.relatedTarget)) zone.classList.remove('dragover'); });
+      zone.addEventListener('drop', e => {
+        if (!dragStage) return;
+        e.preventDefault(); zone.classList.remove('dragover');
+        const moving = dragStage; dragStage = '';
+        if (kind === 'candidates') removeStage(moving);
+        else insertStage(moving, pipeline.length);
+      });
+    }
+    function setSource(id) {
+      if (!sourceIds.has(id)) return;
+      pipeline = [id, ...pipeline.filter(x => !sourceIds.has(x) && x !== id)];
+      if (id === 'search' && !pipeline.includes('download')) pipeline.splice(1, 0, 'download');
+      if (id === 'import') pipeline = pipeline.filter(x => x !== 'download');
+      pipelineDirty = true;
+      activateTab(id, false);
+      renderFlow({scrollStage:id});
+    }
+    function addStage(id) {
+      if (!nodeById(id)) return;
+      if (sourceIds.has(id)) { setSource(id); return; }
+      if (pipeline.includes(id)) return;
+      pipeline = [...pipeline, id];
+      pipelineDirty = true;
+      renderFlow({scrollStage:id});
+    }
+    function insertStage(id, index) {
+      if (!nodeById(id)) return;
+      if (sourceIds.has(id)) { setSource(id); return; }
+      const old = pipeline.indexOf(id);
+      let next = pipeline.filter(x => x !== id);
+      if (old >= 0 && old < index) index--;
+      const minIndex = sourceIds.has(next[0]) ? 1 : 0;
+      index = Math.max(minIndex, Math.min(next.length, index));
+      next.splice(index, 0, id);
+      pipeline = next;
+      pipelineDirty = true;
+      renderFlow({scrollStage:id});
+    }
+    function moveStage(id, delta) {
+      const from = pipeline.indexOf(id);
+      if (from < 0 || sourceIds.has(id)) return;
+      const to = Math.max(sourceIds.has(pipeline[0]) ? 1 : 0, Math.min(pipeline.length - 1, from + delta));
+      if (to === from) return;
+      const next = [...pipeline]; next.splice(from, 1); next.splice(to, 0, id); pipeline = next;
+      pipelineDirty = true;
+      renderFlow({scrollStage:id});
+    }
+    function removeStage(id) {
+      pipeline = pipeline.filter(x => x !== id);
+      pipelineDirty = true;
+      renderFlow();
+    }
+    function activateTab(id, changeSource = true) {
+      const tab = id === 'search' ? 'search' : 'import';
+      document.querySelectorAll('[data-tab]').forEach(b => {
+        const active = b.dataset.tab === tab;
+        b.classList.toggle('active', active);
+        b.setAttribute('aria-selected', String(active));
+      });
+      $('import').hidden = tab !== 'import';
+      $('search').hidden = tab !== 'search';
+      if (changeSource) setSource(tab);
+    }
+    function setValidation(errors, valid) {
+      const el = $('dependency');
+      el.classList.toggle('error', !valid);
+      el.classList.toggle('valid', valid);
+      el.textContent = valid ? '流程检查通过。原文未报告的内容会注明待核对。' : (errors?.length ? errors.join('\n') : '流程还缺少输入来源或必要步骤。');
+    }
+    async function validateCurrent(kind = $('inputKind').value) {
+      const seq = ++validationSeq;
+      if (!state) return {valid:false, errors:['正在连接工作流']};
+      const result = await invoke('validate_pipeline', {stages:pipeline, inputKind:kind});
+      if (seq === validationSeq) setValidation(result.errors || [], !!result.valid);
+      return result;
+    }
+    async function requireValid(kind) {
+      const result = await validateCurrent(kind);
+      if (!result.valid) throw Error((result.errors || ['流程校验失败']).join('\n'));
+      return result;
+    }
+    function ensureWatchable() {
+      if ($('watch').checked && pipeline[0] === 'search') {
+        throw Error('input 文件夹只接收已有 PDF；请先切换到导入入口，或关闭文件夹监听后再保存检索流程。');
+      }
+    }
+    function populateTemplates() {
+      const templates = state?.templates || {};
+      const current = $('templates').value;
+      $('templates').innerHTML = '<option value="">选择模板</option>' + Object.keys(templates).sort((a,b)=>a.localeCompare(b,'zh-CN')).map(name => `<option value="${esc(name)}">${esc(name)}</option>`).join('');
+      if (Object.hasOwn(templates, current)) $('templates').value = current;
+    }
+    async function refresh(initial = false) {
+      try {
+        state = await api('/api/status');
+        const catalogKey = JSON.stringify(nodeList().map(n => [n.id,n.name,n.description,n.inputs,n.outputs,n.kind]));
+        let shouldRender = initial || catalogKey !== lastCatalogKey;
+        if (initial) {
+          pipeline = Array.isArray(state.config.stages) ? [...state.config.stages] : [...defaultPipeline];
+          $('watch').checked = state.config.watchInput;
+          $('publishMode').value = state.config.publishMode || 'preview';
+        } else {
+          const available = new Set(nodeList().map(n => n.id));
+          if (!pipelineDirty && JSON.stringify(state.config.stages || []) !== JSON.stringify(pipeline)) {
+            pipeline = [...(state.config.stages || [])];
+            shouldRender = true;
+          } else if (catalogKey !== lastCatalogKey) {
+            pipeline = pipeline.filter(x => available.has(x));
+          }
+        }
+        lastCatalogKey = catalogKey;
+        $('folder') && ($('folder').textContent = state.config.inputDir || '');
+        const zoteroVersion = state.zotero?.clientVersion || state.zotero?.version;
+        const zoteroConnected = !!(state.zotero?.ok || state.zotero?.serverId);
+        $('health').innerHTML = `<i class="statusDot ${zoteroConnected ? 'ok' : ''}"></i>Zotero ${esc(zoteroVersion || (zoteroConnected ? '已连接' : '未连接'))}`;
+        $('zstatus').textContent = state.zotero?.writeAuthorized ? '已授权' : zoteroConnected ? '已连接，等待授权' : '未连接';
+        $('tstatus').textContent = state.auth?.tencent ? '已有授权' : '待授权';
+        $('agentHint').textContent = state.agentAvailable ? '已连接 Harness 专用执行代理。失败任务会保留进度，补齐连接后可继续。' : '当前只有工具模式。可在 Harness 对话中调用 literature_workflow 来处理任务。';
+        populateTemplates();
+        renderJobs();
+        if (initial) activateTab(pipeline[0] === 'search' ? 'search' : 'import', false);
+        if (shouldRender) renderFlow({resetScroll:initial});
+      } catch (e) { toast(e.message); }
+    }
+    function renderJobs() {
+      $('jobs').innerHTML = state.jobs?.length ? state.jobs.map(j => `<tr><td><strong>${esc(j.title)}</strong><div class="muted">${esc(j.id.slice(0,25))}</div><div class="links">${Object.entries(j.artifacts||{}).filter(([k,v])=>typeof v==='string'&&/\.(html|xlsx|tsv|md|json)$/i.test(v)).map(([k,v])=>`<a href="/api/artifact?jobId=${encodeURIComponent(j.id)}&key=${encodeURIComponent(k)}&token=${encodeURIComponent(token)}" target="_blank" rel="noopener">${esc(k)}</a>`).join('')}</div></td><td><span class="badge ${j.status.startsWith('needs')?'error':''}">${esc(statusNames[j.status]||j.status)}</span>${j.error?`<p class="errorText">${esc(j.error)}</p>`:''}</td><td class="muted">${(j.stages||[]).map(x=>esc(nodeName(x))).join(' · ')}</td><td>${j.status==='completed'?'':`<button type="button" data-retry="${esc(j.id)}">继续</button>`}</td></tr>`).join('') : '<tr><td colspan="4">尚无任务。拖入第一篇论文即可开始。</td></tr>';
+    }
+    async function busy(button, fn) {
+      button.disabled = true;
+      try { await fn(); await refresh(); }
+      catch (e) { toast(e.message); }
+      finally { button.disabled = false; }
+    }
+    async function upload(files) {
+      if (!files?.length) return;
+      if (pipeline[0] === 'search') throw Error('检索入口请使用「按要求找论文」表单；导入现有文件请切换到导入入口。');
+      for (const file of files) {
+        const kind = /\.json$/i.test(file.name) ? 'extract' : 'pdf';
+        await requireValid(kind);
+        await api(`/api/upload?name=${encodeURIComponent(file.name)}&stages=${encodeURIComponent(JSON.stringify(pipeline))}`, {method:'POST',body:file});
+        toast(`已加入队列：${file.name}`);
+      }
+      await refresh();
+    }
+    $('choose').onclick = () => $('files').click();
+    $('files').onchange = e => upload(e.target.files).catch(e => toast(e.message));
+    $('drop').ondragover = e => { e.preventDefault(); $('drop').classList.add('drag'); };
+    $('drop').ondragleave = () => $('drop').classList.remove('drag');
+    $('drop').ondrop = e => { e.preventDefault(); $('drop').classList.remove('drag'); upload(e.dataTransfer.files).catch(e => toast(e.message)); };
+    document.querySelectorAll('[data-tab]').forEach(button => button.onclick = () => activateTab(button.dataset.tab, true));
+    $('inputKind').onchange = () => validateCurrent().catch(e => setValidation([e.message], false));
+    $('all').onclick = () => {
+      const known = new Set(nodeList().map(n=>n.id));
+      const base = defaultPipeline.filter(id=>known.has(id));
+      const extras = orderedNodes().map(n=>n.id).filter(id=>!base.includes(id)&&!sourceIds.has(id)&&id!=='download');
+      pipeline = [...base, ...extras];
+      pipelineDirty = true;
+      $('inputKind').value = 'pdf';
+      activateTab('import', false);
+      renderFlow();
+    };
+    $('local').onclick = () => {
+      const known = new Set(nodeList().map(n=>n.id));
+      pipeline = localPipeline.filter(id=>known.has(id));
+      pipelineDirty = true;
+      $('inputKind').value = 'extract';
+      activateTab('import', false);
+      renderFlow();
+    };
+    $('templates').onchange = () => {
+      const name = $('templates').value;
+      if (!name) return;
+      const stages = state.templates?.[name];
+      if (!Array.isArray(stages)) return;
+      pipeline = [...stages];
+      pipelineDirty = true;
+      activateTab(pipeline[0] === 'search' ? 'search' : 'import', false);
+      renderFlow();
+    };
+    $('saveTemplate').onclick = async () => {
+      const name = prompt('给当前流程模板起个名字：');
+      if (!name?.trim()) return;
+      await busy($('saveTemplate'), async () => {
+        await invoke('save_template', {name:name.trim(), stages:pipeline});
+        toast('流程模板已保存');
+      });
+    };
+    $('saveSteps').onclick = () => busy($('saveSteps'), async () => {
+      ensureWatchable();
+      await requireValid($('inputKind').value);
+      await invoke('settings', {stages:pipeline, watchInput:$('watch').checked});
+      pipelineDirty = false;
+      toast('默认流程已保存；之后放入 input 的论文会按此顺序执行');
+    });
+    $('scan').onclick = () => busy($('scan'), async () => {
+      if (pipeline[0] === 'search') throw Error('input 文件夹处理需要「导入已有论文」作为流程入口。');
+      await requireValid('pdf');
+      await invoke('settings', {stages:pipeline, watchInput:$('watch').checked});
+      pipelineDirty = false;
+      const result = await invoke('scan');
+      toast(`已检查 input 文件夹，发现${result.length}个任务`);
+    });
+    $('searchBtn').onclick = () => busy($('searchBtn'), async () => {
+      if (pipeline[0] !== 'search') throw Error('检索流程需要从「检索文献」卡开始，请切换来源入口。');
+      await requireValid('pdf');
+      await invoke('search_start', {query:$('query').value,limit:Number($('limit').value),fromYear:$('from').value||undefined,toYear:$('to').value||undefined,stages:pipeline});
+      toast('检索任务已加入队列');
+    });
+    $('jobs').onclick = e => { const button = e.target.closest('[data-retry]'); if (button) busy(button, () => invoke('retry', {jobId:button.dataset.retry})); };
+    $('refresh').onclick = () => refresh();
+    $('setup').onclick = () => $('settings').showModal();
+    $('closeSettings').onclick = () => $('settings').close();
+    $('zconnect').onclick = () => busy($('zconnect'), async () => { await invoke('authorize_zotero'); toast('Zotero授权已完成'); });
+    $('tconnect').onclick = () => busy($('tconnect'), async () => { await invoke('connect_tencent'); toast('已启动官方浏览器授权；完成后刷新连接状态'); });
+    $('saveSettings').onclick = () => busy($('saveSettings'), async () => {
+      ensureWatchable();
+      await invoke('save_credentials', {blogAccount:$('account').value,blogPassword:$('password').value});
+      await invoke('settings', {publishMode:$('publishMode').value,stages:pipeline,watchInput:$('watch').checked});
+      pipelineDirty = false;
+      $('password').value = '';
+      $('settings').close();
+      toast('设置已保存');
+    });
+    refresh(true);
+    setInterval(() => refresh(), 5000);
+  </script>
+</body>
+</html>
