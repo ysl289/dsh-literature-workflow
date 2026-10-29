@@ -71,6 +71,10 @@ dsh plugin --profile <profile> add ./packages/lit-learning
 没有全局 `dsh` 命令时，在 DSH 源码 checkout 里用 `pnpm dsh plugin --profile <profile> add <路径>`。
 也可以在 DSH 的 **插件 → 添加插件** 里粘贴三个目录的绝对路径。
 
+> `literature-workflow` 已内置 `assets/`（PDF→Markdown、Excel、HTML 演示页、卡片、发布脚本与模板），
+> **不需要另外准备原工作流目录**；`workflowRoot` 只用于 `input/`、`.plugin-state/` 和产物。
+> 如果该目录里也存在 `src/` 或 `templates/`，会优先使用你本地的版本（便于定制）。
+
 三个包都声明了 `dsh.bundle.patch`，安装后各自的 `bundle.patch.yml` 会被挂载；**改完代码要重启 DSH** 才会加载新的 Host 模块。
 
 ### 4. 安装技能（可选）

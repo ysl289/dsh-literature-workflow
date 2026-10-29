@@ -1,0 +1,193 @@
+{
+  "_meta": {
+    "source": "老师布置的文献积累阅读范式（用户 2026-10-19 提供）",
+    "role": "经济学/金融学顶级编辑视角梳理",
+    "outputFormats": ["Excel", "两个 PPT", "腾讯文档共享表格"],
+    "tencentDocUrl": "https://docs.qq.com/sheet/DTHRhWHFwaGJPTWtL",
+    "version": 2
+  },
+
+  "fields": [
+    {
+      "order": 1,
+      "key": "apa_citation",
+      "label": "APA 格式参考文献",
+      "type": "string",
+      "style": "APA 7th",
+      "hint": "完整可复制的参考文献条目。优先从 Zotero 元数据（Better BibTeX 已安装）取，缺失时回填 PDF 首页信息。",
+      "constraints": "作者-年份-题名-期刊-卷(期)-页码-DOI，全齐；英文文献保留原文大小写规则。"
+    },
+    {
+      "order": 2,
+      "key": "authors",
+      "label": "作者",
+      "type": "string",
+      "hint": "全部作者姓名，按原文顺序。",
+      "constraints": "英文用 Surname, F. M. 形式；中文作者用中文原名。"
+    },
+    {
+      "order": 3,
+      "key": "year",
+      "label": "文献时间",
+      "type": "string",
+      "hint": "发表年份；在线优先发表或工作论文注明版本。",
+      "constraints": "四位年份为主，可加注（forthcoming / working paper / NBER WP No. x）。"
+    },
+    {
+      "order": 4,
+      "key": "abstract",
+      "label": "摘要",
+      "type": "string",
+      "hint": "论文摘要的中文凝练，不是机翻。",
+      "constraints": "200-300 字中文，覆盖：问题、方法、识别、主要发现、含义。"
+    },
+    {
+      "order": 5,
+      "key": "research_questions",
+      "label": "研究问题",
+      "type": "array",
+      "hint": "本文要回答的核心问题，通常 1-3 条。必须是可被数据回答的实证问题。",
+      "constraints": "逐条编号；与第 6 列的假说一一对应。"
+    },
+    {
+      "order": 6,
+      "key": "hypotheses",
+      "label": "研究假说",
+      "type": "array",
+      "hint": "≤5 条，必须与研究问题一一对应（RQ1 → H1）。",
+      "constraints": "最多 5 条；每条给出方向性预测（正向/负向/非线性）；标注是作者明示还是我从模型推出的。"
+    },
+    {
+      "order": 7,
+      "key": "core_theory",
+      "label": "核心理论（已有的理论 + 本文理论）",
+      "type": "string",
+      "hint": "分两层写：① 本文站在哪些既有理论上（点名理论+代表文献）；② 本文自己提出/拓展了什么理论机制。",
+      "constraints": "建议 250-400 字，分「已有理论」「本文理论」两小段。"
+    },
+    {
+      "order": 8,
+      "key": "contribution",
+      "label": "研究贡献",
+      "type": "string",
+      "hint": "相对哪些理论、哪些学者哪一年的研究，说清本文新在哪。",
+      "constraints": "500 字以内，必须分 1、2、3 三点写；每点都要点名对标文献（作者+年份）。"
+    },
+    {
+      "order": 9,
+      "key": "data",
+      "label": "数据介绍",
+      "type": "string",
+      "hint": "数据来源、样本期、样本量、单位、关键变量怎么度量、样本筛选步骤。",
+      "constraints": "150-300 字；关键数字（样本量、时间跨度、覆盖率）必须写。"
+    },
+    {
+      "order": 10,
+      "key": "limitations",
+      "label": "研究核心局限性",
+      "type": "array",
+      "hint": "3 条，要指出会动摇结论的那种局限，不是「样本可以更大」的套话。",
+      "constraints": "恰好 3 条；每条说明它削弱了哪个结论。"
+    },
+    {
+      "order": 11,
+      "key": "future_research",
+      "label": "未来研究方向",
+      "type": "array",
+      "hint": "2 条，从本文的局限或未验证机制自然延伸。",
+      "constraints": "恰好 2 条；每条要可操作（说明用什么数据/什么识别策略能做）。"
+    },
+    {
+      "order": 12,
+      "key": "fun_story",
+      "label": "有趣的故事总结这个研究",
+      "type": "string",
+      "hint": "讲给大爷大妈听也懂的故事。要有具体人物/场景/冲突/反转，不要学术腔，不要「本文研究了…」。",
+      "constraints": "300-500 字；零术语；必须让外行听懂「谁做了什么、发现了什么、为什么反直觉」。"
+    },
+    {
+      "order": 13,
+      "key": "confusions",
+      "label": "我最不懂的 3 个问题 or 概念",
+      "type": "array",
+      "hint": "对读者最可能卡住的 3 个点：概念/方法/识别策略/公式。",
+      "constraints": "恰好 3 条；每条写清「卡在哪」+「一句话提示怎么搞懂」。⚠ 这一列是用户个人化的，AI 只能先给草稿，需用户确认或替换。"
+    },
+    {
+      "order": 14,
+      "key": "name",
+      "label": "姓名",
+      "type": "string",
+      "generated": true,
+      "hint": "工作流自产列：阅读人姓名，由流程自动填充。",
+      "constraints": "自产列，不需要人工或 AI 填写。"
+    },
+    {
+      "order": 15,
+      "key": "filled_at",
+      "label": "时间",
+      "type": "string",
+      "generated": true,
+      "hint": "工作流自产列：填表时间。",
+      "constraints": "自产列。"
+    },
+    {
+      "order": 16,
+      "key": "design_deck",
+      "label": "实证设计（HTML 演示页）",
+      "type": "string",
+      "generated": true,
+      "hint": "ppt1 阶段产物 design_作者_年份.html 的路径/链接。",
+      "constraints": "自产列。"
+    },
+    {
+      "order": 17,
+      "key": "lecture_deck",
+      "label": "完整介绍 PPT（HTML 格式）",
+      "type": "string",
+      "generated": true,
+      "hint": "ppt2 阶段产物 PPT_作者_年份.html 的路径/链接。",
+      "constraints": "自产列。"
+    },
+    {
+      "order": 18,
+      "key": "why_top",
+      "label": "为什么这篇文章能发在 top 里？评述一下",
+      "type": "string",
+      "hint": "站在顶刊编辑视角评述本文的发表理由。",
+      "constraints": "点名它对标哪一档期刊与同类文献。"
+    },
+    {
+      "order": 19,
+      "key": "core_variables",
+      "label": "核心变量",
+      "type": "array",
+      "hint": "实证用到的核心被解释/解释/控制变量。",
+      "constraints": "逐条给出变量名与度量。"
+    },
+    {
+      "order": 20,
+      "key": "economic_concepts",
+      "label": "变量对应的经济概念",
+      "type": "array",
+      "hint": "与核心变量一一对应的经济概念。",
+      "constraints": "与第 19 列逐条对应。"
+    },
+    {
+      "order": 21,
+      "key": "economic_theories",
+      "label": "经济理论（精简，5 个以内，名词要求一字不差）",
+      "type": "array",
+      "hint": "本文真正用到的经济理论；这也是 cards 制卡阶段的查重输入（extract.json 的 economic_theories）。",
+      "constraints": "≤5 条；理论名词与原文一字不差。"
+    }
+  ],
+
+  "notes": [
+    "第 5/6 列必须互相对应：研究问题几条，假说就有几条（≤5）。",
+    "第 8 列有字数硬约束（≤500 字，分 1/2/3）。",
+    "第 10/11/13 列数量硬约束：3 条 / 2 条 / 3 条。",
+    "第 13 列本质上是用户本人视角，AI 产出仅为草稿。",
+    "全表实际 21 列，列序与 src/excel/make_excel.py 的 COLUMNS 一致（姓名/时间在前，实证设计/介绍PPT/为什么能发top/核心变量/经济概念/经济理论在后）；其中 name / filled_at / design_deck / lecture_deck 为工作流自产列。"
+  ]
+}

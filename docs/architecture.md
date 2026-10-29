@@ -43,6 +43,14 @@
 
 `client.js` 是提交进仓库的预构建产物（DSH `__ModuleLoader__` 协议）。Host 侧 `index.mjs` 只负责注册工具与路由；页面代码不参与 Node 测试。修改页面时需要重新生成 bundle，并在 DSH 里重启后验证 slot 注册。
 
+## 内置源码资产（assets/）
+
+`bridge.py` 的 Python 阶段（PDF→Markdown、Excel、HTML 演示页、卡片、发布）原本从工作流根目录的 `src/` 与 `templates/` 读取脚本。为了让新用户只装插件就能跑，仓库把这两组文件内置在 `packages/literature-workflow/assets/`：
+
+- 解析顺序：`workflowRoot/src|templates` 存在则优先使用（允许用户定制），否则回退到包内 `assets/`。
+- 内置副本已去掉个人姓名与个人站点默认值；博客/腾讯文档仍需用户自己的凭据。
+- 只影响“读脚本/模板”，不影响 `input/`、`.plugin-state/` 与产物目录。
+
 ## 测试策略
 
 - Node：状态机、阶段编排、Zotero 交互、Markdown 导入、任务删除/隐藏、Client 页面（jsdom）。

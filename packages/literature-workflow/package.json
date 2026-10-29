@@ -1,6 +1,6 @@
 {
   "name": "dsh-literature-workflow",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Harness-native literature workflow: search, PDF-to-Markdown, extraction, Zotero filing, Excel sheet, cards handoff and publishing, with an authenticated local Client page.",
   "license": "MIT",
   "type": "module",
@@ -17,6 +17,7 @@
     "install.mjs",
     "bundle.patch.yml",
     "bridge.py",
+    "assets/**",
     "lib/**",
     "web/**",
     "locale/*.json",

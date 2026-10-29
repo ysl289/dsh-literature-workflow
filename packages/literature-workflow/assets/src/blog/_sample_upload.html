@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>blog 上传自检页（可删除）</title>
+<style>body{font-family:sans-serif;max-width:720px;margin:40px auto;line-height:1.7}</style>
+</head>
+<body>
+<h1>blog 上传自检页</h1>
+<p>本文件由 src/blog/upload.py 的自检流程使用，用于验证 HTTP 上传接口是否可用。</p>
+<p>它不是任何一篇文献的成果物，可以随时删除。</p>
+<ol>
+<li>登录接口 /login 是否返回 success</li>
+<li>分组 master_fin 是否存在</li>
+<li>上传接口 /blogupload 是否接受 multipart</li>
+<li>文件是否能通过 /view/&lt;group&gt;/&lt;name&gt; 公开访问</li>
+<li>删除接口 /delete/&lt;group&gt;/&lt;name&gt; 是否能清理测试文件</li>
+</ol>
+<p>如果你在站点上看到这个页面，说明它还留在 master_fin 里，请删除它。</p>
+</body>
+</html>

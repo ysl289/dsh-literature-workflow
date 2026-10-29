@@ -108,10 +108,23 @@ def _job_dir(ctx: dict[str, Any], root: Path) -> Path:
 
 
 def _source_path(root: Path, rel: str) -> Path:
-    p = (root / rel).resolve()
-    if not _within(p, root):
+    """Resolve a workflow source asset.
+
+    The user's workflow root wins when it contains the file; otherwise the copy
+    bundled with this package is used, so a fresh install can run PDF→Markdown,
+    Excel, slides and cards without a pre-existing workflow checkout.
+    """
+    candidate = (root / rel).resolve()
+    if candidate.exists():
+        if not _within(candidate, root):
+            raise BridgeError("工作流源码路径越界。", "needs_setup")
+        return candidate
+    bundled = (Path(__file__).resolve().parent / "assets" / rel).resolve()
+    if bundled.exists():
+        return bundled
+    if not _within(candidate, root):
         raise BridgeError("工作流源码路径越界。", "needs_setup")
-    return p
+    return candidate
 
 
 def _persist_immutable(entries: Iterable[tuple[Path, bytes]]) -> dict[str, bool]:

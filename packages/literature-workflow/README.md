@@ -20,6 +20,9 @@ python -m pip install -r ../../requirements.txt
 dsh plugin --profile <profile> add ./packages/literature-workflow
 ```
 
+包内已带 `assets/`（PDF→MD、Excel、HTML、卡片、发布脚本与模板），不需要另装原工作流目录；
+`workflowRoot` 只用于 `input/`、`.plugin-state/` 和产物。
+
 ## 配置
 
 路径默认走 `DSH_LIT_WORKFLOW`（`~/Downloads/文献积累工作流`）；完整字段见

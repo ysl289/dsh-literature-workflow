@@ -1,5 +1,6 @@
 """Render agent-authored, evidence-backed slide plans using the existing deck kit."""
 import html
+import inspect
 import re
 
 
@@ -57,7 +58,14 @@ def render(plan, record, pages, deckkit):
             args['table']={'headers':table['headers'],'rows':table['rows'],'caption':str(table.get('caption') or '')}
         cols=slide.get('cols',1)
         if cols not in (1,2,3):raise ValueError('布局列数必须是1、2或3')
-        args['cols']=cols
+        # Deck kits differ between workflow versions: pass `cols` only when the
+        # installed deckkit accepts it, instead of crashing on an older API.
+        try:
+            supported=set(inspect.signature(deck.slide).parameters)
+        except (TypeError,ValueError):
+            supported=set()
+        if 'cols' in supported:
+            args['cols']=cols
         unit='Markdown段' if (record.get('meta') or {}).get('citation_unit')=='segment' else 'p.'
         args['footnote']='；'.join(f"{unit}{item['page']} · {item.get('field','')} · {item['quote']}" for item in evidence)
         deck.slide(**args)

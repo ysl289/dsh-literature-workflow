@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1 — 2026-10
+
+- `literature-workflow`: bundle the workflow `src/` and `templates/` as `assets/`, with a fallback from `workflowRoot`; a fresh install no longer needs the original workflow checkout.
+- `literature-workflow`: sanitize the bundled scripts (personal name, personal blog default) and make the custom-deck renderer tolerate deck kits without a `cols` parameter.
+- CI: Python tests now run on `windows-latest` without `continue-on-error`.
+
 ## 0.3.0 — 2026-10
 
 - `literature-workflow`: native client page (sidebar panel) replaces the standalone preview panel.

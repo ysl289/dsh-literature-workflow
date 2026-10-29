@@ -22,7 +22,7 @@ description: 文献积累工作流：一篇论文从 PDF 走完整条流水线�
 | `cards` | 理论制卡：查重 → 建理论条目卡 → 制卡报告 | `src/cards/make_cards.py` |
 | `ppt1` | 实证设计 HTML 演示页（读 extract） | `src/html/build_design.py` |
 | `ppt2` | 讲稿版 HTML 演示页（读 slides.json，见下节） | `src/html/build_lecture.py` |
-| `blog` | 上传到 aifinance.icu 的 master_fin | `src/blog/upload.py` |
+| `blog` | 上传到自建站点的分组目录（`--base` / `DSH_BLOG_BASE`） | `src/blog/upload.py` |
 | `sheet` | 登记到腾讯文档共享表格 | `src/wechat/` |
 
 ## 怎么跑

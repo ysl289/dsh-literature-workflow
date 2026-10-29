@@ -1,0 +1,94 @@
+{
+  "_meta": {
+    "purpose": "PDF→MD 之后，由 agent 通读论文产出的结构化抽取结果。它是 Excel / 两个 PPT / 腾讯文档表格 三个下游产物的唯一数据源。",
+    "producer": "agent（读 staging/<paper>.md 后按 templates/excel_schema.json 的字段要求逐项填写）",
+    "consumers": ["src/excel/make_excel.py", "src/ppt/*", "src/wechat/*"],
+    "version": 1
+  },
+
+  "meta": {
+    "title": "论文标题（原文）",
+    "authors_full": "作者全名，原文顺序",
+    "first_author_surname": "第一作者姓氏（英文只写姓，如 Bertrand；用于生成 design_X_年份.html 文件名。留空则由 run.ps1 从 authors_full 推断）",
+    "year": 2026,
+    "journal": "期刊名 / 工作论文系列",
+    "doi": "10.xxxx/xxxxx（无则空字符串）",
+    "source_pdf": "D:\\zotero\\storage\\XXXXXXXX\\xxx.pdf",
+    "zotero_storage_key": "XXXXXXXX",
+    "md_path": "relative or absolute path to the .md",
+    "generated_at": "ISO8601",
+    "extractor_model": "deepseek-v4.1-flash"
+  },
+
+  "apa_citation": "Author, A. A., & Author, B. B. (2026). Title of the article. Journal Name, 12(3), 45-67. https://doi.org/10.xxxx/xxxxx",
+  "authors": "A. A. Author, B. B. Author",
+  "year": "2026",
+  "abstract": "200-300 字中文摘要。",
+
+  "research_questions": [
+    "RQ1: ...",
+    "RQ2: ..."
+  ],
+
+  "hypotheses": [
+    "H1（对应 RQ1）：... 预期方向：正/负/非线性。来源：作者明示 / 由模型推出。",
+    "H2（对应 RQ2）：..."
+  ],
+
+  "core_theory": "【已有理论】... \n\n【本文理论】...",
+
+  "contribution": "1. ...（对标 Author & Author, 2019）\n2. ...\n3. ...",
+
+  "data": "数据来源、样本期、样本量、单位、关键变量度量、样本筛选步骤。",
+
+  "limitations": [
+    "L1: ...（削弱了哪个结论）",
+    "L2: ...",
+    "L3: ..."
+  ],
+
+  "future_research": [
+    "F1: ...（用什么数据/什么识别策略可做）",
+    "F2: ..."
+  ],
+
+  "fun_story": "300-500 字，讲给大爷大妈听也懂的、有趣的故事。具体人物/场景/冲突/反转，零术语。",
+
+  "confusions": [
+    "C1: 卡在 ... → 一句话提示：...",
+    "C2: ...",
+    "C3: ..."
+  ],
+
+  "design": {
+    "_comment": "实证设计块的细粒度信息，供 build_design.py（第 16 列）与 build_lecture.py 的实证策略/识别/机制页使用。没有的字段一律写【待补】，不要编造。",
+    "model_equation_latex": "基准方程（LaTeX，不带 $$）",
+    "equation_label": "方程编号，如 (1)",
+    "variables": [
+      {"symbol": "y_{it}", "role": "被解释变量", "definition": "...", "source": "数据来源", "notes": ""}
+    ],
+    "fixed_effects": "个体/时间/行业等固定效应结构",
+    "cluster_level": "标准误聚类层级",
+    "identification": {
+      "strategy": "DID / IV / RDD / 事件研究 / 田野实验 / 控制函数 …",
+      "assumption": "识别假设（人话）",
+      "threats": ["最怕什么", "怎么排除"],
+      "first_stage_or_balance": "IV 第一阶段 / 平衡性检验（无则空）"
+    },
+    "mechanism": [{"name": "机制名", "test": "怎么检验", "result": "结果或【待补】"}],
+    "heterogeneity": [{"dimension": "行业/地区/时间/规模", "finding": "结果或【待补】"}],
+    "robustness": [{"check": "替换变量/子样本/安慰剂/聚类", "what_it_guards": "防哪种假象", "result": "结果或【待补】"}],
+    "key_coefficients": [{"term": "变量", "coef": "【待补】", "se": "【待补】", "stars": "【待补】"}]
+  },
+
+  "_validation": {
+    "hypotheses_max": 5,
+    "limitations_exactly": 3,
+    "future_research_exactly": 2,
+    "confusions_exactly": 3,
+    "contribution_max_chars": 500,
+    "fun_story_chars": [300, 500],
+    "abstract_chars": [120, 400],
+    "hypotheses_must_map_to_rq": true
+  }
+}
