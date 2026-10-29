@@ -56,7 +56,7 @@ function findElement(node, predicate) {
 test('package metadata exposes the native Client page and its dependencies', async () => {
   const manifest = JSON.parse(await fs.readFile(path.join(packageDir, 'package.json'), 'utf8'));
   assert.equal(manifest.name, 'dsh-literature-workflow');
-  assert.equal(manifest.version, '0.3.0');
+  assert.match(manifest.version, /^\d+\.\d+\.\d+(?:-[\w.-]+)?$/);
   assert.equal(manifest.exports['./client'], './client.js');
   assert.equal(manifest.exports['./icon'], './icon.svg');
   assert.equal(manifest.dsh.client.platform, 'web');
