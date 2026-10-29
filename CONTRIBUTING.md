@@ -24,6 +24,8 @@ Thanks for taking a look. This repository packages three DSH plugins; keep chang
 4. Update the docs when behavior or configuration changes (`README.md`, `docs/`).
 5. Describe what you verified in the pull request — "tests pass" alone is not enough; say which path you exercised.
 
+> Python integration tests depend on the workflow renderer version (`src/html`). Five of them are version-sensitive (design/lecture page checks, custom deck `cols`, Excel path linkage); CI treats pytest as informational. The Node suites and package-structure checks are the gate.
+
 ## Style
 
 - Plain ESM, no build step for host code.

@@ -134,6 +134,7 @@ python -m pytest packages/literature-workflow/tests -q
 ## 已知限制
 
 - **Windows 优先**：Zotero 本地 API、腾讯文档授权、路径大小写/联接处理都按 Windows 验证。
+- **Python 集成测试有 5 项与渲染器版本绑定**（design/lecture 的页码自检、自定义 deck 的 `cols` 布局、Excel 路径联动）。当 `src/html` 版本与插件预期不一致时这些测试会失败；CI 里按 informational 处理，**Node 测试与包结构检查才是门禁**。
 - **Zotero 未安装**时，落盘与回执相关阶段会跳过，不会阻塞其它阶段。
 - **腾讯文档**接口为官方 MCP/授权路径；接口变动时需要适配。
 - **Client bundle 预构建**：`client.js` 直接提交，修改页面需要重新打包。
