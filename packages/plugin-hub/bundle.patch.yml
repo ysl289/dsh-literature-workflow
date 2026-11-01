@@ -5,7 +5,7 @@
 # plugin — delete that line if you do not have it installed.
 - insert:
     - id: dsh-plugin-hub
-      name: 'dsh-plugin-hub'
+      name: '@ysl289/dsh-plugin-hub'
       config:
         hideSidebarIcons: true
         hide:

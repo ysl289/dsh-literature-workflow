@@ -1,5 +1,5 @@
 {
-  "name": "dsh-plugin-hub",
+  "name": "@ysl289/dsh-plugin-hub",
   "version": "0.1.0",
   "description": "Plugin launcher for DeepSeek Harness: collapse the working plugins' sidebar icons into one entry panel, open any panel from a single list.",
   "license": "MIT",

@@ -1,5 +1,5 @@
 window.__ModuleLoader__.load({
-  id: 'dsh-plugin-hub',
+  id: '@ysl289/dsh-plugin-hub',
   factory(require) {
     const React = require('react');
     const h = React.createElement;

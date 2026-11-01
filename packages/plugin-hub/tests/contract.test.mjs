@@ -12,7 +12,7 @@ const read = (f) => fs.readFileSync(path.join(packageDir, f), 'utf8');
 
 test('package metadata exposes the native Client page', async () => {
   const manifest = JSON.parse(read('package.json'));
-  assert.equal(manifest.name, 'dsh-plugin-hub');
+  assert.equal(manifest.name, '@ysl289/dsh-plugin-hub');
   assert.match(manifest.version, /^\d+\.\d+\.\d+(-[\w.-]+)?$/);
   assert.equal(manifest.exports['./client'], './client.js');
   assert.equal(manifest.exports['./icon'], './icon.svg');
@@ -35,11 +35,11 @@ test('the loader id matches the bundle patch entry', async () => {
   const client = read('client.js');
   const match = client.match(/id:\s*'([^']+)'/);
   assert.ok(match, 'client.js registers a module id');
-  assert.equal(match[1], 'dsh-plugin-hub', 'module id is the public package name');
+  assert.equal(match[1], '@ysl289/dsh-plugin-hub', 'module id is the public package name');
 
   const patch = read('bundle.patch.yml');
   assert.match(patch, /id:\s*dsh-plugin-hub/);
-  assert.match(patch, /name:\s*'dsh-plugin-hub'/);
+  assert.match(patch, /name:\s*'@ysl289\/dsh-plugin-hub'/);
   assert.doesNotMatch(patch, /@local\//, 'no local-only scope leaks into the patch');
   assert.doesNotMatch(patch, /[A-Za-z]:[\\/]/, 'no absolute Windows paths in the patch');
 });
@@ -57,7 +57,7 @@ test('hiding is opt-in and the default list is explicit', async () => {
 
 test('the host half stays inert', async () => {
   const index = read('index.mjs');
-  assert.match(index, /export const name = 'dsh-plugin-hub'/);
+  assert.match(index, /export const name = '@ysl289\/dsh-plugin-hub'/);
   assert.doesNotMatch(index, /ctx\.(server|router|http)/, 'the hub registers no backend capability');
 });
 

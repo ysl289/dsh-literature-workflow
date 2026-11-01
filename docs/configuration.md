@@ -75,7 +75,7 @@
 ```yaml
 - insert:
     - id: dsh-plugin-hub
-      name: 'dsh-plugin-hub'
+      name: '@ysl289/dsh-plugin-hub'
       config:
         hideSidebarIcons: true  # 总开关；false = 一律不收起
         hide:                   # 默认收起哪些面板（按插件 id）

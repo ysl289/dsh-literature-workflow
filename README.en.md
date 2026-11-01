@@ -25,7 +25,7 @@ These plugins chain those steps into one pipeline and hold three invariants:
 | [`literature-workflow`](packages/literature-workflow) | The pipeline: search → PDF→Markdown → extraction → Zotero → Excel → card task sheet → slides → publish | Host tools + native page + Python bridge |
 | [`knowledge-cards`](packages/knowledge-cards) | Card library: shelf browsing, deduplication, editing, export, 2D/3D relation graphs | Host tools + native page |
 | [`lit-learning`](packages/lit-learning) | Learning layer: read-only over upstream output — recital, readiness ratings, citation drafts, review items, field map | Host tools + native page |
-| [`plugin-hub`](packages/plugin-hub) | Launcher: collapses the sidebar icons of the above (and any panel) into one entry page | Pure front-end panel |
+| [`@ysl289/dsh-plugin-hub`](packages/plugin-hub) | Launcher: collapses the sidebar icons of the above (and any panel) into one entry page | Pure front-end panel |
 
 Optional skills: [`skills/knowledge-card-library`](skills/knowledge-card-library), [`skills/literature-pipeline`](skills/literature-pipeline).
 
@@ -51,6 +51,24 @@ DSH `0.2.x` (tested on `0.2.1-rc.3`), Node.js ≥ 22, Python ≥ 3.10 with `open
 
 ### Install
 
+> **Not published to npm yet** — install from the git URL or a local directory.
+> (The `dsh-plugin-hub` on npm belongs to a **different author** and is a plugin marketplace; this project's launcher is `@ysl289/dsh-plugin-hub`.)
+
+**Option 1 — paste the URLs into DSH's plugin page**
+
+Open **sidebar → Plugins → Add plugin** and paste:
+
+```
+https://github.com/ysl289/dsh-literature-workflow.git#packages/literature-workflow
+https://github.com/ysl289/dsh-literature-workflow.git#packages/knowledge-cards
+https://github.com/ysl289/dsh-literature-workflow.git#packages/lit-learning
+https://github.com/ysl289/dsh-literature-workflow.git#packages/plugin-hub
+```
+
+> Sub-directory specs (`#packages/...`) depend on your DSH version. If unsupported, use option 2.
+
+**Option 2 — clone, then install from the local directories (most reliable)**
+
 ```bash
 git clone https://github.com/ysl289/dsh-literature-workflow.git
 cd dsh-literature-workflow
@@ -65,7 +83,7 @@ cp -r skills/knowledge-card-library ~/.dsh/skills/
 cp -r skills/literature-pipeline ~/.dsh/skills/
 ```
 
-Restart DSH after installing. Paths are never hard-coded: configure via `DSH_LIT_WORKFLOW`, `DSH_CARDS_HOME`/`KCARD_HOME`, `DSH_LIT_LEARNING` and `DSH_PYTHON`, or fall back to home-directory defaults.
+Restart DSH after installing the plugins. Paths are never hard-coded: configure via `DSH_LIT_WORKFLOW`, `DSH_CARDS_HOME`/`KCARD_HOME`, `DSH_LIT_LEARNING` and `DSH_PYTHON`, or fall back to home-directory defaults.
 
 Publishing defaults to **preview** — nothing is written to Zotero or Tencent Docs until you enable it on the workflow page.
 

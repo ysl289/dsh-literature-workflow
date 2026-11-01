@@ -35,7 +35,7 @@
 | [`literature-workflow`](packages/literature-workflow) | 主流程：检索 → PDF→Markdown → 抽取 → Zotero → Excel → 制卡任务书 → 演示页 → 发布 | Host 工具 + 原生页面 + Python bridge |
 | [`knowledge-cards`](packages/knowledge-cards) | 卡片库：按「形态 × 书架」浏览、查重、编辑、导出，内置 2D/3D 关系网 | Host 工具 + 原生页面 |
 | [`lit-learning`](packages/lit-learning) | 学习层：只读上游产物，生成复述、准备度评级、引用草稿、复习题与领域地图 | Host 工具 + 原生页面 |
-| [`plugin-hub`](packages/plugin-hub) | 入口中心：把上面三个（及任何面板）的侧边栏图标收进一个启动台 | 纯前端面板 |
+| [`@ysl289/dsh-plugin-hub`](packages/plugin-hub) | 入口中心：把上面三个（及任何面板）的侧边栏图标收进一个启动台 | 纯前端面板 |
 
 配套技能（可选但推荐）：[`skills/knowledge-card-library`](skills/knowledge-card-library)、[`skills/literature-pipeline`](skills/literature-pipeline)。
 
@@ -68,6 +68,24 @@
 
 ### 安装
 
+> **当前没有发布到 npm**，请用下面的 git 地址或本地目录安装。
+> （npm 上的 `dsh-plugin-hub` 是**另一位作者**的插件市场，与本项目的入口中心无关——本项目的入口中心叫 `@ysl289/dsh-plugin-hub`。）
+
+**方式一：在 DSH 插件页里粘贴地址**
+
+打开 **侧栏 → 插件 → 添加插件**，把下面四个地址逐个粘进去：
+
+```
+https://github.com/ysl289/dsh-literature-workflow.git#packages/literature-workflow
+https://github.com/ysl289/dsh-literature-workflow.git#packages/knowledge-cards
+https://github.com/ysl289/dsh-literature-workflow.git#packages/lit-learning
+https://github.com/ysl289/dsh-literature-workflow.git#packages/plugin-hub
+```
+
+> 子目录语法（`#packages/...`）取决于你的 DSH 版本是否支持；不支持时用方式二。
+
+**方式二：克隆后按本地目录安装（推荐，最稳）**
+
 ```bash
 git clone https://github.com/ysl289/dsh-literature-workflow.git
 cd dsh-literature-workflow
@@ -82,7 +100,9 @@ dsh plugin --profile <profile> add ./packages/lit-learning
 dsh plugin --profile <profile> add ./packages/plugin-hub     # 可选
 ```
 
-没有全局 `dsh` 命令时，在 DSH 源码 checkout 里用 `pnpm dsh plugin --profile <profile> add <路径>`，或在 DSH 的 **插件 → 添加插件** 里粘贴目录绝对路径。
+没有全局 `dsh` 命令时，在 DSH 源码 checkout 里用 `pnpm dsh plugin --profile <profile> add <路径>`，或在 **插件 → 添加插件** 里粘贴目录的绝对路径。
+
+装完**重启 DSH** 才会加载新的 Host 模块。
 
 > `literature-workflow` 已内置 `assets/`（PDF→Markdown、Excel、HTML 演示页、卡片、发布脚本与模板），
 > **不需要另外准备原工作流目录**；`workflowRoot` 只用于 `input/`、`.plugin-state/` 和产物。
@@ -107,7 +127,7 @@ dsh plugin --profile <profile> add ./packages/plugin-hub     # 可选
 2. 在 **设置 → 文献代理模型** 选择模型（默认跟随 Harness 默认模型）。
 3. 首次落盘 Zotero 时 Zotero 会弹授权窗；选「始终允许」可自动入库。
 4. 发布模式默认 `preview`：只生成预览，不写 Zotero / 腾讯文档。确认无误后再切 `auto`。
-5. 卡片库、学习层在侧栏对应入口打开；装了 `plugin-hub` 的话，三个入口收在一个启动台里。
+5. 卡片库、学习层在侧栏对应入口打开；装了 `@ysl289/dsh-plugin-hub` 的话，三个入口收在一个启动台里。
 
 <p align="center">
   <img src="docs/images/template-confirm.png" alt="模板删除有二次确认，不会误删" width="880">
