@@ -33,7 +33,7 @@ export class LiteratureEngine {
   constructor(config = {}, {onWork, getModelCatalog, getAgentCapability, getProjects, getJobActivity, spawnAuth = spawn} = {}) {
     const workflowRoot = path.resolve(config.workflowRoot || path.join(os.homedir(),'Downloads','文献积累工作流'));
     this.config={workflowRoot,inputDir:path.resolve(config.inputDir||path.join(workflowRoot,'input')),stateDir:path.resolve(config.stateDir||path.join(workflowRoot,'.plugin-state')),
-      python:config.python||process.env.DSH_PYTHON||(process.platform==='win32'?'python':'python3'),rootCollection:config.rootCollection??'',readerName:config.readerName||os.userInfo().username,
+      python:config.python||path.join(os.homedir(),'AppData','Local','Programs','Python','Python313','python.exe'),rootCollection:config.rootCollection??'',readerName:config.readerName||os.userInfo().username||'',
       stages:pickStages(config.stages),publishMode:config.publishMode||'auto',watchInput:config.watchInput!==false,autoRun:config.autoRun!==false,maxPapers:Math.min(30,Math.max(1,config.maxPapers||10)),
       // 知识卡片库正本：插件配置 > 环境变量 > 旧默认值。
       cardsHome:String(config.cardsHome||process.env.KCARD_HOME||path.join(os.homedir(),'Desktop','知识卡片库')),...config};
@@ -43,7 +43,7 @@ export class LiteratureEngine {
     this.config.agentProject = typeof this.config.agentProject === 'string' ? this.config.agentProject.trim() : '';
     this.config.agentProjectDir = path.resolve(this.config.agentProjectDir || this.config.workflowRoot);
     this.onWork=onWork;this.getModelCatalog=getModelCatalog;this.getAgentCapability=getAgentCapability;this.getProjects=getProjects;this.getJobActivity=getJobActivity;this.spawnAuth=spawnAuth;this.store=new JobStore(this.config.stateDir);this.seen=new Map();this.pending=new Map();this.active=new Set();
-    this.toolSpecs=[{name:'literature_workflow',description:'文献积累插件：按卡片顺序阅读、生成及发布。finish返回requires时只处理当前阶段。自定义PPT阶段用save_stage保存有证据的plan及promptHash；paused表示等待用户继续。',parameters:{type:'object',properties:{action:{type:'string',enum:['status','jobs','models','search','download','enqueue','prepare','read_pages','save_analysis','save_stage','finish','run','retry','metadata','collections','settings','scan','search_start','save_template','validate_pipeline']},payload:{type:'object',description:'jobId、stages、stopAfter、stagePrompts（阶段ID到提示词）、stage、plan、promptHash，或原有阅读、检索与抽取参数'}},required:['action'],additionalProperties:false}}];
+    this.toolSpecs=[{name:'literature_workflow',description:'文献积累插件：按卡片顺序阅读、生成及发布。finish返回requires时只处理当前阶段。自定义PPT阶段用save_stage保存有证据的plan及promptHash；paused表示等待用户继续。',parameters:{type:'object',properties:{action:{type:'string',enum:['status','jobs','models','search','download','enqueue','prepare','read_pages','save_analysis','save_stage','finish','run','retry','metadata','collections','settings','scan','search_start','save_template','delete_template','rename_template','validate_pipeline']},payload:{type:'object',description:'jobId、stages、stopAfter、stagePrompts（阶段ID到提示词）、stage、plan、promptHash，或原有阅读、检索与抽取参数'}},required:['action'],additionalProperties:false}}];
   }
   async start() {
     await this.store.init();await fs.mkdir(this.config.inputDir,{recursive:true});
@@ -172,6 +172,30 @@ export class LiteratureEngine {
     this.preferences??={};Object.assign(this.preferences,allowed);Object.assign(this.config,allowed);await atomicJSON(path.join(this.config.stateDir,'preferences.json'),this.preferences);return allowed;
   }
   async saveTemplate({name,stages,stagePrompts={},stopAfter}){if(typeof name!=='string'||!name.trim()||name.length>80)throw Error('模板名为1到80个字');const selected=pickStages(stages);const all=await readJSON(path.join(this.config.stateDir,'templates.json'),{});all[name.trim()]={stages:selected,stagePrompts:normalizeStagePrompts(stagePrompts),stopAfter:pickStopAfter(stopAfter,selected)};await atomicJSON(path.join(this.config.stateDir,'templates.json'),all);return {saved:true};}
+  async deleteTemplate({name}){
+    const key=String(name||'').trim();
+    if(!key)throw Error('缺少模板名');
+    const all=await readJSON(path.join(this.config.stateDir,'templates.json'),{});
+    if(!Object.prototype.hasOwnProperty.call(all,key))throw Error('模板不存在：'+key);
+    delete all[key];
+    await atomicJSON(path.join(this.config.stateDir,'templates.json'),all);
+    return {deleted:true};
+  }
+  async renameTemplate({name,to}){
+    const from=String(name||'').trim();
+    const target=String(to||'').trim();
+    if(!from)throw Error('缺少模板名');
+    if(!target||target.length>80)throw Error('模板名为1到80个字');
+    const all=await readJSON(path.join(this.config.stateDir,'templates.json'),{});
+    if(!Object.prototype.hasOwnProperty.call(all,from))throw Error('模板不存在：'+from);
+    if(from!==target&&Object.prototype.hasOwnProperty.call(all,target))throw Error('已有同名模板：'+target);
+    if(from!==target){
+      all[target]=all[from];
+      delete all[from];
+      await atomicJSON(path.join(this.config.stateDir,'templates.json'),all);
+    }
+    return {renamed:true,name:target};
+  }
   async configureJob({jobId,stagePrompts,stopAfter}){return this.store.locked(jobId,async()=>{
     const j=await this.store.get(jobId);
     if(['completed','cancelled','rendering','importing','preparing','publishing','awaiting_agent'].includes(j.status)||this.active.has(jobId))throw Error('任务正在运行或已结束；请在暂停或等待处理时编辑后续步骤');
@@ -524,6 +548,8 @@ export class LiteratureEngine {
       case 'settings':return this.settings(args);case 'scan':return this.scanInput(true,{stopAfter:args.stopAfter,stagePrompts:args.stagePrompts});case 'authorize_zotero':return this.zotero.authorize();case 'save_credentials':return this.saveCredentials(args);
       case 'validate_pipeline':return validatePipeline(args.stages,{inputKind:args.inputKind||'pdf',existing:args.existing||[]});
       case 'save_template':return this.saveTemplate(args);
+      case 'delete_template':return this.deleteTemplate(args);
+      case 'rename_template':return this.renameTemplate(args);
       case 'connect_tencent':{
         if(this.tencentAuthProcess)return this.tencentAuth;
         const dest=path.join(os.homedir(),'.dsh','tencent_docs_token.json');this.tencentAuth={status:'registering'};

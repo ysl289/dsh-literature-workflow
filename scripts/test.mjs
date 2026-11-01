@@ -9,7 +9,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const packages = ['literature-workflow', 'knowledge-cards', 'lit-learning'];
+const packages = ['literature-workflow', 'knowledge-cards', 'lit-learning', 'plugin-hub'];
 let failed = 0;
 
 for (const name of packages) {

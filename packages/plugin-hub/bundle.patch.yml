@@ -1,0 +1,17 @@
+# Collapse the working plugins' sidebar icons into one entry panel.
+#
+# `hide` lists plugin ids whose standalone sidebar icon is hidden. Remove an id
+# to give that plugin its icon back. `dsh-context` is an optional third-party
+# plugin — delete that line if you do not have it installed.
+- insert:
+    - id: dsh-plugin-hub
+      name: 'dsh-plugin-hub'
+      config:
+        hideSidebarIcons: true
+        hide:
+          - dsh-context
+          - literature-workflow
+          - knowledge-cards
+          - lit-learning
+        # Sidebar order for the hub itself (lower = higher up).
+        order: 4

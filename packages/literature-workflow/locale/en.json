@@ -229,5 +229,22 @@
   "tencent_validating": "Verifying Tencent Docs connection",
   "tencentBrowserFailed": "The browser could not be opened automatically. Use the authorization link above.",
   "tencent_error_vip_required": "Tencent reported insufficient account permissions. Check the Tencent Docs account permissions.",
-  "tencent_error_token_validation_failed": "An authorization result was received, but connection validation failed. It was not saved as connected."
+  "tencent_error_token_validation_failed": "An authorization result was received, but connection validation failed. It was not saved as connected.",
+  "deletePath": "Path",
+  "saveAsTemplate": "Save as template",
+  "templatesEmpty": "No saved templates yet",
+  "templateRename": "Rename template",
+  "templateDelete": "Delete template",
+  "templateDeleteNote": "Deletion cannot be undone. Tasks already started from this template are not affected.",
+  "templateDeleteTitle": "Delete the template “{name}”?",
+  "templateDeleteConfirm": "Delete",
+  "templateDeleting": "Deleting…",
+  "templateRenamed": "Template renamed",
+  "templateDeleted": "Template deleted",
+  "templateSavedAs": "Saved as a new template",
+  "templateHint": "Save the current stage order as a reusable template.",
+  "cancel": "Cancel",
+  "saveTemplateBtn": "Save",
+  "stage_cards": "Knowledge cards",
+  "desc_cards": "Deduplicate theories used in this paper and write them into the card library."
 }

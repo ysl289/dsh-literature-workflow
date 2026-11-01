@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { within } from './lib/store.mjs';
 
 export const NATIVE_API = '/api/literatureWorkflow';
-export const UI_ACTIONS = new Set(['settings', 'scan', 'enqueue', 'search_start', 'retry', 'run', 'finish', 'configure_job', 'hide_job', 'preview_delete_job', 'delete_job', 'authorize_zotero', 'save_credentials', 'connect_tencent', 'save_template', 'validate_pipeline']);
+export const UI_ACTIONS = new Set(['settings', 'scan', 'enqueue', 'search_start', 'retry', 'run', 'finish', 'configure_job', 'hide_job', 'preview_delete_job', 'delete_job', 'authorize_zotero', 'save_credentials', 'connect_tencent', 'save_template', 'delete_template', 'rename_template', 'validate_pipeline']);
 const asset = fileURLToPath(new URL('./web/card-atlas.png', import.meta.url));
 const mime = {'.pdf':'application/pdf', '.xlsx':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', '.html':'text/html; charset=utf-8', '.json':'application/json; charset=utf-8', '.md':'text/plain; charset=utf-8', '.tsv':'text/tab-separated-values; charset=utf-8'};
 const headers = {'cache-control':'no-store', 'x-content-type-options':'nosniff', 'referrer-policy':'no-referrer'};

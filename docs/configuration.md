@@ -70,6 +70,28 @@
         writeOutsideLearningRoot: false
 ```
 
+## plugin-hub
+
+```yaml
+- insert:
+    - id: dsh-plugin-hub
+      name: 'dsh-plugin-hub'
+      config:
+        hideSidebarIcons: true  # 总开关；false = 一律不收起
+        hide:                   # 默认收起哪些面板（按插件 id）
+          - dsh-context         # 第三方插件，没装就删掉这行
+          - literature-workflow
+          - knowledge-cards
+          - lit-learning
+        order: 4                # 入口中心自己的侧边栏位置
+```
+
+优先级从低到高：`bundle.patch.yml` 的 `hide` 列表 → `localStorage['dsh-plugin-hub.hidden.v1']`（页面上点开关后写入，之后以它为准）。
+
+- 页面上「侧边栏图标」一节列出**所有**面板，点一下切换收起/显示。
+- 想回到配置默认值：清掉 `localStorage['dsh-plugin-hub.hidden.v1']` 再重启。
+- 想彻底不收起：`hideSidebarIcons: false`。
+
 ## 发布模式
 
 | 模式 | 行为 |

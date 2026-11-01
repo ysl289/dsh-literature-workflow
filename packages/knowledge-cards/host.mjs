@@ -106,7 +106,7 @@ export async function otherLibraries(home = HOME) {
   const candidates = [
     process.env.DSH_CARDS_HOME_ALT,
     path.join(os.homedir(), 'Desktop', '知识卡片库'),
-    path.join(os.homedir(), 'Documents', '知识卡片库'),
+    'D:\\知识卡片库',
   ].filter(Boolean);
   const out = [];
   for (const candidate of new Set(candidates)) {
@@ -162,7 +162,7 @@ const BUILD_ID = `kc-${Date.now().toString(36)}`;
 
 const SKILL = path.join(os.homedir(), '.dsh', 'skills', 'knowledge-card-library', 'scripts');
 const PY = process.env.DSH_PYTHON
-  || (process.platform === 'win32' ? 'python' : 'python3');
+  || path.join(os.homedir(), 'AppData', 'Local', 'Programs', 'Python', 'Python313', 'python.exe');
 
 const GRAPH_3D = '关系网-3D.html';
 const GRAPH_2D = '关系网.html';

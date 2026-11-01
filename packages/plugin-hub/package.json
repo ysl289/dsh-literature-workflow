@@ -1,0 +1,53 @@
+{
+  "name": "dsh-plugin-hub",
+  "version": "0.1.0",
+  "description": "Plugin launcher for DeepSeek Harness: collapse the working plugins' sidebar icons into one entry panel, open any panel from a single list.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./index.mjs",
+    "./client": "./client.js",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.mjs",
+    "client.js",
+    "bundle.patch.yml",
+    "icon.svg",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "launcher",
+    "sidebar"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ysl289/dsh-literature-workflow.git",
+    "directory": "packages/plugin-hub"
+  },
+  "homepage": "https://github.com/ysl289/dsh-literature-workflow#readme",
+  "bugs": {
+    "url": "https://github.com/ysl289/dsh-literature-workflow/issues"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./bundle.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-ui-sidebar",
+        "@deepseek-ai/dsh-client-ui-theme",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-connection"
+      ]
+    }
+  }
+}

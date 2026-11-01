@@ -259,7 +259,7 @@ window.__ModuleLoader__.load({
       const CARDS = path.join(HOME, 'cards');
       const SKILL = path.join(os.homedir(), '.dsh', 'skills', 'knowledge-card-library', 'scripts');
       const PY = (typeof process !== 'undefined' && process.env && process.env.DSH_PYTHON)
-        || (process.platform === 'win32' ? 'python' : 'python3');
+        || path.join(os.homedir(), 'AppData', 'Local', 'Programs', 'Python', 'Python313', 'python.exe');
 
       // 子进程必须继承同一个 home，否则它按自己的默认值写到另一个库去
       const CHILD_ENV = { ...(process.env || {}), KCARD_HOME: HOME, DSH_CARDS_HOME: HOME };
@@ -603,23 +603,41 @@ window.__ModuleLoader__.load({
 
     // ========== 样式（一次注入，走 class，才有 hover / 过渡）==========
     const CSS = `.kc-root{
+  /* Claude's own card: white paper, warm ink, terracotta accent.
+     Ladder — fill #D97757 / wash #F6DED7 / link #BF6446 / deep #A35035.
+     Body copy stays in ink; the accent marks state and action. */
+  --kc-bg:#FFFFFF;--kc-paper:#FFFFFF;--kc-surface:#FFFFFF;
+  --kc-raise:#FAFAFA;--kc-card:#FAFAFA;--kc-sunken:#F4F4F4;
+  --kc-ink:#161616;--kc-body:#70686A;--kc-muted:#91888A;--kc-faint:#B2ACAD;
+  --kc-line:#EAEAEA;--kc-line-soft:rgba(22,22,22,.06);--kc-line2:#E0E0E0;--kc-line-2:#E0E0E0;
+  --kc-hover:rgba(20,20,19,.05);
+  --kc-accent:#D97757;--kc-accent-soft:#F6DED7;--kc-accent-deep:#A35035;
+  --kc-link:#BF6446;--kc-warm:#A35035;
+  --kc-good:#8A847A;--kc-ok:#8A847A;--kc-warn:#B8762A;--kc-bad:#C0392B;--kc-danger:#C0392B;
+  --kc-r:8px;--kc-r-sm:6px;--kc-r-lg:12px;--kc-r-pill:999px;
+  --kc-ring:0 0 0 1px rgba(20,20,19,.10);
+  --kc-shadow:0 4px 18px rgba(20,20,19,.10),0 1px 3px rgba(20,20,19,.05);
+  --kc-ease:cubic-bezier(.2,0,0,1);--kc-feedback:120ms;
+  --kc-serif:var(--dsh-claude-font-serif,"Tiempos Text","Source Serif Pro","Source Han Serif SC","Noto Serif SC",Georgia,serif);
+  --kc-mono:var(--dsh-claude-font-code,"JetBrains Mono",ui-monospace,Menlo,monospace);
+
   /* 颜色全部取自 DSH 主题令牌：明暗主题自动跟随，不再写死米色 */
-  --kc-paper:var(--dsw-alias-bg-base);
-  --kc-surface:var(--dsw-alias-bg-base);
-  --kc-raise:var(--dsw-alias-bg-layer-1);
-  --kc-ink:var(--dsw-alias-label-primary);
-  --kc-body:var(--dsw-alias-label-secondary);
-  --kc-muted:var(--dsw-alias-label-tertiary);
-  --kc-faint:var(--dsw-alias-label-tertiary);
-  --kc-line:var(--dsw-alias-border-l1);
-  --kc-line-soft:var(--dsw-alias-border-l1);
-  --kc-line-2:var(--dsw-alias-border-l2);
-  --kc-hover:var(--dsw-alias-interactive-bg-hover);
-  --kc-accent:var(--dsw-alias-label-primary);
-  --kc-accent-soft:var(--dsw-alias-interactive-bg-hover);
-  --kc-link:var(--dsw-alias-link);
-  --kc-warm:var(--dsw-alias-label-tertiary);
-  --kc-danger:var(--dsw-alias-label-secondary);
+  /* --kc-paper:var(--dsw-alias-bg-base); */
+  /* --kc-surface:var(--dsw-alias-bg-base); */
+  /* --kc-raise:var(--dsw-alias-bg-layer-1); */
+  /* --kc-ink:var(--dsw-alias-label-primary); */
+  /* --kc-body:var(--dsw-alias-label-secondary); */
+  /* --kc-muted:var(--dsw-alias-label-tertiary); */
+  /* --kc-faint:var(--dsw-alias-label-tertiary); */
+  /* --kc-line:var(--dsw-alias-border-l1); */
+  /* --kc-line-soft:var(--dsw-alias-border-l1); */
+  /* --kc-line-2:var(--dsw-alias-border-l2); */
+  /* --kc-hover:var(--dsw-alias-interactive-bg-hover); */
+  /* --kc-accent:var(--dsw-alias-label-primary); */
+  /* --kc-accent-soft:var(--dsw-alias-interactive-bg-hover); */
+  /* --kc-link:var(--dsw-alias-link); */
+  /* --kc-warm:var(--dsw-alias-label-tertiary); */
+  /* --kc-danger:var(--dsw-alias-label-secondary); */
   --kc-r:8px;--kc-r-sm:6px;--kc-r-lg:12px;
   --kc-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
   --kc-serif:"Source Han Serif SC","Noto Serif SC","Songti SC","SimSun",Georgia,serif;
@@ -713,9 +731,9 @@ window.__ModuleLoader__.load({
 .kc-type{font-family:var(--dsw-font-family);letter-spacing:.02em;color:var(--kc-muted)}
 .kc-dot{width:4px;height:4px;border-radius:50%;background:var(--kc-muted);flex:0 0 auto}
 /* 状态色跟着文字色混一点，明暗两套都能读（深色下自动提亮，浅色下自动压深） */
-.kc-dot--ok{background:color-mix(in srgb,#2f7a5f 72%,var(--kc-ink))}
-.kc-dot--draft{background:color-mix(in srgb,#c08429 72%,var(--kc-ink))}
-.kc-dot--bad{background:color-mix(in srgb,#b0453a 72%,var(--kc-ink))}
+.kc-dot--ok{background:var(--kc-accent)}
+.kc-dot--draft{background:color-mix(in srgb,#B8762A 72%,var(--kc-ink))}
+.kc-dot--bad{background:color-mix(in srgb,#C0392B 72%,var(--kc-ink))}
 
 /* ---- 阅读区 ---- */
 .kc-read{flex:1;min-width:0;display:flex;flex-direction:column;min-height:0;background:var(--kc-paper)}
@@ -726,15 +744,15 @@ window.__ModuleLoader__.load({
 .kc-chip{display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 8px;border-radius:99px;
   border:1px solid var(--kc-line);font-family:var(--kc-mono);font-size:11px;letter-spacing:.08em;
   color:var(--kc-muted);background:transparent}
-.kc-chip--ok{color:color-mix(in srgb,#2f7a5f 58%,var(--kc-ink));
-  border-color:color-mix(in srgb,#2f7a5f 32%,transparent);
-  background:color-mix(in srgb,#2f7a5f 9%,transparent)}
-.kc-chip--draft{color:color-mix(in srgb,#9a6a1e 58%,var(--kc-ink));
-  border-color:color-mix(in srgb,#9a6a1e 32%,transparent);
-  background:color-mix(in srgb,#9a6a1e 9%,transparent)}
-.kc-chip--bad{color:color-mix(in srgb,#a3342b 58%,var(--kc-ink));
-  border-color:color-mix(in srgb,#a3342b 32%,transparent);
-  background:color-mix(in srgb,#a3342b 9%,transparent)}
+.kc-chip--ok{color:var(--kc-accent-deep);
+  border-color:color-mix(in srgb,var(--kc-accent) 28%,transparent);
+  background:var(--kc-accent-soft)}
+.kc-chip--draft{color:color-mix(in srgb,#A35035 58%,var(--kc-ink));
+  border-color:color-mix(in srgb,#A35035 32%,transparent);
+  background:color-mix(in srgb,#A35035 9%,transparent)}
+.kc-chip--bad{color:color-mix(in srgb,#C0392B 58%,var(--kc-ink));
+  border-color:color-mix(in srgb,#C0392B 32%,transparent);
+  background:color-mix(in srgb,#C0392B 9%,transparent)}
 /* 可点的 chip：只改边框与文字，不引入第二种按钮外观 */
 .kc-chip--link{appearance:none;cursor:pointer;background:transparent;gap:5px;
   transition:color .13s ease,border-color .13s ease,background-color .13s ease}
@@ -879,7 +897,7 @@ window.__ModuleLoader__.load({
   font-family:var(--kc-mono);font-size:11px;line-height:1.95;letter-spacing:.05em;
   color:var(--kc-muted)}
 .kc-mapsum b{color:var(--kc-ink);font-weight:500}
-.kc-mapsum .kc-warn{color:color-mix(in srgb,#9a6a1e 62%,var(--kc-ink))}
+.kc-mapsum .kc-warn{color:color-mix(in srgb,#A35035 62%,var(--kc-ink))}
 .kc-mapgroup{display:flex;align-items:center;gap:7px;padding:16px 8px 6px;
   font-size:11px;letter-spacing:.11em;color:var(--kc-muted);font-weight:600}
 .kc-mapgroup b{font-family:var(--kc-mono);font-size:11px;font-weight:400;margin-left:auto;
@@ -944,11 +962,11 @@ window.__ModuleLoader__.load({
   letter-spacing:.08em;color:var(--kc-muted);white-space:nowrap}
 .kc-role[data-role="提出"],.kc-role[data-role="产出"]{color:var(--kc-ink);
   border-color:var(--kc-line-2);font-weight:500}
-.kc-role[data-role="反驳"]{color:color-mix(in srgb,#a3342b 58%,var(--kc-ink));
-  border-color:color-mix(in srgb,#a3342b 32%,transparent);
-  background:color-mix(in srgb,#a3342b 9%,transparent)}
-.kc-role[data-role="检验"]{color:color-mix(in srgb,#2f7a5f 58%,var(--kc-ink));
-  border-color:color-mix(in srgb,#2f7a5f 30%,transparent)}
+.kc-role[data-role="反驳"]{color:color-mix(in srgb,#C0392B 58%,var(--kc-ink));
+  border-color:color-mix(in srgb,#C0392B 32%,transparent);
+  background:color-mix(in srgb,#C0392B 9%,transparent)}
+.kc-role[data-role="检验"]{color:var(--kc-accent-deep);
+  border-color:color-mix(in srgb,var(--kc-accent) 30%,transparent)}
 .kc-mapfoot{flex:0 0 auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap;
   padding:11px 34px;border-top:1px solid var(--kc-line);background:var(--kc-surface)}
 .kc-mapfoot select{font:inherit;font-size:12px;height:30px;padding:0 6px;max-width:250px;
@@ -988,6 +1006,21 @@ window.__ModuleLoader__.load({
   border-radius:6px;border:1px solid var(--kc-line-2);background:transparent;color:var(--kc-body);
   cursor:pointer}
 .kc-modal-bar button:hover{background:var(--kc-hover);color:var(--kc-ink)}
+
+  /* Claude surface layer (kc): serif headings, hairline separators, pill
+     actions, a 4px rhythm and an editorial type ladder. */
+  .kc-title,.kc-h1,.kc-heading{font-family:var(--kc-serif);font-weight:500;letter-spacing:-.015em}
+  .kc-name,.kc-sec-title,.kc-card-title{font-family:var(--kc-serif);font-weight:600;letter-spacing:-.005em}
+  .kc-kicker,.kc-eyebrow,.kc-label{text-transform:uppercase;letter-spacing:.09em;font-size:10px;color:var(--kc-accent-deep,#A35035)}
+  .kc-row,.kc-list>li,.kc-item{border-top:.5px solid rgba(22,22,22,.07)}
+  .kc-row:first-child,.kc-list>li:first-child,.kc-item:first-child{border-top:0}
+  .kc-tile,.kc-card,.kc-panel,.kc-box{border:1px solid var(--kc-line,#EAEAEA);border-radius:var(--kc-r,8px);background:var(--kc-surface,#FFF)}
+  .kc-go,.kc-btn,.kc-action{border-radius:var(--kc-r-pill,999px)}
+  .kc-tag{border-radius:var(--kc-r-pill,999px);background:var(--kc-accent-soft,#F6DED7);color:var(--kc-accent-deep,#A35035)}
+  .kc-wrap,.kc-page,.kc-body{padding-top:24px;padding-bottom:56px}
+  .kc-sec,.kc-section{margin-top:28px}
+  .kc-meta,.kc-sub,.kc-note{font-family:var(--kc-mono);font-size:10.5px;letter-spacing:.02em;color:var(--kc-muted,#91888A)}
+  .kc-root :focus-visible{outline:2px solid var(--kc-accent,#D97757);outline-offset:2px}
 `;
 
     function ensureCss() {
@@ -1298,8 +1331,8 @@ window.__ModuleLoader__.load({
     }
 
     // 与关系网同一套书架色
-    const SHELF_PALETTE = ['#0f6e56', '#185fa5', '#ba7517', '#534ab7',
-      '#d4537e', '#639922', '#993c1d', '#5f5e5a'];
+    const SHELF_PALETTE = ['#A35035', '#BF6446', '#D97757', '#B8762A',
+  '#8A847A', '#6B5B4E', '#C0392B', '#7A6A57'];
     const shelfMap = {};
     let shelfIdx = 0;
     function shelfColor(name) {
@@ -1970,14 +2003,13 @@ window.__ModuleLoader__.load({
     }
 
     function SidebarIcon({ size = 20 }) {
+      /* claude-star */
       return h('svg', {
-        width: size, height: size, viewBox: '0 0 24 24', fill: 'none',
-        stroke: 'currentColor', strokeWidth: 1.6, strokeLinecap: 'round',
-        strokeLinejoin: 'round', 'aria-hidden': true,
+        width: size, height: size, viewBox: '0 0 24 24', fill: 'none', 'aria-hidden': true,
       }, [
-        h('path', { d: 'M4.5 4.5h6v15h-6z', key: 'a' }),
-        h('path', { d: 'M13.5 4.5h6v15h-6z', key: 'b' }),
-        h('path', { d: 'M6.5 8h2M15.5 8h2', key: 'c', opacity: .55 }),
+        h('g', { fill: 'currentColor', key: 'star' }, [0, 60, 120, 180, 240, 300].map((deg) =>
+          h('ellipse', { key: deg, cx: 12, cy: 5.6, rx: 1.5, ry: 4.6, transform: `rotate(${deg} 12 12)` }))),
+        h('circle', { key: 'core', cx: 12, cy: 12, r: 2.1, fill: 'currentColor', opacity: 0.9 }),
       ]);
     }
 

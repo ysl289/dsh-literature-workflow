@@ -461,19 +461,32 @@ test('stage prompt editors persist overrides, send them with new tasks, and conf
     findElement(tree, node => node.props?.['data-testid'] === 'stop-after').props.onChange({target:{value:'read'}});
     tree = render();
 
-    findElement(tree, node => node.type === 'button' && node.props['aria-expanded'] === false).props.onClick();
+    // The template picker is a button + popup menu (not a native <select>).
+    // Saving first: click "存为模板" to open the naming dialog.
+    findElement(tree, node => node.type === 'button' && node.props.children === '存为模板').props.onClick();
     tree = render();
-    findElement(tree, node => node.type === 'input' && node.props['aria-label'] === '模板名称').props.onChange({ target: { value: 'PPT deck' } });
+    const templateNameInput = findElement(tree, node => node.type === 'input' && node.props['aria-label'] === '模板名称');
+    templateNameInput.props.onChange({ target: { value: 'PPT deck' } });
     tree = render();
-    findElement(tree, node => node.type === 'button' && node.props.children === '保存为模板').props.onClick();
+    findElement(tree, node => node.type === 'button' && node.props.children === '保存').props.onClick();
     await tick(); tree = render();
     const templatePayload = calls.findLast(call => call.action === 'save_template').payload;
     assert.ok(templatePayload.stagePrompts.design);
     assert.equal(templatePayload.stopAfter, 'read');
-    const templateSelect = findElement(tree, node => node.type === 'select' && node.props['aria-label'] === '已保存模板');
-    templateSelect.props.onChange({ target: { value: 'Legacy' } });
+    // Re-open the template menu: the trigger is the button wrapping the
+    // "已保存模板" label (not the unrelated sidebar toggle).
+    const menuTrigger = findElement(tree, node =>
+      node.type === 'button' &&
+      node.props['aria-expanded'] === false &&
+      findElements(node, child => typeof child?.props?.children === 'string' && child.props.children === '已保存模板').length > 0);
+    menuTrigger.props.onClick();
     tree = render();
-    assert.deepEqual(findElements(tree, node => node.props?.className === 'lw-step-name').map(node => node.props.children), ['导入已有论文', '阅读与结构化抽取'], 'legacy array templates remain selectable');
+    const legacyEntry = findElement(tree, node => node.props?.className === 'lw-tpl-name' && node.props.title === 'Legacy');
+    legacyEntry.props.onClick();
+    tree = render();
+    // Step titles live in .lw-step-name-text; .lw-step-name also wraps the
+    // stage kind label, so assert on the text node specifically.
+    assert.deepEqual(findElements(tree, node => node.props?.className === 'lw-step-name-text').map(node => node.props.children), ['导入已有论文', '阅读与结构化抽取'], 'legacy array templates remain selectable');
 
     get('edit-job-job-1').props.onClick(); tree = render();
     const jobStageSelect = get('job-prompt-stage');

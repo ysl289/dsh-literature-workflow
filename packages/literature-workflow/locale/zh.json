@@ -229,5 +229,22 @@
   "tencent_validating": "正在验证腾讯文档连接",
   "tencentBrowserFailed": "系统未能自动打开浏览器，请点击上方授权链接。",
   "tencent_error_vip_required": "腾讯接口返回权限不足，请检查当前账号的腾讯文档权限。",
-  "tencent_error_token_validation_failed": "已收到授权结果，但腾讯文档连接验证失败；未保存为已连接。"
+  "tencent_error_token_validation_failed": "已收到授权结果，但腾讯文档连接验证失败；未保存为已连接。",
+  "deletePath": "路径",
+  "saveAsTemplate": "存为模板",
+  "templatesEmpty": "还没有保存的模板",
+  "templateRename": "重命名模板",
+  "templateDelete": "删除模板",
+  "templateDeleteNote": "删除后无法恢复；已用该模板启动的任务不受影响。",
+  "templateDeleteTitle": "删除模板「{name}」？",
+  "templateDeleteConfirm": "确认删除",
+  "templateDeleting": "正在删除…",
+  "templateRenamed": "模板已重命名",
+  "templateDeleted": "模板已删除",
+  "templateSavedAs": "已保存为新模板",
+  "cancel": "取消",
+  "saveTemplateBtn": "保存",
+  "templateHint": "把当前阶段顺序存成一份可复用的模板。",
+  "stage_cards": "理论制卡",
+  "desc_cards": "把本文用到的理论查重后写进卡片库。"
 }

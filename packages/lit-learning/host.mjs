@@ -83,7 +83,7 @@ export function attachLearningUI(ctx, service, config) {
     // 探针：不带任何副作用，用来判断「路由通不通、认证过没过」。
     route('/ping', 'GET', async () => json({
       ok: true,
-      plugin: 'dsh-lit-learning',
+      plugin: '@local/dsh-lit-learning',
       pid: process.pid,
       learningRoot: config.learningRoot,
       built: Boolean(currentManifestSync(config.learningRoot)),

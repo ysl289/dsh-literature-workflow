@@ -46,12 +46,14 @@ window.__ModuleLoader__.load({
       stages: '当前顺序', emptyFlow: '把下方步骤拖到这里，或点击“加入”。', candidates: '可添加步骤', add: '加入', remove: '移出', moveUp: '上移', moveDown: '下移',
       source: '入口', processing: '处理', publish: '发布', validationPending: '正在检查流程…', validationOK: '流程检查通过，原文未报告的内容会注明待核对。', validationError: '流程还缺少输入来源或必要步骤。',
       searchTitle: '按主题寻找论文', searchDesc: '创建检索任务，由独立文献代理整理候选并按流程继续。', query: '检索要求', queryPlaceholder: '例如：数字金融对企业创新的影响，优先近五年实证研究', limit: '最多篇数', fromYear: '起始年份', toYear: '结束年份', startSearch: '开始检索',
-      uploadTitle: '导入已有论文', uploadDesc: '选择或拖入 PDF、Markdown（.md / .markdown）或 paper.extract.json。Markdown 直接进入所选的分类、阅读等后续流程，不执行 PDF 转换。文件只通过 Harness 的本机认证通道传给工作流。', chooseFiles: '选择文件', dropHint: '将 PDF、Markdown 或 extract.json 拖到这里', dropAlt: '也可以点击“选择文件”', scanFolder: '扫描 input 文件夹', inputFolder: '输入文件夹',
+      uploadTitle: '导入已有论文', uploadDesc: '支持 PDF、Markdown 与 paper.extract.json。', chooseFiles: '选择文件', dropHint: '拖入 PDF 或 Markdown', dropAlt: '或点击选择', scanFolder: '扫描 input 文件夹', inputFolder: '输入文件夹',
       jobs: '任务队列', jobsHelp: '最近任务与当前进度。', jobTitle: '论文 / 任务', status: '状态', progress: '流程', actions: '操作', retry: '继续', artifacts: '产物', noJobs: '暂无任务。选择检索或导入入口开始。', download: '下载',
       hideJob: '隐藏', unhideJob: '取消隐藏', showHiddenJobs: '显示隐藏任务', hiddenJobsOnly: '队列中没有可见任务；还有 {count} 条隐藏任务。', jobHidden: '任务已隐藏，仅从队列视图中收起；不会启动或停止流程。', jobUnhidden: '任务已取消隐藏。',
       deleteJob: '彻底删除', deleteJobAria: '彻底删除任务「{job}」', deleteJobTitle: '彻底删除「{job}」？', deleteJobNote: '这会永久删除任务记录、本地产物和任务生成的 Zotero 副本。原始论文文件会保留；已发布到 Blog 或腾讯文档的网上内容会保留。请先检查下面的删除清单。', deleteJobConfirm: '确认彻底删除', deleteJobDone: '任务记录及清单中的本地产物已彻底删除。', deleteJobBlocked: '此任务当前不可删除。', deletingJob: '正在彻底删除…',
       deletePreviewLoading: '正在读取删除清单…', deletePreviewFailed: '无法读取删除清单。任务尚未删除，请取消后重试。', deletePreviewInvalid: '服务端未返回有效的删除计划令牌，任务尚未删除。', deleteInventory: '将删除的本地文件', deleteInventoryCount: '共 {count} 个文件 · {bytes} 字节', deleteInventoryMore: '仅显示前 10 个；另有 {count} 个文件。', deleteInventoryEmpty: '没有列出本地文件。', deletePath: '路径', deleteBytes: '字节', deleteKind: '类型', deleteWarnings: '删除提示', deleteExternal: '网上发布内容', deleteExternalNote: '已发布到网上的内容会保留，不会由此操作删除。', deleteStatus: '状态', deleteConfirmScope: '此操作不可撤销。',
       saveWorkflow: '保存默认流程', saveTemplate: '保存为模板', templateName: '模板名称', templates: '已保存模板', watchInput: '监听 input 文件夹', publishMode: '发布方式', rootCollection: 'Zotero 根分类', saveSettings: '保存设置', closeSettings: '收起设置',
+      saveAsTemplate: '存为模板',
+      templatesEmpty: '还没有保存的模板', templateRename: '重命名模板', templateDelete: '删除模板', templateDeleteNote: '删除后无法恢复；已用该模板启动的任务不受影响。', templateDeleteTitle: '删除模板「{name}」？', templateDeleteConfirm: '确认删除', templateDeleting: '正在删除…', templateRenamed: '模板已重命名', templateDeleted: '模板已删除', templateSavedAs: '已保存为新模板', cancel: '取消', saveTemplateBtn: '保存', templateHint: '把当前阶段顺序存成一份可复用的模板。',
       stopAfter: '暂停在此步之后', stopAfterNone: '不暂停，继续跑完流程', pausedAfter: '已在「{stage}」后暂停；点“继续”会从剩余步骤恢复。',
       editPrompt: '编辑提示词', promptEditorTitle: '编辑「{stage}」提示词', promptText: '阶段提示词', promptDefault: '恢复内置提示词', promptSave: '保存提示词', promptCancel: '取消', promptApplied: '已保存。提示词仅用于新任务，不会改写已完成的产物。', promptHelp: '可按需要补充任务要求；保留原有输出格式和事实核验要求。',
       editRemaining: '编辑后续步骤', remainingEditorTitle: '配置「{job}」的后续步骤', remainingPromptStages: '可编辑提示词的未完成步骤', remainingNone: '后续步骤中没有可编辑提示词的阶段。', remainingHelp: '这里只保存这条任务未完成步骤的设置，不会启动或重跑任务。完成后点“继续”恢复。',
@@ -82,12 +84,13 @@ window.__ModuleLoader__.load({
       stages: 'Current order', emptyFlow: 'Drop steps here or choose Add.', candidates: 'Available steps', add: 'Add', remove: 'Remove', moveUp: 'Move up', moveDown: 'Move down',
       source: 'Source', processing: 'Process', publish: 'Publish', validationPending: 'Checking workflow…', validationOK: 'Workflow is valid. Unreported source details will be marked for review.', validationError: 'The flow is missing a source or a required step.',
       searchTitle: 'Find papers by topic', searchDesc: 'A dedicated literature agent collects candidates and continues through this flow.', query: 'Search request', queryPlaceholder: 'For example: digital finance and firm innovation, empirical studies from the last five years', limit: 'Maximum papers', fromYear: 'From year', toYear: 'To year', startSearch: 'Start search',
-      uploadTitle: 'Import existing papers', uploadDesc: 'Choose or drop a PDF, Markdown (.md / .markdown), or paper.extract.json. Markdown enters your selected downstream steps directly and skips PDF conversion. Files use Harness’s authenticated local transport.', chooseFiles: 'Choose files', dropHint: 'Drop a PDF, Markdown file, or extract.json here', dropAlt: 'You can also choose files', scanFolder: 'Scan input folder', inputFolder: 'Input folder',
+      uploadTitle: 'Import existing papers', uploadDesc: 'PDF, Markdown, or paper.extract.json.', chooseFiles: 'Choose files', dropHint: 'Drop a PDF, Markdown file, or extract.json here', dropAlt: 'You can also choose files', scanFolder: 'Scan input folder', inputFolder: 'Input folder',
       jobs: 'Job queue', jobsHelp: 'Recent tasks and current progress.', jobTitle: 'Paper / task', status: 'Status', progress: 'Flow', actions: 'Action', retry: 'Continue', artifacts: 'Artifacts', noJobs: 'No tasks yet. Start with search or local import.', download: 'Download',
       hideJob: 'Hide', unhideJob: 'Unhide', showHiddenJobs: 'Show hidden tasks', hiddenJobsOnly: 'There are no visible tasks in the queue; {count} hidden tasks remain.', jobHidden: 'Task hidden from the queue view. This did not start or stop its workflow.', jobUnhidden: 'Task unhidden.',
       deleteJob: 'Delete permanently', deleteJobAria: 'Permanently delete task “{job}”', deleteJobTitle: 'Permanently delete “{job}”?', deleteJobNote: 'This permanently removes the task record, local outputs, and Zotero copies created by the task. The original paper files will be kept. Content already published to Blog or Tencent Docs will remain online. Review the deletion inventory below.', deleteJobConfirm: 'Confirm permanent deletion', deleteJobDone: 'The task record and listed local outputs were permanently deleted.', deleteJobBlocked: 'This task cannot be deleted right now.', deletingJob: 'Deleting permanently…',
       deletePreviewLoading: 'Loading deletion inventory…', deletePreviewFailed: 'Could not load the deletion inventory. The task has not been deleted. Cancel and try again.', deletePreviewInvalid: 'The server did not return a valid deletion plan token. The task has not been deleted.', deleteInventory: 'Local files to be deleted', deleteInventoryCount: '{count} files · {bytes} bytes total', deleteInventoryMore: 'Showing the first 10 files; {count} more files are omitted.', deleteInventoryEmpty: 'No local files were listed.', deletePath: 'Path', deleteBytes: 'Bytes', deleteKind: 'Type', deleteWarnings: 'Deletion notes', deleteExternal: 'Online publications', deleteExternalNote: 'Content already published online will remain and is not deleted by this action.', deleteStatus: 'Status', deleteConfirmScope: 'This action cannot be undone.',
       saveWorkflow: 'Save default flow', saveTemplate: 'Save as template', templateName: 'Template name', templates: 'Saved templates', watchInput: 'Watch input folder', publishMode: 'Publishing mode', rootCollection: 'Zotero root collection', saveSettings: 'Save settings', closeSettings: 'Close settings',
+      saveAsTemplate: 'Save as template', templatesEmpty: 'No saved templates yet', templateRename: 'Rename template', templateDelete: 'Delete template', templateDeleteNote: 'Deletion cannot be undone. Tasks already started from this template are not affected.', templateDeleteTitle: 'Delete the template “{name}”?', templateDeleteConfirm: 'Delete', templateDeleting: 'Deleting…', templateRenamed: 'Template renamed', templateDeleted: 'Template deleted', templateSavedAs: 'Saved as a new template', templateHint: 'Save the current stage order as a reusable template.', cancel: 'Cancel', saveTemplateBtn: 'Save',
       stopAfter: 'Pause after this step', stopAfterNone: 'Do not pause; run the rest of the flow', pausedAfter: 'Paused after “{stage}”. Choose Continue to resume the remaining steps.',
       editPrompt: 'Edit prompt', promptEditorTitle: 'Edit the “{stage}” prompt', promptText: 'Stage prompt', promptDefault: 'Restore built-in prompt', promptSave: 'Save prompt', promptCancel: 'Cancel', promptApplied: 'Saved. Prompts apply to new tasks and do not rewrite completed output.', promptHelp: 'Add task-specific guidance while preserving the existing output format and evidence checks.',
       editRemaining: 'Edit remaining steps', remainingEditorTitle: 'Configure remaining steps for “{job}”', remainingPromptStages: 'Unfinished steps with editable prompts', remainingNone: 'No unfinished step has an editable prompt.', remainingHelp: 'This only saves settings for this job’s unfinished steps; it does not start or rerun the task. Choose Continue when ready.',
@@ -113,37 +116,80 @@ window.__ModuleLoader__.load({
 
     const STYLES = `
       .lw-root{
-        --lw-bg:var(--dsw-alias-bg-base,#fff);
-        --lw-surface:var(--dsw-alias-bg-layer-1,#fff);
-        --lw-card:var(--dsw-alias-bg-layer-2,#fff);
-        --lw-sunken:var(--dsw-alias-bg-module-platform,#f5f6f7);
-        --lw-line-1:var(--dsw-alias-border-l1,#0000000a);
-        --lw-line-2:var(--dsw-alias-border-l2,#0000001a);
-        --lw-line-3:var(--dsw-alias-border-l3,#0000001f);
-        --lw-line-4:var(--dsw-alias-border-l4,#00000029);
-        --lw-ink:var(--dsw-alias-label-primary,#0f1115);
-        --lw-ink-2:var(--dsw-alias-label-secondary,#61666b);
-        --lw-ink-3:var(--dsw-alias-label-tertiary,#81858c);
-        --lw-accent:var(--dsw-alias-state-business-primary,#4176e6);
-        --lw-ok:var(--dsw-alias-state-success-primary,#22c55e);
-        --lw-bad:var(--dsw-alias-state-error-primary,#ec1313);
-        --lw-warn:var(--dsw-alias-state-warn-label,#dd8629);
-        --lw-hover:var(--dsw-alias-interactive-bg-hover,#2631480f);
-        --lw-focus:var(--dsw-focus-ring-color,#4176e6);
-        --lw-skeleton:var(--dsw-alias-bg-skeleton,#0000000a);
-        --lw-r-xs:var(--dsw-radius-xs,4px);
-        --lw-r-sm:var(--dsw-radius-sm,8px);
-        --lw-r-md:var(--dsw-radius-md,12px);
-        --lw-r-lg:var(--dsw-radius-lg,16px);
-        --lw-shadow-1:var(--dsw-shadow-lv1,0 2px 4px 0 #0000000d);
-        --lw-shadow-2:var(--dsw-shadow-lv2,0 4px 12px 0 #00000005,0 2px 8px 0 #0000000a);
+        /* Claude's own colour card, written as literals on purpose: the skin
+           serves both brands, and inheriting them yields the DeepSeek palette
+           (cool canvas, blue accent) whenever that card is in force. These are
+           the Claude seeds from the skin's palette table. */
+        --lw-bg:#FFFFFF;
+        --lw-surface:#FFFFFF;
+        --lw-card:#FAFAFA;
+        --lw-sunken:#F4F4F4;
+        --lw-line-1:#EAEAEA;
+        --lw-line-2:#E0E0E0;
+        --lw-line-3:#D5D5D5;
+        --lw-line-4:#C8C8C8;
+        /* A line that only separates sits a rung below the lightest outline and
+           is drawn at 0.5px, so an outline always reads heavier than it. */
+        --lw-divider:rgba(22,22,22,.06);
+        /* Warm ink, never pure black: this is what makes the surface read as print. */
+        --lw-ink:#161616;
+        --lw-ink-2:#70686A;
+        --lw-ink-3:#91888A;
+        /* Claude Orange, the desaturated terracotta. A verb, not a colour:
+           it fills the primary action and the mark, never body text. */
+        --lw-accent:#D97757;
+        --lw-accent-pressed:#BE6242;
+        --lw-accent-soft:#F6DED7;
+        --lw-accent-ink:#FFFFFF;
+        --lw-ok:#8A847A;
+        --lw-bad:#C0392B;
+        --lw-warn:#B8762A;
+        --lw-hover:rgba(20,20,19,.05);
+        --lw-focus:rgba(20,20,19,.45);
+        --lw-skeleton:rgba(20,20,19,.05);
+        /* Radius ladder 4 / 8 / 16 with a 12px popover card; softness is core. */
+        --lw-r-xs:4px;--lw-r-sm:8px;--lw-r-md:12px;--lw-r-lg:16px;--lw-r-pill:999px;
+        /* Ring shadows, not drop shadows: depth without visible elevation. */
+        --lw-ring:0 0 0 1px rgba(20,20,19,.10);
+        --lw-shadow-1:0 0 0 1px rgba(20,20,19,.10);
+        --lw-shadow-2:0 4px 18px rgba(20,20,19,.10),0 1px 3px rgba(20,20,19,.05);
+        /* One token per motion role: feedback, reveal, surface, exit, travel. */
         --lw-ease:cubic-bezier(.2,0,0,1);
-        --lw-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-        --lw-serif:"Noto Serif SC","Source Han Serif SC","Songti SC",Georgia,serif;
+        --lw-feedback:120ms;
+        --lw-surface-in:180ms;
+        --lw-exit:110ms;
+        --lw-travel:240ms;
+        --lw-mono:var(--dsh-claude-font-code,var(--ds-font-family-code,"JetBrains Mono",ui-monospace,Menlo,monospace));
+        --lw-serif:var(--dsh-claude-font-serif,"Tiempos Text","Source Serif Pro","Noto Serif SC","Songti SC",Georgia,serif);
+        --lw-sans:var(--dsw-font-family,"Styrene A",Inter,system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif);
+        /* Where Claude puts the orange: the mark, the primary action, the active
+           choice, links inside content, the streaming caret — and the eyebrow
+           label above a section. It never sets body copy. */
+        --lw-accent-text:#BF6446;
+        --lw-eyebrow:#A35035;
         display:flex;flex-direction:column;height:100%;min-height:0;overflow:hidden;
+        container-type:inline-size;
         background:var(--lw-bg);color:var(--lw-ink);
-        font:var(--dsw-font-s-14,14px/22px var(--dsw-font-family,system-ui,sans-serif));
-        
+        /* Generous leading: Claude reads as prose, not as a dashboard. */
+        font:14px/22px var(--lw-sans);
+        -webkit-font-smoothing:antialiased;
+      }
+      /* Warm dark: near-black with an orange undertone, never blue-tinted dark.
+         The host writes a truthy value; presence alone is not dark. */
+      html[data-ds-dark-theme="1"] .lw-root,body[data-ds-dark-theme="1"] .lw-root,
+      html[data-ds-dark-theme="true"] .lw-root,body[data-ds-dark-theme="true"] .lw-root,
+      html[data-theme="dark"] .lw-root{
+        --lw-bg:#1F1B16;--lw-surface:#2A2520;--lw-card:#3A332C;--lw-sunken:#332D26;
+        --lw-line-1:rgba(232,224,210,.14);--lw-line-2:rgba(232,224,210,.20);
+        --lw-line-3:rgba(232,224,210,.26);--lw-line-4:rgba(232,224,210,.32);
+        --lw-divider:rgba(232,224,210,.08);
+        --lw-ink:#E8E0D2;--lw-ink-2:#B5AB9E;--lw-ink-3:#8C8378;
+        --lw-accent:#D97757;--lw-accent-soft:#4A352A;
+        --lw-hover:rgba(232,224,210,.07);
+        --lw-ring:0 0 0 1px rgba(232,224,210,.14);
+        --lw-shadow-1:0 0 0 1px rgba(232,224,210,.14);
+        --lw-shadow-2:0 10px 30px rgba(0,0,0,.45),0 0 0 1px rgba(232,224,210,.14);
+        --lw-skeleton:rgba(232,224,210,.08);
       }
       .lw-root *{box-sizing:border-box}
       .lw-root :where(button,input,select,textarea){font:inherit;color:inherit;margin:0}
@@ -151,7 +197,7 @@ window.__ModuleLoader__.load({
       .lw-root ::selection{background:color-mix(in srgb,var(--lw-accent) 22%,transparent)}
       .lw-root svg{display:block;flex:none}
 
-      .lw-head{flex:none;border-bottom:1px solid var(--lw-line-1);background:var(--lw-bg)}
+      .lw-head{flex:none;border-bottom:.5px solid var(--lw-divider);background:var(--lw-bg)}
       .lw-head-inner{display:flex;align-items:center;gap:13px;width:100%;max-width:1320px;margin:0 auto;padding:14px 24px}
       .lw-mark{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--lw-sunken);color:var(--lw-ink-2)}
       .lw-head-copy{min-width:0}
@@ -165,7 +211,7 @@ window.__ModuleLoader__.load({
       .lw-chip.is-warn{background:color-mix(in srgb,var(--lw-warn) 12%,transparent);color:color-mix(in srgb,var(--lw-warn) 72%,var(--lw-ink))}
       .lw-chip.is-warn .lw-dot{background:var(--lw-warn)}
 
-      .lw-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:30px;padding:0 11px;border:1px solid transparent;border-radius:var(--lw-r-sm);background:transparent;color:var(--lw-ink);font-size:13px;line-height:18px;font-weight:500;white-space:nowrap;cursor:pointer;transition:background-color .12s var(--lw-ease),border-color .12s var(--lw-ease),color .12s var(--lw-ease),opacity .12s var(--lw-ease)}
+      .lw-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:30px;padding:0 13px;border:1px solid transparent;border-radius:var(--lw-r-pill);background:transparent;color:var(--lw-ink);font-size:13px;line-height:18px;font-weight:500;white-space:nowrap;cursor:pointer;transition:background-color .12s var(--lw-ease),border-color .12s var(--lw-ease),color .12s var(--lw-ease),opacity .12s var(--lw-ease)}
       .lw-btn:hover{background:var(--lw-hover)}
       .lw-btn:active{transform:translateY(.5px)}
       .lw-btn:disabled{opacity:.4;cursor:default;background:transparent}
@@ -182,28 +228,27 @@ window.__ModuleLoader__.load({
       .lw-btn-sm{height:26px;padding:0 9px;font-size:12px;line-height:16px;gap:4px}
 
       .lw-scroll{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain}
-      .lw-page{max-width:1320px;margin:0 auto;padding:18px 24px 52px;display:flex;flex-direction:column;gap:14px}
+      .lw-page{max-width:1320px;margin:0 auto;padding:20px 24px 56px;display:flex;flex-direction:column;gap:16px}
 
       /* 三块面板若都用同样重的描边，就像三张卡片摞在一起。输入区留实线当锚点，
          下面两块只留最淡一层线，读起来是「一个入口 + 两段清单」。 */
       .lw-panel{border:1px solid var(--lw-line-1);border-radius:var(--lw-r-md);background:transparent;overflow:hidden}
-      .lw-panel-head{display:flex;align-items:center;gap:12px;padding:13px 16px}
-      .lw-panel-head.has-rule{border-bottom:1px solid var(--lw-line-1)}
+      .lw-panel-head{display:flex;align-items:center;gap:12px;padding:14px 16px}
+      .lw-panel-head.has-rule{border-bottom:.5px solid var(--lw-divider)}
       .lw-panel-copy{min-width:0}
-      .lw-panel-title{display:flex;align-items:center;gap:8px;margin:0;font-size:13px;line-height:20px;font-weight:500;letter-spacing:-.005em}
+      .lw-panel-title{display:flex;align-items:center;gap:8px;margin:0;font-family:var(--lw-serif);font-size:14px;line-height:21px;font-weight:600;letter-spacing:-.005em}
       .lw-panel-sub{margin:2px 0 0;font-size:12px;line-height:17px;color:var(--lw-ink-2)}
-      .lw-count{display:inline-flex;align-items:center;height:18px;padding:0 6px;border-radius:5px;background:var(--lw-sunken);color:var(--lw-ink-3);font-family:var(--lw-mono);font-size:11px;line-height:14px;font-weight:400;font-variant-numeric:tabular-nums;letter-spacing:.04em}
+      .lw-count{display:inline-flex;align-items:center;height:18px;padding:0 7px;border-radius:var(--lw-r-pill);background:var(--lw-accent-soft);color:var(--lw-eyebrow);font-family:var(--lw-mono);font-size:11px;line-height:14px;font-weight:400;font-variant-numeric:tabular-nums;letter-spacing:.04em}
       .lw-head-right{display:flex;align-items:center;gap:6px;margin-left:auto;flex:none}
 
       /* 流程编排 / 任务队列是「清单」不是「卡片」：去掉盒子，只留一条通栏细线分隔，
          内容与页面左缘对齐。整页于是只剩输入区一个盒子，主次一眼能看出来。 */
       .lw-panel--flat{border:0;border-radius:0;background:transparent;overflow:visible}
-      .lw-panel--flat > .lw-panel-head{padding:16px 0 12px;border-bottom:1px solid var(--lw-line-2)}
-      .lw-panel--flat .lw-steps{padding:14px 0}
+      .lw-panel--flat > .lw-panel-head{padding:18px 0 12px;border-bottom:.5px solid var(--lw-divider)}
       .lw-panel--flat .lw-validate{padding:0 0 10px}
       .lw-panel--flat .lw-palette{padding:10px 0 0}
-      .lw-panel--flat .lw-job{padding:12px 0;border-top-color:var(--lw-line-2)}
-      .lw-panel--flat .lw-skel-row{padding:14px 0;border-top-color:var(--lw-line-2)}
+      .lw-panel--flat .lw-job{padding:12px 0;border-top-color:var(--lw-divider)}
+      .lw-panel--flat .lw-skel-row{padding:14px 0;border-top-color:var(--lw-divider)}
       .lw-panel--flat .lw-empty{padding:36px 0 40px}
 
       .lw-select-wrap{position:relative;display:inline-flex;align-items:center}
@@ -211,7 +256,7 @@ window.__ModuleLoader__.load({
       .lw-select{appearance:none;height:26px;max-width:168px;padding:0 24px 0 9px;border:1px solid var(--lw-line-2);border-radius:var(--lw-r-sm);background:transparent;color:var(--lw-ink-2);font-size:12px;line-height:16px;font-weight:500;cursor:pointer;transition:border-color .12s var(--lw-ease),background-color .12s var(--lw-ease)}
       .lw-select:hover{border-color:var(--lw-line-3);background:var(--lw-hover);color:var(--lw-ink)}
 
-      .lw-composer{padding:12px;border-color:var(--lw-line-2);background:var(--lw-surface)}
+      .lw-composer{padding:0;border-color:var(--lw-line-1);background:var(--lw-surface)}
       .lw-composer-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
       .lw-stop-after{display:inline-flex;align-items:center;gap:6px;color:var(--lw-ink-3)}
       .lw-stop-after .lw-label{font-size:11px;line-height:14px;white-space:nowrap}
@@ -219,7 +264,9 @@ window.__ModuleLoader__.load({
       .lw-seg button{height:26px;border:0;border-radius:var(--lw-r-sm);background:transparent;color:var(--lw-ink-2);font-size:12px;line-height:16px;font-weight:500;cursor:pointer;transition:background-color .12s var(--lw-ease),color .12s var(--lw-ease),box-shadow .12s var(--lw-ease)}
       .lw-seg button:hover{color:var(--lw-ink)}
       .lw-seg button[aria-selected="true"]{background:var(--lw-surface);color:var(--lw-ink);box-shadow:var(--lw-shadow-1)}
-      body[data-ds-dark-theme] .lw-seg button[aria-selected="true"]{background:color-mix(in srgb,var(--lw-ink) 10%,var(--lw-sunken))}
+      html[data-ds-dark-theme="1"] .lw-seg button[aria-selected="true"],
+      body[data-ds-dark-theme="1"] .lw-seg button[aria-selected="true"],
+      html[data-theme="dark"] .lw-seg button[aria-selected="true"]{background:var(--lw-card);box-shadow:var(--lw-ring)}
       .lw-composer-note{margin-left:auto;font-size:11px;line-height:16px;color:var(--lw-ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
       .lw-inline{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
       .lw-inline-field{display:flex;align-items:center;gap:7px;font-size:11px;line-height:16px;color:var(--lw-ink-3);white-space:nowrap}
@@ -231,49 +278,68 @@ window.__ModuleLoader__.load({
       .lw-input,.lw-textarea,.lw-select-full{width:100%;min-width:0;height:32px;padding:0 10px;border:1px solid var(--lw-line-3);border-radius:var(--lw-r-sm);background:var(--lw-surface);color:var(--lw-ink);font-size:13px;line-height:20px;transition:border-color .12s var(--lw-ease),box-shadow .12s var(--lw-ease)}
       .lw-textarea{height:auto;min-height:66px;padding:7px 10px;resize:vertical;line-height:20px}
       .lw-input::placeholder,.lw-textarea::placeholder{color:var(--lw-ink-3)}
+      /* The caret and the selection both take Claude Orange: the cursor is part
+         of the brand, not the operating system's default. */
+      .lw-root :where(input,textarea,[contenteditable]){caret-color:var(--lw-accent)}
+      .lw-root ::selection{background:var(--lw-accent-soft);color:var(--lw-ink)}
+      /* A link inside content is Claude Orange — the one place body text may
+         take it, because the word itself is the affordance. */
+      .lw-root a{color:var(--lw-accent-text);text-decoration-color:color-mix(in srgb,var(--lw-accent) 45%,transparent);text-underline-offset:2px}
+      .lw-root a:hover{color:var(--lw-accent-pressed)}
+      .lw-root ::-moz-selection{background:var(--lw-accent-soft);color:var(--lw-ink)}
+      /* Focus is a ring, never a glow: one hairline plus a soft accent halo. */
+      .lw-input:focus,.lw-textarea:focus,.lw-select-full:focus{border-color:var(--lw-accent);box-shadow:0 0 0 1px var(--lw-accent),0 0 0 4px color-mix(in srgb,var(--lw-accent) 12%,transparent)}
       .lw-input:hover,.lw-textarea:hover,.lw-select-full:hover{border-color:var(--lw-line-4)}
       .lw-input:focus,.lw-textarea:focus,.lw-select-full:focus{outline:none;border-color:var(--lw-accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--lw-accent) 15%,transparent)}
-      .lw-drop-inline{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px dashed var(--lw-line-3);border-radius:var(--lw-r-md);background:var(--lw-sunken);transition:border-color .12s var(--lw-ease),background-color .12s var(--lw-ease)}
-      .lw-drop-inline.is-drag{border-color:var(--lw-accent);background:color-mix(in srgb,var(--lw-accent) 6%,var(--lw-surface))}
-      .lw-drop-icon{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:var(--lw-surface);color:var(--lw-ink-3);box-shadow:var(--lw-shadow-1);flex:none}
-      .lw-drop-copy{min-width:0;display:grid;gap:1px}
-      .lw-drop-title{font-size:12px;line-height:17px;font-weight:500}
-      .lw-drop-hint{font-size:11px;line-height:15px;color:var(--lw-ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-      .lw-drop-actions{display:flex;gap:6px;margin-left:auto;flex:none}
+      /* The drop target is not a container: it is one line of copy with the
+         action at its end, so the composer card stays the only box on screen. */
+      .lw-drop-inline{display:flex;align-items:center;gap:10px;padding:6px 0;border:0;border-radius:0;background:transparent;transition:opacity var(--lw-feedback) var(--lw-ease)}
+      .lw-drop-inline.is-drag{opacity:.7}
+      .lw-drop-icon{display:grid;place-items:center;width:22px;height:22px;border-radius:0;background:transparent;color:var(--lw-ink-3);box-shadow:none;flex:none}
+      .lw-drop-icon svg{width:15px;height:15px}
+      .lw-drop-copy{min-width:0;display:flex;align-items:baseline;gap:8px;flex:1 1 auto}
+      .lw-drop-title{font-size:12.5px;line-height:20px;font-weight:400;color:var(--lw-ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+      .lw-drop-hint{font-family:var(--lw-mono);font-size:10.5px;line-height:20px;color:var(--lw-ink-3);opacity:.75;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+      .lw-drop-actions{display:flex;gap:8px;margin-left:auto;flex:none}
 
-      .lw-steps{display:flex;align-items:stretch;padding:16px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;scrollbar-width:thin}
-      .lw-steps::-webkit-scrollbar{height:8px}
-      .lw-steps::-webkit-scrollbar-thumb{background:var(--dsw-alias-scrollbar-bg-l1,#e5e5e5);border-radius:999px;border:2px solid transparent;background-clip:content-box}
-      .lw-connector{display:grid;place-items:center;flex:0 0 20px;color:var(--lw-ink-3);opacity:.5}
+      .lw-steps{display:flex;flex-direction:column;padding:0;overflow:visible}
+
+      .lw-steps::-webkit-scrollbar{height:auto}
+      .lw-connector{display:none}
       .lw-steps-wrap{position:relative}
-      .lw-steps-wrap:after{content:"";position:absolute;top:0;right:0;bottom:0;width:76px;background:linear-gradient(90deg,transparent,var(--lw-surface) 42%);pointer-events:none}
-      .lw-step{position:relative;display:flex;flex-direction:column;gap:5px;flex:0 0 180px;width:180px;min-height:142px;padding:11px 12px 10px;border:1px solid var(--lw-line-2);border-radius:var(--lw-r-md);background:var(--lw-card);cursor:grab;scroll-snap-align:start;transition:border-color .12s var(--lw-ease),box-shadow .16s var(--lw-ease)}
-      .lw-step:hover{border-color:var(--lw-line-3);box-shadow:var(--lw-shadow-1)}
+      .lw-steps-wrap:after{content:none}
+      .lw-step{position:relative;display:flex;align-items:center;gap:12px;flex:none;width:auto;min-height:36px;padding:9px 12px;border:0;border-top:.5px solid var(--lw-divider);border-radius:0;background:transparent;cursor:grab;transition:background-color var(--lw-feedback) var(--lw-ease)}
+      .lw-step:first-child,.lw-step:nth-child(1){border-top:0}
+      .lw-step:hover{background:var(--lw-hover);border-color:var(--lw-divider);box-shadow:none}
       .lw-step:active{cursor:grabbing}
       .lw-step.is-dragging{opacity:.4}
-      .lw-step.is-over{border-color:var(--lw-accent);background:color-mix(in srgb,var(--lw-accent) 5%,var(--lw-card))}
-      .lw-step.drop-before:before,.lw-step.drop-after:after{content:"";position:absolute;top:10px;bottom:10px;width:2px;border-radius:2px;background:var(--lw-accent)}
-      .lw-step.drop-before:before{left:-12px}
-      .lw-step.drop-after:after{right:-12px}
-      .lw-step-top{display:flex;align-items:center;gap:6px;min-height:16px}
-      .lw-idx{font-family:var(--lw-mono);font-size:11px;line-height:14px;font-weight:400;color:var(--lw-ink-3);font-variant-numeric:tabular-nums;letter-spacing:.08em}
-      .lw-kind{font-size:11px;line-height:14px;color:var(--lw-ink-3)}
-      .lw-kind:before{content:"·";margin-right:4px}
-      .lw-step-icon{margin-left:auto;color:var(--lw-ink-3);transition:color .12s var(--lw-ease)}
-      .lw-step:hover .lw-step-icon{color:var(--lw-ink-2)}
-      .lw-step-name{margin:1px 0 0;font-size:13px;line-height:19px;font-weight:500;letter-spacing:-.005em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-      .lw-step-desc{margin:0;min-height:34px;font-size:12px;line-height:17px;color:var(--lw-ink-2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-      .lw-step-foot{margin-top:auto;padding-top:8px;border-top:1px solid var(--lw-line-1);min-height:29px}
-      .lw-step-io{display:flex;align-items:center;gap:4px;min-height:19px;overflow:hidden;transition:opacity .1s var(--lw-ease)}
-      .lw-io{display:inline-flex;align-items:center;height:18px;padding:0 5px;border-radius:var(--lw-r-xs);background:var(--lw-sunken);color:var(--lw-ink-2);font-size:11px;line-height:14px;white-space:nowrap}
-      .lw-io-sep{color:var(--lw-ink-3);font-size:11px;opacity:.85}
-      .lw-step-tools{position:absolute;top:8px;right:8px;display:flex;align-items:center;gap:1px;padding:1px;border-radius:6px;background:var(--lw-card);opacity:0;pointer-events:none;transition:opacity .12s var(--lw-ease)}
-      .lw-tool{display:grid;place-items:center;width:24px;height:19px;padding:0;border:0;border-radius:5px;background:transparent;color:var(--lw-ink-3);cursor:pointer;transition:background-color .1s var(--lw-ease),color .1s var(--lw-ease)}
+      .lw-step.is-over{background:var(--lw-accent-soft);border-color:var(--lw-divider)}
+      .lw-step.drop-before:before,.lw-step.drop-after:after{content:"";position:absolute;left:0;right:0;height:2px;border-radius:2px;background:var(--lw-accent)}
+      .lw-step.drop-before:before{top:-1px}
+      .lw-step.drop-after:after{bottom:-1px}
+      /* The ordinal and the name share the first two columns. */
+      .lw-step-top{display:contents}
+      .lw-idx{flex:0 0 28px;font-family:var(--lw-mono);font-size:11px;line-height:18px;font-weight:600;color:var(--lw-eyebrow);font-variant-numeric:tabular-nums;letter-spacing:.06em}
+      .lw-step-icon{grid-column:1;grid-row:1;display:none}
+      .lw-step-name{flex:0 1 190px;display:flex;align-items:baseline;gap:7px;margin:0;min-width:80px;font-family:var(--lw-serif);font-size:13px;line-height:18px;font-weight:600;letter-spacing:-.005em;white-space:nowrap}
+      .lw-step-name-text{overflow:hidden;text-overflow:ellipsis;min-width:0}
+      .lw-step-name .lw-kind{flex:none;font-family:var(--lw-mono);font-size:9.5px;font-weight:400;letter-spacing:.06em;text-transform:uppercase;color:var(--lw-ink-3);opacity:.75}
+      .lw-step-name .lw-kind:before{content:"·";margin-right:5px;opacity:.45}
+      /* The description is a sibling of the name in the markup: it takes the
+         flexible column so it trails the name on the same baseline. */
+      .lw-step-desc{flex:1 1 auto;margin:0;font-size:11.5px;line-height:18px;color:var(--lw-ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+      .lw-step-foot{flex:0 0 auto;margin:0 0 0 auto;padding:0;border:0;min-height:0;display:flex;align-items:center;gap:4px;white-space:nowrap}
+      .lw-step-io{display:flex;align-items:center;gap:4px;min-height:0;overflow:hidden}
+      .lw-io{display:inline-flex;align-items:center;height:17px;padding:0 6px;border-radius:var(--lw-r-pill);background:var(--lw-sunken);color:var(--lw-ink-2);font-family:var(--lw-mono);font-size:10px;line-height:14px;white-space:nowrap}
+      .lw-io-sep{color:var(--lw-ink-3);font-size:10px;opacity:.7}
+      .lw-step-tools{position:absolute;right:10px;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:1px;padding:0;border-radius:0;background:transparent;opacity:0;pointer-events:none;transition:opacity var(--lw-feedback) var(--lw-ease)}
+      .lw-tool{display:grid;place-items:center;width:24px;height:20px;padding:0;border:0;border-radius:var(--lw-r-xs);background:transparent;color:var(--lw-ink-3);cursor:pointer;transition:background-color var(--lw-feedback) var(--lw-ease),color var(--lw-feedback) var(--lw-ease)}
       .lw-tool:hover{background:var(--lw-hover);color:var(--lw-ink)}
       .lw-tool:disabled{opacity:.3;cursor:default;background:transparent}
-      .lw-step:hover .lw-step-icon,.lw-step:focus-within .lw-step-icon{opacity:0}
+      /* On hover the capsules give way to the row's own tools. */
+      .lw-step:hover .lw-step-foot,.lw-step:focus-within .lw-step-foot{visibility:hidden}
       .lw-step:hover .lw-step-tools,.lw-step:focus-within .lw-step-tools{opacity:1;pointer-events:auto}
-      .lw-flow-empty{display:grid;place-items:center;gap:6px;width:100%;min-height:110px;padding:20px;border:1px dashed var(--lw-line-3);border-radius:var(--lw-r-md);color:var(--lw-ink-3);font-size:12px;line-height:18px;text-align:center}
+      .lw-flow-empty{display:grid;place-items:center;gap:6px;width:100%;min-height:96px;padding:20px;border:1px dashed var(--lw-line-1);border-radius:var(--lw-r-sm);color:var(--lw-ink-3);font-size:12px;line-height:18px;text-align:center}
 
       .lw-validate{display:flex;align-items:center;gap:6px;padding:0 16px 10px;font-size:11px;line-height:16px;color:var(--lw-ink-3)}
       .lw-validate .lw-dot{width:5px;height:5px;border-radius:50%;background:var(--dsw-alias-state-idle-primary,#d4d4d4);flex:none}
@@ -281,7 +347,7 @@ window.__ModuleLoader__.load({
       .lw-validate.is-bad{color:color-mix(in srgb,var(--lw-bad) 74%,var(--lw-ink))}
       .lw-validate.is-bad .lw-dot{background:var(--lw-bad)}
 
-      .lw-palette{padding:10px 16px 14px;border-top:1px solid var(--lw-line-1)}
+      .lw-palette{padding:10px 16px 14px;border-top:.5px solid var(--lw-divider)}
       .lw-palette-head{display:flex;align-items:center;gap:6px;margin-bottom:8px;font-size:11px;line-height:14px;font-weight:500;color:var(--lw-ink-3)}
       .lw-palette-grid{display:flex;flex-wrap:wrap;gap:6px}
       .lw-add{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 8px;border:1px solid var(--lw-line-2);border-radius:var(--lw-r-sm);background:var(--lw-card);color:var(--lw-ink-2);font-size:12px;line-height:16px;cursor:pointer;transition:border-color .12s var(--lw-ease),background-color .12s var(--lw-ease),color .12s var(--lw-ease)}
@@ -290,37 +356,37 @@ window.__ModuleLoader__.load({
       .lw-add:hover svg:last-child{opacity:1}
 
       .lw-jobs{display:flex;flex-direction:column}
-      .lw-job{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center;padding:12px 16px;border-top:1px solid var(--lw-line-1);transition:background-color .12s var(--lw-ease)}
+      .lw-job{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center;padding:12px 16px;border-top:.5px solid var(--lw-divider);transition:background-color .12s var(--lw-ease)}
       .lw-job:first-child{border-top:0}
       .lw-job:hover{background:var(--lw-hover)}
       .lw-job-main{min-width:0}
       .lw-job-line{display:flex;align-items:center;gap:10px;min-width:0}
-      .lw-job-title{flex:1 1 auto;min-width:0;margin:0;font-size:13px;line-height:19px;font-weight:500;letter-spacing:-.005em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+      .lw-job-title{flex:1 1 auto;min-width:0;margin:0;font-family:var(--lw-serif);font-size:13.5px;line-height:20px;font-weight:600;letter-spacing:-.005em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
       .lw-job-action{display:flex;align-items:center;justify-content:flex-end;min-width:52px}
       .lw-job-actions{display:flex;align-items:center;justify-content:flex-end;gap:6px;flex-wrap:wrap}
       .lw-job-meta{display:flex;align-items:center;gap:6px;margin-top:3px;font-family:var(--lw-mono);font-size:11px;line-height:15px;color:var(--lw-ink-3);font-variant-numeric:tabular-nums;letter-spacing:.02em;min-width:0}
       .lw-job-meta i{font-style:normal;opacity:.45}
       .lw-job-meta .lw-progress{margin-left:1px}
       .lw-artifacts{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
-      .lw-artifact{display:inline-flex;align-items:center;gap:4px;height:22px;max-width:190px;padding:0 7px;border:1px solid var(--lw-line-2);border-radius:6px;background:transparent;color:var(--lw-ink-2);font-size:11px;line-height:14px;cursor:pointer;transition:border-color .12s var(--lw-ease),background-color .12s var(--lw-ease),color .12s var(--lw-ease)}
+      .lw-artifact{display:inline-flex;align-items:center;gap:4px;height:22px;max-width:190px;padding:0 9px;border:1px solid var(--lw-line-1);border-radius:var(--lw-r-pill);background:transparent;color:var(--lw-ink-2);font-size:11px;line-height:14px;cursor:pointer;transition:border-color .12s var(--lw-ease),background-color .12s var(--lw-ease),color .12s var(--lw-ease)}
       .lw-artifact span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
       .lw-artifact:hover{border-color:var(--lw-line-3);background:var(--lw-surface);color:var(--lw-ink)}
       .lw-job-error{margin-top:4px;font-size:11px;line-height:15px;color:color-mix(in srgb,var(--lw-bad) 74%,var(--lw-ink))}
       .lw-progress{display:flex;align-items:center;gap:3px}
       .lw-pip{width:6px;height:6px;border-radius:50%;background:var(--lw-line-3);transition:background-color .2s var(--lw-ease)}
       .lw-pip.is-done{background:var(--lw-ok)}
-      .lw-pip.is-now{background:var(--lw-accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--lw-accent) 16%,transparent)}
-      .lw-tag{display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 7px;border-radius:6px;background:var(--lw-sunken);color:var(--lw-ink-2);font-size:11px;line-height:14px;font-weight:500;white-space:nowrap}
+      .lw-pip.is-now{background:var(--lw-accent);box-shadow:0 0 0 2px var(--lw-accent-soft)}
+      .lw-tag{display:inline-flex;align-items:center;gap:5px;height:20px;padding:0 8px;border-radius:var(--lw-r-pill);background:var(--lw-sunken);color:var(--lw-ink-2);font-size:11px;line-height:14px;font-weight:500;white-space:nowrap}
       .lw-tag .lw-dot{width:5px;height:5px;border-radius:50%;background:currentColor;opacity:.85}
-      .lw-tag.is-ok{background:color-mix(in srgb,var(--lw-ok) 13%,transparent);color:color-mix(in srgb,var(--lw-ok) 62%,var(--lw-ink))}
-      .lw-tag.is-live{background:color-mix(in srgb,var(--lw-accent) 12%,transparent);color:color-mix(in srgb,var(--lw-accent) 74%,var(--lw-ink))}
+      
+      .lw-tag.is-live{background:var(--lw-accent-soft);color:var(--lw-eyebrow)}
       .lw-tag.is-warn{background:color-mix(in srgb,var(--lw-warn) 12%,transparent);color:color-mix(in srgb,var(--lw-warn) 72%,var(--lw-ink))}
       .lw-tag.is-warn .lw-dot{background:var(--lw-warn)}
       .lw-tag.is-bad{background:color-mix(in srgb,var(--lw-bad) 9%,transparent);color:color-mix(in srgb,var(--lw-bad) 74%,var(--lw-ink))}
 
       .lw-empty{display:grid;justify-items:center;gap:4px;padding:40px 16px 44px;text-align:center}
       .lw-empty-icon{display:grid;place-items:center;width:38px;height:38px;margin-bottom:4px;border-radius:11px;background:var(--lw-sunken);color:var(--lw-ink-3)}
-      .lw-empty-title{font-size:13px;line-height:20px;font-weight:500;color:var(--lw-ink-2)}
+      .lw-empty-title{font-family:var(--lw-serif);font-size:14px;line-height:21px;font-weight:600;color:var(--lw-ink-2)}
       .lw-empty-hint{font-size:12px;line-height:17px;color:var(--lw-ink-3);max-width:34ch}
 
       .lw-settings-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:12px;padding:16px}
@@ -328,6 +394,104 @@ window.__ModuleLoader__.load({
       .lw-model-field{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:8px 12px}
       .lw-model-field .lw-field{min-width:0}
       .lw-model-status{grid-column:1/-1;margin:0}
+
+      /* The pixel crab: Claude Code's mascot on an integer grid. Decorative and
+         inline, so it can never cover content the way a fixed overlay would. */
+      .lw-crab{display:flex;justify-content:flex-end;align-items:flex-end;padding:0 2px 2px;color:var(--lw-accent);pointer-events:none;opacity:0;animation:lw-crab-in var(--lw-surface-in) var(--lw-ease) forwards}
+      .lw-crab svg{display:block;width:33px;height:26px;flex:none}
+      @keyframes lw-crab-in{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+      /* One horizontal line per row, and a pinned trailing column, so the
+         capsules share a single right edge down the whole list. */
+      .lw-step-name{align-self:center}
+      .lw-step-desc{align-self:center;line-height:18px}
+      .lw-step-foot{align-self:center;min-width:0;justify-self:end}
+      .lw-step-foot .lw-step-io{justify-content:flex-end}
+
+      /* --- Accent ladder in use -------------------------------------------
+         fill  #D97757 primary action, live dot, active marker
+         wash  #F6DED7 chip and tag backgrounds, hovered rows
+         link  #BF6446 section eyebrows, links, ordinals
+         deep  #A35035 hover of the above
+         Body copy never takes the accent; the accent marks state and action. */
+
+      /* Section headings carry a thin clay rule under the eyebrow, the way a
+         Claude section is introduced. */
+      .lw-head-title{color:var(--lw-ink)}
+      .lw-head-title::after{content:"";display:block;width:26px;height:2px;margin-top:6px;border-radius:2px;background:var(--lw-accent)}
+      .lw-panel-title{color:var(--lw-ink)}
+      .lw-panel--flat > .lw-panel-head.has-rule{border-bottom-color:var(--lw-accent-soft)}
+
+      /* The stage row: an accent rail on hover, so the list responds in clay. */
+      .lw-step:hover{background:color-mix(in srgb,var(--lw-accent) 4%,transparent)}
+      .lw-step:hover .lw-idx{color:var(--lw-accent)}
+      .lw-step.is-over{background:var(--lw-accent-soft)}
+
+      /* The IN/OUT capsules: the source is quiet, the target carries the wash,
+         because the row reads left to right as "from here to there". */
+      .lw-io{background:var(--lw-sunken);color:var(--lw-ink-2);border:1px solid transparent}
+      .lw-step-io .lw-io:last-child{background:var(--lw-accent-soft);color:var(--lw-eyebrow);border-color:color-mix(in srgb,var(--lw-accent) 22%,transparent)}
+      .lw-step:hover .lw-step-io .lw-io:last-child{background:color-mix(in srgb,var(--lw-accent) 16%,var(--lw-accent-soft))}
+      .lw-io-sep{color:var(--lw-accent);opacity:.55}
+
+      /* Artifacts and job chips pick up the wash; the row's live state is the
+         only thing that uses the solid fill. */
+      .lw-artifact:hover{border-color:color-mix(in srgb,var(--lw-accent) 34%,transparent);background:var(--lw-accent-soft);color:var(--lw-eyebrow)}
+      .lw-tag{background:var(--lw-sunken);color:var(--lw-ink-2)}
+      
+      .lw-chip{background:var(--lw-sunken)}
+      .lw-chip.is-ok{background:var(--lw-accent-soft);color:var(--lw-eyebrow)}
+
+      /* Progress pips: settled ones are the wash, the current one is the fill,
+         so a run reads as a clay line filling up. */
+      .lw-pip{background:var(--lw-accent-soft)}
+      .lw-pip.is-done{background:color-mix(in srgb,var(--lw-accent) 55%,var(--lw-accent-soft))}
+      .lw-pip.is-now{background:var(--lw-accent)}
+
+      /* Focus ring in clay, matching the accent-bearing controls. */
+      .lw-root :focus-visible{outline-color:var(--lw-accent)}
+      .lw-input:focus,.lw-textarea:focus,.lw-select-full:focus{border-color:var(--lw-accent);box-shadow:0 0 0 1px var(--lw-accent),0 0 0 4px color-mix(in srgb,var(--lw-accent) 12%,transparent)}
+
+      /* The segmented switch reserves the wash for the selected pill. */
+      .lw-seg button[aria-selected="true"]{background:var(--lw-surface);color:var(--lw-eyebrow);box-shadow:var(--lw-ring)}
+      .lw-seg{background:var(--lw-accent-soft)}
+
+      /* The add-step affordance is the one dashed control left, in clay. */
+      .lw-add:hover{border-color:color-mix(in srgb,var(--lw-accent) 45%,transparent);background:var(--lw-accent-soft);color:var(--lw-eyebrow)}
+      .lw-flow-empty{border-color:color-mix(in srgb,var(--lw-accent) 30%,transparent);color:var(--lw-ink-3)}
+
+
+      /* Settled is quiet, not celebratory: a completed run or stage drops to
+         secondary ink with a hollow dot, so the only coloured thing on the page
+         is what is live or what needs the reader. */
+      
+            .lw-chip.is-ok .lw-dot{background:var(--lw-accent)}
+      /* A finished stage's last capsule stops competing with a live one. */
+      .lw-step.is-done .lw-step-io .lw-io:last-child{background:var(--lw-sunken);color:var(--lw-ink-2);border-color:transparent}
+      .lw-step.is-done .lw-idx{color:var(--lw-ink-3)}
+      /* Progress pips: settled is a clay tint, live is the fill, never green. */
+      .lw-pip.is-done{background:color-mix(in srgb,var(--lw-accent) 62%,var(--lw-accent-soft))}
+      .lw-pip.is-now{background:var(--lw-accent);box-shadow:0 0 0 2px var(--lw-accent-soft)}
+
+.lw-tag.is-ok{background:var(--lw-accent-soft);color:var(--lw-eyebrow);border:1px solid color-mix(in srgb,var(--lw-accent) 26%,transparent)}
+      .lw-tag.is-ok .lw-dot{background:var(--lw-accent)}
+
+      /* A narrow panel drops the description rather than squeezing the rail. */
+      @container (max-width: 700px){
+        .lw-step-desc{display:none}
+        .lw-step-name{flex-basis:auto;min-width:0}
+      }
+
+      .lw-tpl{position:relative;display:inline-flex}
+      .lw-tpl-menu{position:absolute;top:calc(100% + 6px);right:0;z-index:30;min-width:240px;max-width:320px;padding:4px;border:1px solid var(--lw-line-1);border-radius:var(--lw-r-sm);background:var(--lw-surface);box-shadow:var(--lw-shadow-2);animation:lw-lift-in var(--lw-surface-in) var(--lw-ease)}
+      .lw-tpl-row{display:flex;align-items:center;gap:1px;border-radius:var(--lw-r-xs)}
+      .lw-tpl-row:hover{background:var(--lw-hover)}
+      .lw-tpl-row + .lw-tpl-row{border-top:.5px solid var(--lw-divider)}
+      .lw-tpl-name{flex:1 1 auto;min-width:0;padding:7px 8px;border:0;border-radius:var(--lw-r-xs);background:transparent;color:var(--lw-ink);font-size:12.5px;line-height:18px;text-align:left;cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+      .lw-tpl-name:hover{color:var(--lw-eyebrow)}
+      .lw-tpl-row .lw-tool{width:24px;height:24px;opacity:0;transition:opacity var(--lw-feedback) var(--lw-ease)}
+      .lw-tpl-row:hover .lw-tool,.lw-tpl-row:focus-within .lw-tool{opacity:1}
+      .lw-tpl-empty{padding:14px 10px;font-size:12px;line-height:18px;color:var(--lw-ink-3);text-align:center}
+
       @media(max-width:820px){.lw-model-field{grid-template-columns:minmax(0,1fr)}}
       .lw-toggle{position:relative;display:inline-flex;align-items:center;gap:9px;font-size:12px;line-height:18px;color:var(--lw-ink-2);cursor:pointer}
       .lw-toggle input{position:absolute;width:0;height:0;opacity:0}
@@ -336,12 +500,12 @@ window.__ModuleLoader__.load({
       .lw-toggle input:checked+.lw-switch{background:var(--lw-ink)}
       .lw-toggle input:checked+.lw-switch i{transform:translateX(12px)}
       .lw-toggle input:focus-visible+.lw-switch{outline:2px solid var(--lw-focus);outline-offset:2px}
-      .lw-settings-foot{display:flex;align-items:center;gap:12px;padding:12px 16px;border-top:1px solid var(--lw-line-1)}
+      .lw-settings-foot{display:flex;align-items:center;gap:12px;padding:12px 16px;border-top:.5px solid var(--lw-divider)}
       .lw-settings-foot .lw-hint{flex:1;min-width:0}
       .lw-hint{font-size:12px;line-height:17px;color:var(--lw-ink-3)}
-      .lw-dialog-backdrop{position:fixed;z-index:10000;inset:0;display:grid;place-items:center;padding:20px;background:#0007}
-      .lw-dialog{display:grid;gap:12px;width:min(680px,100%);max-height:min(86vh,820px);overflow:auto;padding:18px;border:1px solid var(--lw-line-2);border-radius:var(--lw-r-lg);background:var(--lw-surface);color:var(--lw-ink);box-shadow:0 18px 60px #0004}
-      .lw-dialog-title{margin:0;font-size:15px;line-height:22px;font-weight:600}
+      .lw-dialog-backdrop{position:fixed;z-index:10000;inset:0;display:grid;place-items:center;padding:20px;background:rgba(31,27,22,.42);animation:lw-fade-in var(--lw-surface-in) var(--lw-ease)}
+      .lw-dialog{display:grid;gap:12px;width:min(680px,100%);max-height:min(86vh,820px);overflow:auto;padding:20px;border:1px solid var(--lw-line-1);border-radius:var(--lw-r-md);background:var(--lw-surface);color:var(--lw-ink);box-shadow:var(--lw-shadow-2);animation:lw-lift-in var(--lw-surface-in) var(--lw-ease)}
+      .lw-dialog-title{margin:0;font-family:var(--lw-serif);font-size:17px;line-height:25px;font-weight:600;letter-spacing:-.01em}
       .lw-dialog-note{margin:0;font-size:12px;line-height:18px;color:var(--lw-ink-3)}
       .lw-delete-inventory{display:grid;gap:8px;max-height:42vh;overflow:auto;padding:10px;border:1px solid var(--lw-line-2);border-radius:var(--lw-r-md);background:var(--lw-sunken)}
       .lw-delete-inventory ul{margin:0;padding-left:20px}
@@ -360,16 +524,17 @@ window.__ModuleLoader__.load({
       .lw-notice.is-warn{border-color:color-mix(in srgb,var(--lw-warn) 30%,transparent);background:transparent;color:var(--lw-ink-2)}
       .lw-notice.is-warn svg{color:var(--lw-warn)}
 
-      .lw-skel{border-radius:6px;background:var(--lw-skeleton);animation:lw-pulse 1.5s ease-in-out infinite}
-      .lw-skel-row{display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:1px solid var(--lw-line-1)}
+      .lw-skel{border-radius:var(--lw-r-xs);background:var(--lw-skeleton);animation:lw-pulse 1.5s ease-in-out infinite}
+      .lw-skel-row{display:flex;align-items:center;gap:12px;padding:14px 16px;border-top:.5px solid var(--lw-divider)}
       @keyframes lw-pulse{0%,100%{opacity:1}50%{opacity:.55}}
+      @keyframes lw-fade-in{from{opacity:0}to{opacity:1}}
+      @keyframes lw-lift-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
       @media(max-width:820px){
         .lw-head-inner{padding:10px 14px;gap:8px}
         .lw-head-sub{display:none}
         .lw-page{padding:14px 14px 36px}
         .lw-seg{flex:1 1 100%}
-        .lw-step{flex-basis:156px;width:156px}
         .lw-job{grid-template-columns:minmax(0,1fr);row-gap:8px}
         .lw-job-action{justify-content:flex-start}
         .lw-job-actions{justify-content:flex-start}
@@ -471,7 +636,9 @@ window.__ModuleLoader__.load({
       const [modelCatalog, setModelCatalog] = React.useState(null);
       const [modelCatalogLoading, setModelCatalogLoading] = React.useState(false);
       const [modelCatalogError, setModelCatalogError] = React.useState('');
-      const [templateName, setTemplateName] = React.useState('');
+      const [templateMenu, setTemplateMenu] = React.useState(false);
+      const [templateEdit, setTemplateEdit] = React.useState(null);
+      const [templateDeleteTarget, setTemplateDeleteTarget] = React.useState(null);
       const [account, setAccount] = React.useState('');
       const [password, setPassword] = React.useState('');
       const [dragging, setDragging] = React.useState('');
@@ -717,10 +884,32 @@ window.__ModuleLoader__.load({
         stagePromptsDirty.current = false;
         return true;
       }, tValue(t, 'saved'));
-      const saveTemplate = async () => {
-        if (!templateName.trim()) { setError(tValue(t, 'templateName')); return; }
-        await perform('template', () => invoke('save_template', { name: templateName.trim(), stages: pipeline, stagePrompts, stopAfter: stopAfter || null }), tValue(t, 'saved'));
-        setTemplateName('');
+      const submitTemplateEdit = async () => {
+        const name = (templateEdit?.name || '').trim();
+        if (!name) { setError(tValue(t, 'templateName')); return; }
+        const editing = templateEdit;
+        setTemplateEdit(null);
+        if (editing.mode === 'rename') {
+          await perform('template', () => invoke('rename_template', { name: editing.from, to: name }), tValue(t, 'templateRenamed'));
+        } else {
+          await perform('template', () => invoke('save_template', { name, stages: pipeline, stagePrompts, stopAfter: stopAfter || null }), tValue(t, 'templateSavedAs'));
+        }
+      };
+      const removeTemplate = name => {
+        setTemplateMenu(false);
+        setTemplateDeleteTarget({ name });
+      };
+      const confirmRemoveTemplate = async () => {
+        const target = templateDeleteTarget?.name;
+        if (!target) return;
+        let ok = false;
+        await perform('template', async () => {
+          const result = await invoke('delete_template', { name: target });
+          ok = true;
+          return result;
+        }, tValue(t, 'templateDeleted'));
+        // 删除失败时留着弹窗，让人看见错误并重试，而不是悄悄关掉。
+        if (ok) setTemplateDeleteTarget(null);
       };
       const runSearch = async () => perform('search', async () => {
         if (pipeline[0] !== 'search') throw new Error(tValue(t, 'searchEntry'));
@@ -797,14 +986,26 @@ window.__ModuleLoader__.load({
         const inputs = (node.inputs || []).map(typeName);
         const outputs = (node.outputs || []).map(typeName);
         const items = [];
+        // Every declared format is named. A stage that reads two or three
+        // kinds says so; nothing collapses into a counter that hides the
+        // answer the row exists to give.
         if (inputs.length) {
-          items.push(h('span', { className: 'lw-io', key: 'in' }, inputs[0]));
+          items.push(h('span', {
+            className: 'lw-io',
+            key: 'in',
+            title: inputs.join(' / '),
+          }, inputs.join(', ')));
           items.push(h('span', { className: 'lw-io-sep', key: 'sep' }, '→'));
         }
-        if (outputs.length) items.push(h('span', { className: 'lw-io', key: 'out' }, outputs[0]));
-        else items.push(h('span', { className: 'lw-io', key: 'none' }, tValue(t, 'none')));
-        const extra = Math.max(0, outputs.length - 1) + Math.max(0, inputs.length - 1);
-        if (extra) items.push(h('span', { className: 'lw-io-sep', key: 'extra', title: [...inputs, ...outputs].join(' / ') }, `+${extra}`));
+        if (outputs.length) {
+          items.push(h('span', {
+            className: 'lw-io',
+            key: 'out',
+            title: outputs.join(' / '),
+          }, outputs.join(', ')));
+        } else {
+          items.push(h('span', { className: 'lw-io', key: 'none' }, tValue(t, 'none')));
+        }
         return items;
       };
 
@@ -850,10 +1051,12 @@ window.__ModuleLoader__.load({
         }, [
           h('div', { className: 'lw-step-top', key: 'top' }, [
             selected ? h('span', { className: 'lw-idx', key: 'idx' }, String(index + 1).padStart(2, '0')) : null,
-            kind ? h('span', { className: 'lw-kind', key: 'kind' }, kind) : null,
             h('span', { className: 'lw-step-icon', key: 'icon' }, icon(node.id, 13, 1.5)),
           ]),
-          h('h4', { className: 'lw-step-name', key: 'name', title: stageName(node) }, stageName(node)),
+          h('h4', { className: 'lw-step-name', key: 'name', title: stageName(node) }, [
+            h('span', { className: 'lw-step-name-text', key: 'text' }, stageName(node)),
+            kind ? h('span', { className: 'lw-kind', key: 'kind' }, kind) : null,
+          ]),
           h('p', { className: 'lw-step-desc', key: 'desc' }, stageDescription(node)),
           h('div', { className: 'lw-step-foot', key: 'foot' }, [
             h('div', { className: 'lw-step-io', key: 'io' }, ioRow(node)),
@@ -1010,13 +1213,38 @@ window.__ModuleLoader__.load({
         ]);
       };
 
-      const templateSelect = h('span', { className: 'lw-select-wrap', key: 'templates' },
-        h('select', {
-          className: 'lw-select', value: '', 'aria-label': tValue(t, 'templates'),
-          onChange: event => applyTemplate(templates[event.target.value]),
-        }, h('option', { value: '', key: 'default' }, tValue(t, 'templates')), ...Object.keys(templates).sort().map(name => h('option', { value: name, key: name }, name))),
-        icon('chevronDown', 11, 1.7));
-      const promptDialog = !deleteConfirmation && promptEditor ? (() => {
+      const templateNames = Object.keys(templates).sort();
+      const templateSelect = h('span', { className: 'lw-tpl', key: 'templates' }, [
+        h('button', {
+          className: 'lw-btn lw-btn-quiet lw-btn-sm', type: 'button', key: 'toggle',
+          'aria-haspopup': 'menu', 'aria-expanded': templateMenu,
+          onClick: () => setTemplateMenu(open => !open),
+        }, [
+          h('span', { key: 'label' }, tValue(t, 'templates')),
+          templateNames.length ? h('span', { className: 'lw-count', key: 'n' }, String(templateNames.length)) : null,
+          icon('chevronDown', 11, 1.7),
+        ]),
+        templateMenu ? h('div', { className: 'lw-tpl-menu', role: 'menu', key: 'menu' },
+          templateNames.length
+            ? templateNames.map(name => h('div', { className: 'lw-tpl-row', role: 'none', key: name }, [
+              h('button', {
+                className: 'lw-tpl-name', type: 'button', role: 'menuitem', key: 'apply', title: name,
+                onClick: () => { applyTemplate(templates[name]); setTemplateMenu(false); },
+              }, name),
+              h('button', {
+                className: 'lw-tool', type: 'button', key: 'rename', title: tValue(t, 'templateRename'),
+                'aria-label': tValue(t, 'templateRename') + ': ' + name,
+                onClick: () => { setTemplateMenu(false); setTemplateEdit({ mode: 'rename', from: name, name }); },
+              }, icon('edit', 12, 1.6)),
+              h('button', {
+                className: 'lw-tool', type: 'button', key: 'delete', title: tValue(t, 'templateDelete'),
+                'aria-label': tValue(t, 'templateDelete') + ': ' + name,
+                onClick: () => void removeTemplate(name),
+              }, icon('close', 12, 1.6)),
+            ]))
+            : h('div', { className: 'lw-tpl-empty', key: 'empty' }, tValue(t, 'templatesEmpty'))) : null,
+      ]);
+      const promptDialog = !deleteConfirmation && !templateDeleteTarget && promptEditor ? (() => {
         const isJobEditor = promptEditor.scope === 'job';
         const stageLabel = promptEditor.stageId ? stageText(t, promptEditor.stageId) : '';
         const title = isJobEditor
@@ -1060,6 +1288,61 @@ window.__ModuleLoader__.load({
               h('button', { type: 'button', className: 'lw-btn lw-btn-primary', disabled: !!busy, 'data-testid': isJobEditor ? 'save-job-prompt' : 'save-stage-prompt', onClick: () => void (isJobEditor ? saveJobPrompt() : saveStagePrompt()), key: 'save' }, busy === 'stage-prompt' || busy.startsWith('configure-job:') ? tValue(t, 'saving') : isJobEditor ? tValue(t, 'saveSettings') : tValue(t, 'promptSave')),
             ]),
           ]));
+      })() : null;
+      const templateDialog = templateEdit && !templateDeleteTarget ? h('div', {
+        className: 'lw-dialog-backdrop', role: 'presentation', key: 'template-dialog-backdrop',
+        onClick: event => { if (event.target === event.currentTarget) setTemplateEdit(null); },
+      }, h('section', {
+        className: 'lw-dialog', role: 'dialog', 'aria-modal': true, 'aria-labelledby': 'lw-template-dialog-title',
+        onKeyDown: event => { if (event.key === 'Escape') setTemplateEdit(null); },
+      }, [
+        h('h2', { className: 'lw-dialog-title', id: 'lw-template-dialog-title', key: 'title' },
+          tValue(t, templateEdit.mode === 'rename' ? 'templateRename' : 'saveAsTemplate')),
+        h('p', { className: 'lw-dialog-note', key: 'note' }, tValue(t, 'templateHint')),
+        h('label', { className: 'lw-field', key: 'field' }, [
+          h('span', { className: 'lw-label', key: 'label' }, tValue(t, 'templateName')),
+          h('input', {
+            className: 'lw-input', type: 'text', key: 'input', value: templateEdit.name, maxLength: 80, autoFocus: true,
+            'aria-label': tValue(t, 'templateName'),
+            onChange: event => setTemplateEdit({ ...templateEdit, name: event.target.value }),
+            onKeyDown: event => {
+              if (event.key === 'Enter') { event.preventDefault(); void submitTemplateEdit(); }
+            },
+          }),
+        ]),
+        h('div', { className: 'lw-dialog-actions', key: 'actions' }, [
+          h('button', { className: 'lw-btn lw-btn-quiet', type: 'button', key: 'cancel', onClick: () => setTemplateEdit(null) }, tValue(t, 'cancel')),
+          h('button', { className: 'lw-btn lw-btn-primary', type: 'button', key: 'ok', onClick: () => void submitTemplateEdit() }, tValue(t, 'saveTemplateBtn')),
+        ]),
+      ])) : null;
+      const templateDeleteDialog = templateDeleteTarget ? (() => {
+        const target = templateDeleteTarget.name;
+        const deleting = busy === 'template';
+        return h('div', {
+          className: 'lw-dialog-backdrop', role: 'presentation', key: 'template-delete-backdrop',
+          onClick: event => { if (event.target === event.currentTarget && !deleting) setTemplateDeleteTarget(null); },
+        }, h('section', {
+          className: 'lw-dialog', role: 'dialog', 'aria-modal': true,
+          'aria-labelledby': 'lw-template-delete-title',
+          onKeyDown: event => { if (event.key === 'Escape' && !deleting) setTemplateDeleteTarget(null); },
+          'data-testid': 'template-delete-dialog',
+        }, [
+          h('h2', { className: 'lw-dialog-title', id: 'lw-template-delete-title', key: 'title' },
+            tValue(t, 'templateDeleteTitle').replace('{name}', target)),
+          h('p', { className: 'lw-dialog-note', key: 'note' }, tValue(t, 'templateDeleteNote')),
+          h('div', { className: 'lw-dialog-actions', key: 'actions' }, [
+            h('button', {
+              type: 'button', className: 'lw-btn lw-btn-quiet', disabled: deleting,
+              'data-testid': 'cancel-delete-template', key: 'cancel',
+              onClick: () => setTemplateDeleteTarget(null),
+            }, tValue(t, 'cancel')),
+            h('button', {
+              type: 'button', className: 'lw-btn lw-btn-primary lw-btn-danger', disabled: deleting,
+              'data-testid': 'confirm-delete-template', key: 'confirm',
+              onClick: () => void confirmRemoveTemplate(),
+            }, deleting ? tValue(t, 'templateDeleting') : tValue(t, 'templateDeleteConfirm')),
+          ]),
+        ]));
       })() : null;
       const deleteDialog = deleteConfirmation ? (() => {
         const preview = deleteConfirmation.preview || {};
@@ -1191,10 +1474,11 @@ window.__ModuleLoader__.load({
               ]),
               h('div', { className: 'lw-head-right', key: 'actions' }, [
                 templateSelect,
-                h('button', {
-                  className: 'lw-btn lw-btn-quiet lw-btn-sm', type: 'button', disabled: !!busy || !validation?.valid, key: 'save-flow',
-                  onClick: () => void perform('save-flow', async () => { await validate(currentKind); await invoke('settings', { stages: pipeline, watchInput, stagePrompts }); dirty.current = false; stagePromptsDirty.current = false; return true; }, tValue(t, 'saved')),
-                }, tValue(t, 'saveWorkflow')),
+                      h('button', {
+                        className: 'lw-btn lw-btn-quiet lw-btn-sm', type: 'button', disabled: !!busy || !validation?.valid, key: 'save-template',
+                        title: tValue(t, 'templateHint'),
+                        onClick: () => setTemplateEdit({ mode: 'create', name: '' }),
+                      }, tValue(t, 'saveAsTemplate')),
               ]),
             ]),
             h('div', { className: 'lw-steps-wrap', key: 'steps-wrap' }, h('div', {
@@ -1328,10 +1612,6 @@ window.__ModuleLoader__.load({
               tencentFlow.status === 'failed' ? h('p', { className: 'lw-hint lw-span-12', role: 'alert', key: 'tencent-error' }, tValue(t, `tencent_error_${tencentFlow.errorCode}`, tValue(t, 'tencentError'))) : null,
             ]),
             h('div', { className: 'lw-settings-foot', key: 'foot' }, [
-              h('div', { className: 'lw-inline', key: 'template' }, [
-                h('input', { type: 'text', className: 'lw-input', style: { width: 168 }, value: templateName, placeholder: tValue(t, 'templateName'), onChange: event => setTemplateName(event.target.value), 'aria-label': tValue(t, 'templateName'), key: 'name' }),
-                h('button', { type: 'button', className: 'lw-btn lw-btn-quiet lw-btn-sm', disabled: !!busy, onClick: () => void saveTemplate(), key: 'save' }, tValue(t, 'saveTemplate')),
-              ]),
               h('span', { className: 'lw-hint', key: 'note' }, tValue(t, 'settingsNote')),
               h('button', { type: 'button', className: 'lw-btn lw-btn-primary', disabled: !!busy || !validation?.valid, 'data-testid': 'save-settings', onClick: () => saveSettings(), key: 'save-settings' }, busy === 'settings' ? tValue(t, 'saving') : tValue(t, 'saveSettings')),
             ]),
@@ -1375,15 +1655,21 @@ window.__ModuleLoader__.load({
 
           inputFolder ? h('div', { className: 'lw-foot', key: 'foot' }, [icon('folder', 11, 1.6, 'icon'), h('span', { key: 'path', title: inputFolder }, `${tValue(t, 'inputFolder')} · ${inputFolder}`)]) : null,
         ])),
+      templateDialog,
+        templateDeleteDialog,
         promptDialog,
         deleteDialog,
       ]);
     }
 
     function SidebarIcon({ size = 20 }) {
-      return h('svg', { width: size, height: size, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 1.6, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true }, [
-        h('path', { d: 'M5.2 4.4h13.6v15.2H5.2z', key: 'frame' }),
-        h('path', { d: 'M8.4 8.6h7.2M8.4 12h7.2M8.4 15.4h4.4', key: 'lines' }),
+      /* claude-star */
+      return h('svg', {
+        width: size, height: size, viewBox: '0 0 24 24', fill: 'none', 'aria-hidden': true,
+      }, [
+        h('g', { fill: 'currentColor', key: 'star' }, [0, 60, 120, 180, 240, 300].map((deg) =>
+          h('ellipse', { key: deg, cx: 12, cy: 5.6, rx: 1.5, ry: 4.6, transform: `rotate(${deg} 12 12)` }))),
+        h('circle', { key: 'core', cx: 12, cy: 12, r: 2.1, fill: 'currentColor', opacity: 0.9 }),
       ]);
     }
 

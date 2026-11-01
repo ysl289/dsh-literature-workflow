@@ -5,7 +5,8 @@
   "workspaces": [
     "packages/literature-workflow",
     "packages/knowledge-cards",
-    "packages/lit-learning"
+    "packages/lit-learning",
+    "packages/plugin-hub"
   ],
   "scripts": {
     "check": "node scripts/check.mjs",
