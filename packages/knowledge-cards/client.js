@@ -1,5 +1,5 @@
 window.__ModuleLoader__.load({
-  id: 'dsh-knowledge-cards',
+  id: '@ysl289/dsh-knowledge-cards',
   factory(require) {
     const React = require('react');
     const h = React.createElement;

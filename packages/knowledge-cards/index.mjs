@@ -3,7 +3,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { attachCardsUI, setHome } from './host.mjs';
 
-export const name = 'dsh-knowledge-cards';
+export const name = '@ysl289/dsh-knowledge-cards';
 export const description = '知识卡片库：按书架浏览、查重、编辑与出图，并内置 2D/3D 关系网。';
 export const inject = ['connection'];
 

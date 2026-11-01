@@ -3,7 +3,7 @@ import { LiteratureEngine } from './lib/engine.mjs';
 import { installRequestTap, installTransportTap } from './lib/transport-tap.mjs';
 import { attachNativeUI } from './host-api.mjs';
 
-export const name = 'dsh-literature-workflow';
+export const name = '@ysl289/dsh-literature-workflow';
 export const description = '文献工作流：以本地 PDF 队列驱动检索、原文抽取、Zotero、渲染与发布。';
 export const inject = ['tools', 'agents', 'agentDefaultModel'];
 

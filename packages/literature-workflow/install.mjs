@@ -1,12 +1,28 @@
 import os from 'node:os';
 import path from 'node:path';
 import fs from 'node:fs/promises';
+import { readFileSync } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const packageDir = path.dirname(fileURLToPath(import.meta.url));
 
 function yamlString(value) {
   return `'${String(value).replaceAll("'", "''")}'`;
+}
+
+/**
+ * Read the package name from the manifest next to this bundle, so the patch
+ * always matches whatever the package is actually called (scoped or not)
+ * instead of a hard-coded literal that drifts on rename.
+ */
+function readPackageName(directory) {
+  const fallback = 'dsh-literature-workflow';
+  try {
+    const manifest = JSON.parse(readFileSync(path.join(directory, 'package.json'), 'utf8'));
+    return typeof manifest.name === 'string' && manifest.name ? manifest.name : fallback;
+  } catch {
+    return fallback;
+  }
 }
 
 /**
@@ -34,7 +50,7 @@ export function buildBundlePatch({ directory = packageDir, home = os.homedir() }
   return [
     '- insert:',
     '    - id: dsh-literature-workflow',
-    "      name: 'dsh-literature-workflow'",
+    `      name: '${readPackageName(directory)}'`,
     '      config:',
     configYaml,
     '',

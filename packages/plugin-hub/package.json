@@ -4,6 +4,10 @@
   "description": "Plugin launcher for DeepSeek Harness: collapse the working plugins' sidebar icons into one entry panel, open any panel from a single list.",
   "license": "MIT",
   "type": "module",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "exports": {
     ".": "./index.mjs",
     "./client": "./client.js",

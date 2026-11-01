@@ -55,7 +55,7 @@ function findElement(node, predicate) {
 
 test('package metadata exposes the native Client page and its dependencies', async () => {
   const manifest = JSON.parse(await fs.readFile(path.join(packageDir, 'package.json'), 'utf8'));
-  assert.equal(manifest.name, 'dsh-literature-workflow');
+  assert.equal(manifest.name, '@ysl289/dsh-literature-workflow');
   assert.match(manifest.version, /^\d+\.\d+\.\d+(?:-[\w.-]+)?$/);
   assert.equal(manifest.exports['./client'], './client.js');
   assert.equal(manifest.exports['./icon'], './icon.svg');
@@ -73,7 +73,7 @@ test('package metadata exposes the native Client page and its dependencies', asy
   assert.ok(!manifest.files.some(file => /preview\.mjs|open-panel|\.cmd$/.test(file)), 'standalone preview launchers are not packaged');
 
   const patch = await fs.readFile(path.join(packageDir, 'bundle.patch.yml'), 'utf8');
-  assert.match(patch, /name: 'dsh-literature-workflow'/);
+  assert.match(patch, /name: '@ysl289\/dsh-literature-workflow'/);
   assert.match(patch, /nativeUI: true/);
   assert.doesNotMatch(patch, /file:\/\//);
   const zh = JSON.parse(await fs.readFile(path.join(packageDir, 'locale', 'zh.json'), 'utf8'));
@@ -271,7 +271,7 @@ test('registers a keyed Harness main page and sidebar entry without a standalone
   try {
     const clientPath = path.join(packageDir, 'client.js');
     await import(`${pathToFileURL(clientPath).href}?client-test=${Date.now()}`);
-    assert.equal(loaded.id, 'dsh-literature-workflow');
+    assert.equal(loaded.id, '@ysl289/dsh-literature-workflow');
 
     const React = {
       Fragment: Symbol('Fragment'),

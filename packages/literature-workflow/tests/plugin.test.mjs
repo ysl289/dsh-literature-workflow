@@ -408,12 +408,12 @@ test('builds a native manager install plan and prepares a bundle patch idempoten
     const modulePath = path.join(tempRoot, 'index.mjs');
     await fs.writeFile(modulePath, 'export {};', 'utf8');
     await fs.writeFile(path.join(tempRoot, 'package.json'), JSON.stringify({
-      name: 'dsh-literature-workflow',
+      name: '@ysl289/dsh-literature-workflow',
       dsh: { bundle: { patch: './bundle.patch.yml' } },
     }), 'utf8');
     const expectedUrl = pathToFileURL(modulePath).href;
     const patchText = buildBundlePatch({ directory: tempRoot, home: 'C:/Users/test-user' });
-    assert.ok(patchText.includes("name: 'dsh-literature-workflow'"));
+    assert.ok(patchText.includes("name: '@ysl289/dsh-literature-workflow'"));
     assert.ok(!patchText.includes('file:///'), 'native Client metadata must resolve from the installed package');
     assert.ok(patchText.includes("rootCollection: ''"));
     assert.ok(patchText.includes("publishMode: 'preview'"));

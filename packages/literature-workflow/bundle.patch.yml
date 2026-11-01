@@ -4,7 +4,7 @@
 # config, then from home-directory defaults (see docs/configuration.md).
 - insert:
     - id: dsh-literature-workflow
-      name: 'dsh-literature-workflow'
+      name: '@ysl289/dsh-literature-workflow'
       config:
         rootCollection: ''
         publishMode: 'preview'

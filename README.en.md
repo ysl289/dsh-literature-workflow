@@ -51,23 +51,29 @@ DSH `0.2.x` (tested on `0.2.1-rc.3`), Node.js ≥ 22, Python ≥ 3.10 with `open
 
 ### Install
 
-> **Not published to npm yet** — install from the git URL or a local directory.
-> (The `dsh-plugin-hub` on npm belongs to a **different author** and is a plugin marketplace; this project's launcher is `@ysl289/dsh-plugin-hub`.)
+**Option 1 — from npm (simplest)**
 
-**Option 1 — paste the URLs into DSH's plugin page**
-
-Open **sidebar → Plugins → Add plugin** and paste:
+In DSH, open **sidebar → Plugins → Add plugin** and paste the package names:
 
 ```
-https://github.com/ysl289/dsh-literature-workflow.git#packages/literature-workflow
-https://github.com/ysl289/dsh-literature-workflow.git#packages/knowledge-cards
-https://github.com/ysl289/dsh-literature-workflow.git#packages/lit-learning
-https://github.com/ysl289/dsh-literature-workflow.git#packages/plugin-hub
+@ysl289/dsh-literature-workflow
+@ysl289/dsh-knowledge-cards
+@ysl289/dsh-lit-learning
+@ysl289/dsh-plugin-hub
 ```
 
-> Sub-directory specs (`#packages/...`) depend on your DSH version. If unsupported, use option 2.
+Or from the CLI:
 
-**Option 2 — clone, then install from the local directories (most reliable)**
+```bash
+dsh plugin --profile <profile> add @ysl289/dsh-literature-workflow
+dsh plugin --profile <profile> add @ysl289/dsh-knowledge-cards
+dsh plugin --profile <profile> add @ysl289/dsh-lit-learning
+dsh plugin --profile <profile> add @ysl289/dsh-plugin-hub    # optional
+```
+
+> All packages are scoped under `@ysl289/`. The **unscoped** `dsh-plugin-hub` on npm belongs to a **different author** and is unrelated to this project.
+
+**Option 2 — from source (if you want to modify the code)**
 
 ```bash
 git clone https://github.com/ysl289/dsh-literature-workflow.git
@@ -77,13 +83,13 @@ python -m pip install -r requirements.txt
 dsh plugin --profile <profile> add ./packages/literature-workflow
 dsh plugin --profile <profile> add ./packages/knowledge-cards
 dsh plugin --profile <profile> add ./packages/lit-learning
-dsh plugin --profile <profile> add ./packages/plugin-hub     # optional
+dsh plugin --profile <profile> add ./packages/plugin-hub
 
 cp -r skills/knowledge-card-library ~/.dsh/skills/
 cp -r skills/literature-pipeline ~/.dsh/skills/
 ```
 
-Restart DSH after installing the plugins. Paths are never hard-coded: configure via `DSH_LIT_WORKFLOW`, `DSH_CARDS_HOME`/`KCARD_HOME`, `DSH_LIT_LEARNING` and `DSH_PYTHON`, or fall back to home-directory defaults.
+Restart DSH after installing. Paths are never hard-coded: configure via `DSH_LIT_WORKFLOW`, `DSH_CARDS_HOME`/`KCARD_HOME`, `DSH_LIT_LEARNING` and `DSH_PYTHON`, or fall back to home-directory defaults.
 
 Publishing defaults to **preview** — nothing is written to Zotero or Tencent Docs until you enable it on the workflow page.
 

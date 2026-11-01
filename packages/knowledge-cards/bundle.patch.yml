@@ -3,7 +3,7 @@
 # somewhere else.
 - insert:
     - id: dsh-knowledge-cards
-      name: 'dsh-knowledge-cards'
+      name: '@ysl289/dsh-knowledge-cards'
       config:
         home: ''
         nativeUI: true

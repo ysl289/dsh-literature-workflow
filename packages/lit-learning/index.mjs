@@ -5,7 +5,7 @@ import { normalizeConfig, REQUIRED_HOST_SERVICES } from './lib/config.mjs';
 import { createService } from './lib/service.mjs';
 import { attachLearningUI } from './host.mjs';
 
-export const name = 'dsh-lit-learning';
+export const name = '@ysl289/dsh-lit-learning';
 export const description = '文献学习层：从只读文献与卡片生成练习、资料准备度检查、证据定位与复习记录。';
 export const inject = ['tools', 'connection'];
 

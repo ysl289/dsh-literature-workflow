@@ -1,5 +1,5 @@
 window.__ModuleLoader__.load({
-  id: 'dsh-literature-workflow',
+  id: '@ysl289/dsh-literature-workflow',
   factory(require) {
     const React = require('react');
     const h = React.createElement;

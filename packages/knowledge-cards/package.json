@@ -1,9 +1,13 @@
 {
-  "name": "dsh-knowledge-cards",
+  "name": "@ysl289/dsh-knowledge-cards",
   "version": "0.2.0",
   "description": "Knowledge-card library for DeepSeek Harness: browse by shelf, deduplicate, edit, export, with built-in 2D and 3D relation graphs.",
   "license": "MIT",
   "type": "module",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "exports": {
     ".": "./index.mjs",
     "./client": "./client.js",

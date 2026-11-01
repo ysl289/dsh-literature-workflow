@@ -11,7 +11,9 @@
   "scripts": {
     "check": "node scripts/check.mjs",
     "test": "node scripts/test.mjs",
-    "verify": "node scripts/verify-package.mjs"
+    "verify": "node scripts/verify-package.mjs",
+    "publish:dry": "node scripts/publish.mjs --dry-run",
+    "publish:all": "node scripts/publish.mjs"
   },
   "engines": {
     "node": ">=22"

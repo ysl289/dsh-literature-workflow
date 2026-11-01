@@ -3,7 +3,7 @@
 # defaults. Set them only when your directories live somewhere else.
 - insert:
     - id: dsh-lit-learning
-      name: 'dsh-lit-learning'
+      name: '@ysl289/dsh-lit-learning'
       config:
         workflowRoot: ''
         cardsHome: ''

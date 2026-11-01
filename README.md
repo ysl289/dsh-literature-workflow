@@ -68,23 +68,30 @@
 
 ### 安装
 
-> **当前没有发布到 npm**，请用下面的 git 地址或本地目录安装。
-> （npm 上的 `dsh-plugin-hub` 是**另一位作者**的插件市场，与本项目的入口中心无关——本项目的入口中心叫 `@ysl289/dsh-plugin-hub`。）
+**方式一：从 npm 装（最简单）**
 
-**方式一：在 DSH 插件页里粘贴地址**
-
-打开 **侧栏 → 插件 → 添加插件**，把下面四个地址逐个粘进去：
+打开 **侧栏 → 插件 → 添加插件**，粘贴包名：
 
 ```
-https://github.com/ysl289/dsh-literature-workflow.git#packages/literature-workflow
-https://github.com/ysl289/dsh-literature-workflow.git#packages/knowledge-cards
-https://github.com/ysl289/dsh-literature-workflow.git#packages/lit-learning
-https://github.com/ysl289/dsh-literature-workflow.git#packages/plugin-hub
+@ysl289/dsh-literature-workflow
+@ysl289/dsh-knowledge-cards
+@ysl289/dsh-lit-learning
+@ysl289/dsh-plugin-hub
 ```
 
-> 子目录语法（`#packages/...`）取决于你的 DSH 版本是否支持；不支持时用方式二。
+或命令行：
 
-**方式二：克隆后按本地目录安装（推荐，最稳）**
+```bash
+# <profile> 换成你的 profile 名（Web 端通常是 desktop 或 web）
+dsh plugin --profile <profile> add @ysl289/dsh-literature-workflow
+dsh plugin --profile <profile> add @ysl289/dsh-knowledge-cards
+dsh plugin --profile <profile> add @ysl289/dsh-lit-learning
+dsh plugin --profile <profile> add @ysl289/dsh-plugin-hub    # 可选
+```
+
+> 注意包名都带 `@ysl289/` 作用域。npm 上**未加作用域的** `dsh-plugin-hub` 是**另一位作者**的插件市场，与本项目无关。
+
+**方式二：从源码装（想改代码时用）**
 
 ```bash
 git clone https://github.com/ysl289/dsh-literature-workflow.git
@@ -93,16 +100,18 @@ python -m pip install -r requirements.txt
 ```
 
 ```bash
-# <profile> 换成你的 profile 名（Web 端通常是 desktop 或 web）
 dsh plugin --profile <profile> add ./packages/literature-workflow
 dsh plugin --profile <profile> add ./packages/knowledge-cards
 dsh plugin --profile <profile> add ./packages/lit-learning
-dsh plugin --profile <profile> add ./packages/plugin-hub     # 可选
+dsh plugin --profile <profile> add ./packages/plugin-hub
 ```
 
 没有全局 `dsh` 命令时，在 DSH 源码 checkout 里用 `pnpm dsh plugin --profile <profile> add <路径>`，或在 **插件 → 添加插件** 里粘贴目录的绝对路径。
 
 装完**重启 DSH** 才会加载新的 Host 模块。
+
+> **Python 依赖**：`literature-workflow` 需要 Python 3.10+ 与 `openpyxl`、`requests`、`PyMuPDF`。
+> 从 npm 安装时不会自动装这些，请自行 `pip install`（见 [requirements.txt](requirements.txt)）。
 
 > `literature-workflow` 已内置 `assets/`（PDF→Markdown、Excel、HTML 演示页、卡片、发布脚本与模板），
 > **不需要另外准备原工作流目录**；`workflowRoot` 只用于 `input/`、`.plugin-state/` 和产物。
