@@ -1,4 +1,4 @@
-import { promises as fs } from 'node:fs';
+import { existsSync, promises as fs } from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 import { createHash, randomUUID } from 'node:crypto';
@@ -465,7 +465,7 @@ export class LiteratureEngine {
         j.completedStages=[...new Set([...(j.completedStages||[]),stage])];j.cursor++;await this.store.save(j);
         const paused=await this.pauseAfter(j,stage);if(paused)return paused;
       }
-      if(j.zotero){await this.copyToStorage(j);await this.store.save(j);}
+      if(j.zotero){await this.copyToStorage(j);await this.rehomeArtifacts(j);await this.store.save(j);}
       j.status=j.hasPublishPreview?'ready_publish':'completed';j.stage='done';delete j.error;await this.store.save(j);return this.summary(j);
     }catch(e){j.error=safeError(e);j.status=e?.code==='ZOTERO_MARKDOWN_ATTACHMENT_UNSUPPORTED'?'needs_setup':/authoriz|401|凭证|授权|token|credential/i.test(j.error)?'needs_auth':'needs_attention';await this.store.save(j);if(e?.code==='ZOTERO_MARKDOWN_ATTACHMENT_UNSUPPORTED')return this.summary(j);throw e;}
   });}
@@ -518,10 +518,71 @@ export class LiteratureEngine {
     for(const f of [j.extractPath,j.prepared?.markdownPath||j.prepared?.mdPath,...Object.values(j.artifacts)].filter(x=>typeof x==='string')){
       if(!within(this.store.dir(j.id),f))continue;let stat;try{stat=await fs.stat(f)}catch{continue}if(!stat.isFile())continue;
       const d=path.join(dest,path.basename(f));let created=false;
-      try{await fs.copyFile(f,d,1);created=true;}catch(e){if(e.code!=='EEXIST')throw e;if(sha(await fs.readFile(d))!==sha(await fs.readFile(f)))throw Error('Zotero内已有不同内容同名产物，已停止，未覆盖');}
-      const digest=sha(await fs.readFile(d)),prior=(j.localCopies||[]).find(copy=>copy.path===d);
+      const prior=(j.localCopies||[]).find(copy=>copy.path===d);
+      try{await fs.copyFile(f,d,1);created=true;}
+      catch(e){
+        if(e.code!=='EEXIST')throw e;
+        // 同名不同内容：只有确认这份副本是本任务之前复制过去的，才允许用新版本覆盖；
+        // 不是我们放的（比如别的任务或用户手工放的）一律停下，不覆盖。
+        if(sha(await fs.readFile(d))!==sha(await fs.readFile(f))){
+          if(!prior?.createdByJob)throw Error('Zotero内已有不同内容同名产物，已停止，未覆盖');
+          await fs.copyFile(f,d);
+        }
+      }
+      const digest=sha(await fs.readFile(d));
       j.localCopies=[...(j.localCopies||[]).filter(copy=>copy.path!==d),{path:d,sha256:digest,createdByJob:created||!!prior?.createdByJob}];
     }j.artifacts.zoteroFolder=dest;
+  }
+  /**
+   * 任务收尾：把已经复制到 Zotero 的产物从任务目录里删掉，并把路径改指向 Zotero。
+   * 知识卡片相关文件（制卡任务书/判定书/快照/报告、card_*.md）留在插件目录，
+   * 卡片正文本身在卡片库里，都不搬。只搬论文产物本体。
+   * 任一步失败都只记录、不中断收尾——原件还在，用户不会丢东西。
+   */
+  async rehomeArtifacts(j){
+    const folder=j.artifacts?.zoteroFolder;if(!folder||!existsSync(folder))return 0;
+    const keep=name=>/^(制卡|card_|cards)/i.test(String(name||''));
+    const remap=new Map();
+    let moved=0;
+    for(const [key,value] of Object.entries(j.artifacts||{})){
+      if(typeof value!=='string'||key==='zoteroFolder')continue;
+      if(!within(this.store.dir(j.id),value))continue;
+      if(keep(path.basename(value)))continue;
+      let stat;try{stat=await fs.stat(value)}catch{continue}
+      if(!stat.isFile())continue;
+      const target=path.join(folder,path.basename(value));
+      try{
+        if(!existsSync(target))continue;                    // 没复制成功就保留原件
+        if(sha(await fs.readFile(target))!==sha(await fs.readFile(value)))continue;
+        await fs.unlink(value);moved++;remap.set(value,target);j.artifacts[key]=target;
+      }catch{/* 保留原件 */ }
+    }
+    // extract 与 markdown 同样处理（它们是后续阶段/Bridge 的输入，必须同步改指向）
+    for(const slot of ['extractPath']){
+      const value=j[slot];if(typeof value!=='string'||!within(this.store.dir(j.id),value))continue;
+      const target=path.join(folder,path.basename(value));
+      try{
+        if(!existsSync(target))continue;
+        if(sha(await fs.readFile(target))!==sha(await fs.readFile(value)))continue;
+        await fs.unlink(value);moved++;j[slot]=target;
+      }catch{/* 保留原件 */ }
+    }
+    if(j.prepared){
+      const value=j.prepared.markdownPath||j.prepared.mdPath;
+      if(typeof value==='string'&&within(this.store.dir(j.id),value)){
+        const target=path.join(folder,path.basename(value));
+        try{
+          if(existsSync(target)&&sha(await fs.readFile(target))===sha(await fs.readFile(value))){
+            await fs.unlink(value);moved++;
+            j.prepared.markdownPath=target;if(j.prepared.mdPath)j.prepared.mdPath=target;
+          }
+        }catch{/* 保留原件 */ }
+      }
+    }
+    j.localCopies=(j.localCopies||[]).map(copy=>{
+      const hit=[...remap.values()].includes(copy.path);return hit?copy:copy;
+    });
+    return moved;
   }
   async invoke(action,args={},context={}){
     switch(action){

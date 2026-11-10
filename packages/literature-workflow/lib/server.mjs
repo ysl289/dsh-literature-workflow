@@ -34,8 +34,13 @@ export async function startControlPanel(engine){
       }
       if(req.method==='GET'&&u.pathname==='/api/artifact'){
         const j=await engine.store.get(u.searchParams.get('jobId'));const key=u.searchParams.get('key');let f=j.artifacts?.[key];
-        if(!f||typeof f!=='string'||!within(engine.store.dir(j.id),f))throw Error('产物不存在');
-        const real=await fs.realpath(f),base=await fs.realpath(engine.store.dir(j.id));if(!within(base,real))throw Error('产物路径越界');
+        // 产物可能已迁到该任务的 Zotero 文件夹（收尾剪贴），两个根都算合法；其余路径仍拒绝。
+        const folder=typeof j.artifacts?.zoteroFolder==='string'?j.artifacts.zoteroFolder:null;
+        const inJob=typeof f==='string'&&within(engine.store.dir(j.id),f);
+        const inZotero=typeof f==='string'&&!!folder&&within(folder,f);
+        if(typeof f!=='string'||(!inJob&&!inZotero))throw Error('产物不存在');
+        const real=await fs.realpath(f);
+        const base=await fs.realpath(inJob?engine.store.dir(j.id):folder);if(!within(base,real))throw Error('产物路径越界');
         const st=await fs.stat(real);if(!st.isFile())throw Error('不是文件');
         // HTML decks have local scripts; sandbox prevents their accessing the control panel's origin.
         if(path.extname(real)==='.html')res.setHeader('Content-Security-Policy',"sandbox allow-scripts allow-downloads; default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data: blob:; font-src data:");
