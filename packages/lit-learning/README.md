@@ -65,12 +65,14 @@ lit-learning/
 | 输入 | 位置 | 用途 |
 | --- | --- | --- |
 | `job.json` | `<workflowRoot>/.plugin-state/jobs/<id>/job.json` | 论文标识、状态、阶段、产物索引 |
-| `paper.extract.json` | 同上（或 `job.extractPath`） | 21 列抽取 + `evidence` 证据链 |
+| `paper.extract.json` | 同上（或 `job.extractPath`） | 21 列抽取 + `evidence` 证据链；工作流收尾归档后指向该任务的 Zotero 目录也会被采信 |
 | `pages.json` / `full.md` | 同上 | 证据的页码与段号定位 |
 | `catalog.json` + `cards/**/*.md` | `<cardsHome>` | 卡片、书架、关系、来源引用 |
 | 口径与词表 | `lexicon/` | 评级、策略归一、量级主题、常识 |
 
 **只读边界**：不写 `.plugin-state`，不改 `job.json`，不动卡片库一张卡。校验项 `boundary` 会检查配置有没有被改成可写。
+
+声明路径（`extractPath` / `markdownPath`）只允许落在工作流目录，或**该任务 job.json 自己声明的 `artifacts.zoteroFolder`**：工作流收尾会把已复制到 Zotero 的产物搬走并改指向，若只认工作流目录，归档过的论文在学习层就会被判越界。除此之外的绝对路径仍然拒绝。
 
 ## 输出（学习层）
 

@@ -97,12 +97,37 @@ function pickExtractPath(job, jobDir, root) {
   if (!declared) return { path: '', rejected: '' };
   try {
     // 越界会抛 PATH_OUTSIDE_ROOT，这里当成「不认这个声明」处理
-    return { path: resolveInside(root || jobDir, declared, 'job.json 声明的抽取文件'), rejected: '' };
+    return { path: resolveJobInput(root, job, jobDir, declared, 'job.json 声明的抽取文件'), rejected: '' };
   } catch {
     // 静默不采信是危险的：论文还在、只是抽取降级成字段级证据，
     // 看起来和「一切正常」几乎一样。把被拒的声明记下来，交给校验去报警。
     return { path: '', rejected: declared };
   }
+}
+
+/**
+ * 声明路径的合法根：工作流目录，加上该任务自己的 Zotero 归档目录。
+ *
+ * 工作流收尾会把已确认复制到 Zotero 的产物从任务目录搬走，并把 job.json 里的
+ * extractPath / markdownPath 改指向那个文件夹。若只认工作流目录，归档过的论文
+ * 在学习层就被判越界——材料还在 Zotero 里，但学习层读不到。
+ * 额外认的只有「这个任务 job.json 自己声明的那一个目录」，不是放宽到任意绝对路径。
+ */
+export function jobInputRoots(root, job, jobDir) {
+  const roots = [root || jobDir];
+  const folder = typeof job?.artifacts?.zoteroFolder === 'string' ? job.artifacts.zoteroFolder.trim() : '';
+  if (folder && existsSync(folder)) roots.push(folder);
+  return roots;
+}
+
+/** 按「工作流目录 → 该任务 Zotero 目录」依次解析；都越界就抛 PATH_OUTSIDE_ROOT。 */
+export function resolveJobInput(root, job, jobDir, target, label = '路径') {
+  let outside = null;
+  for (const base of jobInputRoots(root, job, jobDir)) {
+    try { return resolveInside(base, target, label); }
+    catch (error) { if (error?.code !== 'PATH_OUTSIDE_ROOT') throw error; outside = error; }
+  }
+  throw outside;
 }
 
 function textOf(value) {
@@ -221,7 +246,7 @@ export async function loadPaper(jobDir, { root = '' } = {}) {
     const declaredMd = job.markdownPath || job.prepared?.mdPath || '';
     if (declaredMd) {
       try {
-        mdPath = resolveInside(root || jobDir, declaredMd, 'job.json 声明的正文文件');
+        mdPath = resolveJobInput(root, job, jobDir, declaredMd, 'job.json 声明的正文文件');
       } catch {
         mdPath = localMd;
       }

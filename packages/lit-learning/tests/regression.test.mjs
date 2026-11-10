@@ -479,3 +479,55 @@ test('卡片为 0：只警告不阻断，但 publishable 为 false', async () =>
   assert.equal(nonempty.level, 'warn');
   assert.equal(report.summary.publishable, false);
 });
+
+// ── 工作流收尾归档：产物搬进 Zotero 之后学习层仍要读得到 ────────────────
+test('归档到 Zotero：extractPath 指向该任务自己的 Zotero 目录时采信', async () => {
+  const fx = await fixture({ papers: 1 });
+  const jobDir = fx.jobs[0].dir;
+  const zotero = path.join(fx.root, 'zotero', 'KEY123', 'literature-abc');
+  await fsp.mkdir(zotero, { recursive: true });
+  const moved = path.join(zotero, 'paper.extract.json');
+  await fsp.writeFile(moved, JSON.stringify(extractFixture(fx.jobs[0].id)), 'utf8');
+  // 收尾已把本地副本搬走：只留 job.json 里的声明与 artifacts.zoteroFolder
+  await fsp.rm(path.join(jobDir, 'paper.extract.json'));
+
+  const jobPath = path.join(jobDir, 'job.json');
+  const job = JSON.parse(await fsp.readFile(jobPath, 'utf8'));
+  await fsp.writeFile(jobPath, JSON.stringify({
+    ...job,
+    extractPath: moved,
+    artifacts: { ...(job.artifacts || {}), zoteroFolder: zotero },
+  }), 'utf8');
+
+  await buildLearningLayer(fx.config, { rebuild: true });
+  const paper = JSON.parse(await fsp.readFile(
+    path.join(fx.learningRoot, 'papers', `${fx.jobs[0].id}.json`), 'utf8'));
+  assert.equal(paper.title, `合成论文 ${fx.jobs[0].id}`, '归档目录里的抽取必须被采信');
+});
+
+test('归档目录不扩大边界：Zotero 目录之外的声明照样拒绝', async () => {
+  const fx = await fixture({ papers: 1 });
+  const jobDir = fx.jobs[0].dir;
+  const zotero = path.join(fx.root, 'zotero', 'KEY999');
+  await fsp.mkdir(zotero, { recursive: true });
+  const evil = path.join(fx.root, 'outside', 'evil.extract.json');
+  await fsp.mkdir(path.dirname(evil), { recursive: true });
+  await fsp.writeFile(evil, JSON.stringify({
+    ...extractFixture(fx.jobs[0].id), meta: { title: '被外部文件替换的标题' },
+  }), 'utf8');
+  await fsp.rm(path.join(jobDir, 'paper.extract.json'));
+
+  const jobPath = path.join(jobDir, 'job.json');
+  const job = JSON.parse(await fsp.readFile(jobPath, 'utf8'));
+  await fsp.writeFile(jobPath, JSON.stringify({
+    ...job,
+    extractPath: evil,
+    artifacts: { ...(job.artifacts || {}), zoteroFolder: zotero },
+  }), 'utf8');
+
+  // 本地副本已不在，声明又越界：必须在生成前失败，不能悄悄当成空库
+  await assert.rejects(
+    () => buildLearningLayer(fx.config, { rebuild: true }),
+    error => error.code === 'PATH_OUTSIDE_ROOT' && /Zotero 归档目录之外/.test(error.message),
+  );
+});

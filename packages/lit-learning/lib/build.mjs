@@ -4,8 +4,8 @@ import {
   existsSync, listDirsStrict, readJsonStrict, readTextStrict, serialize, sha256,
   writeIfChanged, writeJson, withFileLock,
 } from './fsx.mjs';
-import { assertBoundaries, describeConfig, readonlyDeclarations, resolveInside } from './config.mjs';
-import { loadCards, loadLexicon, loadPapers, normalizeStrategy, stableProjection } from './sources.mjs';
+import { assertBoundaries, describeConfig, readonlyDeclarations } from './config.mjs';
+import { loadCards, loadLexicon, loadPapers, normalizeStrategy, resolveJobInput, stableProjection } from './sources.mjs';
 import { ratePaper } from './rating.mjs';
 import {
   buildCitations, buildCommonsense, buildCrossQuestions, buildGaps, buildQuestions, buildRecital,
@@ -22,7 +22,7 @@ import {
 } from './storage.mjs';
 
 /** 生成器版本：改动规则导致内容变化时必须抬，否则「陈旧」判断会失真（清单 17）。 */
-export const GENERATOR_VERSION = 9;
+export const GENERATOR_VERSION = 10;
 
 const CONTENT_DIRS = ['papers', 'indices', 'map', 'exam', 'gaps', 'commonsense'];
 const CONTENT_FILES = ['citations.json'];
@@ -40,10 +40,10 @@ async function assertInputsReadable(config) {
     if (existsSync(local)) await readJsonStrict(local);
     else if (declared) {
       try {
-        await readJsonStrict(resolveInside(config.workflowRoot, declared, 'job.json 声明的抽取文件'));
+        await readJsonStrict(resolveJobInput(config.workflowRoot, job, dir, declared, 'job.json 声明的抽取文件'));
       } catch (error) {
         if (error?.code === 'PATH_OUTSIDE_ROOT') {
-          throw Object.assign(new Error(`论文 ${job.id} 的 extractPath 指向工作流目录之外，已拒绝读取`),
+          throw Object.assign(new Error(`论文 ${job.id} 的 extractPath 指向工作流目录与 Zotero 归档目录之外，已拒绝读取`),
             { code: 'PATH_OUTSIDE_ROOT' });
         }
         throw error;

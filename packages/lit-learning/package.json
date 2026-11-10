@@ -1,6 +1,6 @@
 {
   "name": "@ysl289/dsh-lit-learning",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Literature learning layer for DeepSeek Harness: read-only workflow and card inputs, evidence locating, readiness ratings, recital and review.",
   "license": "MIT",
   "type": "module",
