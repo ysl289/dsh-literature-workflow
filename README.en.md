@@ -51,27 +51,20 @@ DSH `0.2.x` (tested on `0.2.1-rc.3`), Node.js ≥ 22, Python ≥ 3.10 with `open
 
 ### Install
 
-**Option 1 — from npm (simplest)**
+**Option 1 — download a release zip (no git needed)**
 
-In DSH, open **sidebar → Plugins → Add plugin** and paste the package names:
-
-```
-@ysl289/dsh-literature-workflow
-@ysl289/dsh-knowledge-cards
-@ysl289/dsh-lit-learning
-@ysl289/dsh-plugin-hub
-```
-
-Or from the CLI:
+1. Open [Releases](https://github.com/ysl289/dsh-literature-workflow/releases) and download the latest `dsh-literature-suite-<version>.zip` (individual `*.tgz` files are published too).
+2. Extract it to a stable directory, e.g. `D:\dsh-literature-suite`; it contains the four plugin directories.
+3. In DSH open **sidebar → Plugins → Add plugin** and paste the absolute directory paths, or use the CLI:
 
 ```bash
-dsh plugin --profile <profile> add @ysl289/dsh-literature-workflow
-dsh plugin --profile <profile> add @ysl289/dsh-knowledge-cards
-dsh plugin --profile <profile> add @ysl289/dsh-lit-learning
-dsh plugin --profile <profile> add @ysl289/dsh-plugin-hub    # optional
+dsh plugin --profile <profile> add D:/dsh-literature-suite/packages/literature-workflow
+dsh plugin --profile <profile> add D:/dsh-literature-suite/packages/knowledge-cards
+dsh plugin --profile <profile> add D:/dsh-literature-suite/packages/lit-learning
+dsh plugin --profile <profile> add D:/dsh-literature-suite/packages/plugin-hub    # optional
 ```
 
-> All packages are scoped under `@ysl289/`. The **unscoped** `dsh-plugin-hub` on npm belongs to a **different author** and is unrelated to this project.
+4. **Restart DSH** and the four entries appear in the sidebar (or inside the plugin hub).
 
 **Option 2 — from source (if you want to modify the code)**
 
@@ -88,6 +81,8 @@ dsh plugin --profile <profile> add ./packages/plugin-hub
 cp -r skills/knowledge-card-library ~/.dsh/skills/
 cp -r skills/literature-pipeline ~/.dsh/skills/
 ```
+
+> **About npm**: the package names are reserved as `@ysl289/dsh-literature-workflow`, `@ysl289/dsh-knowledge-cards`, `@ysl289/dsh-lit-learning` and `@ysl289/dsh-plugin-hub`, but they are **not published to npm yet**, so installing by name currently returns 404. The **unscoped** `dsh-plugin-hub` on npm belongs to a **different author** and is unrelated to this project.
 
 Restart DSH after installing. Paths are never hard-coded: configure via `DSH_LIT_WORKFLOW`, `DSH_CARDS_HOME`/`KCARD_HOME`, `DSH_LIT_LEARNING` and `DSH_PYTHON`, or fall back to home-directory defaults.
 

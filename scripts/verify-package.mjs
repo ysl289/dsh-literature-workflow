@@ -9,7 +9,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
-const packages = ['literature-workflow', 'knowledge-cards', 'lit-learning'];
+const packages = ['literature-workflow', 'knowledge-cards', 'lit-learning', 'plugin-hub'];
 let failures = 0;
 const fail = (pkg, message) => {
   failures += 1;
@@ -29,7 +29,10 @@ function globExists(base, pattern) {
 for (const name of packages) {
   const dir = path.join(root, 'packages', name);
   const manifest = JSON.parse(fs.readFileSync(path.join(dir, 'package.json'), 'utf8'));
-  if (manifest.name !== `dsh-${name === 'literature-workflow' ? 'literature-workflow' : name}`) {
+  // Packages may be scoped (@owner/dsh-x) or bare (dsh-x); the directory name only fixes the last segment.
+  const lastSegment = name.replace(/[.*+?^${}()|[\]\\]/g, (ch) => `\\${ch}`);
+  const expectedName = new RegExp(`^(?:@[a-z0-9][a-z0-9._-]*/)?dsh-${lastSegment}$`);
+  if (!expectedName.test(manifest.name)) {
     fail(name, `unexpected package name ${manifest.name}`);
   }
   if (manifest.license !== 'MIT') fail(name, 'license must be MIT');

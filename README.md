@@ -68,28 +68,21 @@
 
 ### 安装
 
-**方式一：从 npm 装（最简单）**
+**方式一：下载压缩包（不装 git 也能用）**
 
-打开 **侧栏 → 插件 → 添加插件**，粘贴包名：
-
-```
-@ysl289/dsh-literature-workflow
-@ysl289/dsh-knowledge-cards
-@ysl289/dsh-lit-learning
-@ysl289/dsh-plugin-hub
-```
-
-或命令行：
+1. 打开 [Releases](https://github.com/ysl289/dsh-literature-workflow/releases)，下载最新的 `dsh-literature-suite-<版本>.zip`（也可以逐个下 `*.tgz`）。
+2. 解压到固定目录，例如 `D:\dsh-literature-suite`，里面是四个插件目录。
+3. 在 DSH 里 **侧栏 → 插件 → 添加插件** 粘贴目录的绝对路径；或命令行：
 
 ```bash
 # <profile> 换成你的 profile 名（Web 端通常是 desktop 或 web）
-dsh plugin --profile <profile> add @ysl289/dsh-literature-workflow
-dsh plugin --profile <profile> add @ysl289/dsh-knowledge-cards
-dsh plugin --profile <profile> add @ysl289/dsh-lit-learning
-dsh plugin --profile <profile> add @ysl289/dsh-plugin-hub    # 可选
+dsh plugin --profile <profile> add D:/dsh-literature-suite/packages/literature-workflow
+dsh plugin --profile <profile> add D:/dsh-literature-suite/packages/knowledge-cards
+dsh plugin --profile <profile> add D:/dsh-literature-suite/packages/lit-learning
+dsh plugin --profile <profile> add D:/dsh-literature-suite/packages/plugin-hub    # 可选
 ```
 
-> 注意包名都带 `@ysl289/` 作用域。npm 上**未加作用域的** `dsh-plugin-hub` 是**另一位作者**的插件市场，与本项目无关。
+4. **重启 DSH**，四个入口出现在侧栏（或收在插件入口中心里）。
 
 **方式二：从源码装（想改代码时用）**
 
@@ -110,8 +103,10 @@ dsh plugin --profile <profile> add ./packages/plugin-hub
 
 装完**重启 DSH** 才会加载新的 Host 模块。
 
+> **关于 npm**：四个包的包名已预留为 `@ysl289/dsh-literature-workflow`、`@ysl289/dsh-knowledge-cards`、`@ysl289/dsh-lit-learning`、`@ysl289/dsh-plugin-hub`，**目前还没有发布到 npm 仓库**，所以现在按包名安装会 404；发布后再把上面改成默认方式。npm 上**未加作用域的** `dsh-plugin-hub` 是**另一位作者**的插件市场，与本项目无关。
+
 > **Python 依赖**：`literature-workflow` 需要 Python 3.10+ 与 `openpyxl`、`requests`、`PyMuPDF`。
-> 从 npm 安装时不会自动装这些，请自行 `pip install`（见 [requirements.txt](requirements.txt)）。
+> 无论从压缩包还是源码安装，都不会自动装这些 Python 包，请自行 `pip install -r requirements.txt`。
 
 > `literature-workflow` 已内置 `assets/`（PDF→Markdown、Excel、HTML 演示页、卡片、发布脚本与模板），
 > **不需要另外准备原工作流目录**；`workflowRoot` 只用于 `input/`、`.plugin-state/` 和产物。

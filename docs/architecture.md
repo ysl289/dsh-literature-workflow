@@ -38,6 +38,7 @@
 - **Client 页面**：通过 DSH 的 slot 注册（`main` / `sidebar.panellist`），页面调用 Host 的 owner-only HTTP 路由，与工具共用同一个执行器。
 - **只读边界**：学习层在 `normalizeConfig` 里做双向路径校验（不能落在卡片库/工作流状态目录里，也不能包住它们），越界直接拒绝加载。
 - **发布**：`publishMode` 三档 —— `preview`（只生成预览）、`local`（只落本地产物）、`auto`（对流程中保留的 blog/腾讯文档卡执行发布）。默认 `preview`。
+- **收尾归档**：Zotero 落盘之后，`rehomeArtifacts` 把「已确认按内容复制到该论文 Zotero 文件夹」的产物从任务目录删掉，并把 job 里的路径改指向 Zotero；`card_*`、`制卡*` 这类卡片文件不搬，仍在插件目录。缺副本、内容不一致、写失败一律保留原件并继续收尾——不因为归档失败丢东西。
 
 ## Client bundle
 
